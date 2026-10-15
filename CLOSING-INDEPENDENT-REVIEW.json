@@ -1,0 +1,42 @@
+{
+  "candidate": "closing-execution-v2",
+  "verdict": "PASS within synthetic adapter and atomic-claim scope",
+  "archive_sha256": "22f77d65279e70ace69c1d66a028b7019266054114b2bbf19e7ce9ce49ce5312",
+  "manifest_sha256": "4ff80a032509fe34e97ec6746729df007f871ba51b8e1c73f544004b08537cf2",
+  "hashed_files_verified": 48,
+  "files_unchanged_after_tests": true,
+  "suite": {
+    "passed": 112,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 80.058
+  },
+  "original_independent_probes": {
+    "passed": 10,
+    "failed": 0
+  },
+  "additional_claim_probes": {
+    "passed": 4,
+    "failed": 0,
+    "cases": [
+      "failed admission hash survives reopen",
+      "interrupted claim survives reopen",
+      "four contenders one winner with matching input hash",
+      "claim and trial rollback atomically"
+    ]
+  },
+  "production_delta": [
+    "closing_run.py atomic claim and runner metadata version 2.0.0"
+  ],
+  "strategy_engine_changed": false,
+  "baseline_preserved_in_package": 37,
+  "publication_performed": false,
+  "broker_activity": false,
+  "residual_limits": [
+    "Synthetic-only adapter; no real-data admission or walk-forward integration",
+    "Claims local to supplied ledger; canonical governed journal still required",
+    "Complete verified session/calendar/admin history and causal market data remain required",
+    "No effective-dated fee-update adapter",
+    "No market-performance or execution-qualification claim"
+  ]
+}

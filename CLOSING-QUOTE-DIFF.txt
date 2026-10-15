@@ -1,0 +1,53 @@
+--- reviewed_engine_quote
++++ closing_adapter_quote
+@@ -1,7 +1,7 @@
+     def _quote(self, e, now, c):
+         finite(e['bid'],e['ask'],e['bid_size'],e['ask_size'])
+         age = (now-utc(e['quote_at'])).total_seconds()
+-        if not 0 <= age <= self.policy.quote_max_age_seconds or e['bid'] > e['ask'] or min(e['bid_size'],e['ask_size']) < 1 or e.get('quality') != 'verified':
++        if not 0 <= age <= self.policy.quote_max_age_seconds or e['bid'] <= 0 or e['bid'] > e['ask'] or min(e['bid_size'],e['ask_size']) < 1 or e.get('quality') != 'verified':
+             return dict(status='skip',reason='stale_crossed_unverified_or_empty_quote')
+         tick = c.get('tick')
+         if not tick or any(abs(x/tick-round(x/tick)) > 1e-6 for x in (e['bid'],e['ask'])):
+@@ -33,7 +33,6 @@
+             price = e['bid'] if p['side'] == 1 else e['ask']
+             reason = None
+             if p['side']*(price-p['stop']) <= 0: reason = 'stop'
+-            elif p['side']*(price-p['target']) >= 0: reason = 'target'
+             else:
+                 if s['paused'] or s['daily_paused']:
+                     s['exit_decisions'].setdefault(key,dict(reason='risk_pause',at=now.isoformat()))
+@@ -59,7 +58,11 @@
+         signal = s['pending'].get(key)
+         if not signal or now <= utc(signal['at']) or utc(e['quote_at']) <= utc(signal['at']):
+             return dict(status='no_executable_signal')
+-        del s['pending'][key]  # first later valid quote consumes intent even if risk-rejected
++        if min((now-utc(signal['at'])).total_seconds(),(utc(e['quote_at'])-utc(signal['at'])).total_seconds()) < 1:
++            return dict(status='no_executable_signal',reason='minimum_processing_latency')
++        del s['pending'][key]  # one attempt per session, including risk rejection
++        if s['positions']:return dict(status='skip',reason='one_global_position_research_policy')
++        if now>=utc(signal['exit_at']):return dict(status='skip',reason='session_entry_window_closed')
+         reason = self._eligibility(c,now)
+         if (now-utc(signal['at'])).total_seconds() > self.policy.signal_ttl_seconds: reason = 'signal_expired'
+         if s['paused'] or s['daily_paused']: reason = 'risk_pause'
+@@ -71,7 +74,10 @@
+             return dict(status='skip',reason='stale_portfolio_mark')
+         side = signal['side']
+         fill = (e['ask'] if side == 1 else e['bid'])+side*c['tick']*self.policy.slippage_ticks
+-        distance = side*(fill-signal['stop'])
++        distance = signal['stop_distance']
++        signal['stop'] = fill-side*distance
++        if side*((e['bid'] if side==1 else e['ask'])-signal['stop']) <= 0:
++            return dict(status='skip',reason='entry_quote_already_beyond_stop')
+         if distance < c['tick']:
+             return dict(status='skip',reason='invalid_stop_after_gap')
+         carry_reserve = (math.ceil(self.policy.max_hold_seconds/86400)+1)*c['daily_carry_fee']
+@@ -83,7 +89,7 @@
+         elif margins+max(self._margins(key,now)[:2])+risk+open_risk > s['equity']: reason = 'margin_and_loss_reserve'
+         if reason: return dict(status='skip',reason=reason,risk=risk)
+         s['cash'] -= c['fee_per_side']
+-        s['positions'][key] = dict(side=side,entry=fill,stop=signal['stop'],target=fill+side*distance*self.hypothesis.reward_risk,
++        s['positions'][key] = dict(side=side,entry=fill,stop=signal['stop'],target=None,exit_at=signal['exit_at'],session_id=signal['session_id'],
+                                   risk=risk,at=e['available_at'],adjustment=e.get('adjustment',0),quantity=1)
+         self._equity(now)
+         return dict(status='entry',fill=fill,quantity=1,risk=risk,equity=s['equity'])

@@ -1,0 +1,112 @@
+{
+  "candidate": "closing-execution-v2",
+  "published_baseline": "ef4bf05d226056020486d0f22145c68145936384",
+  "strategy": "closing_half_hour_continuation",
+  "strategy_version": "1.0.0",
+  "signal_kernel": "closing-half-hour-continuation-1.0.0",
+  "independent_review": "PASS within synthetic adapter and atomic-claim scope",
+  "publication_authorized": true,
+  "release_held": false,
+  "broker_execution_enabled": false,
+  "loop_enabled": false,
+  "qualified_for_paper": false,
+  "profit_claim": false,
+  "existing_engine_modified": false,
+  "existing_pipeline_modified": false,
+  "adapter_tests": 24,
+  "full_suite": {
+    "tests": 112,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 76.987,
+    "passed": true,
+    "synthetic_only": true
+  },
+  "specification_conventions": [
+    "Uses existing completed-five-minute-bar signal kernel; no intrabar trade-tick override",
+    "Explicit decision event at 15:30 America/New_York; calendar must be known before session open",
+    "ATR-SMA20 requires 21 consecutive completed five-minute trade bars plus previous regular close",
+    "Fixed ATR stop measured from actual slipped entry fill; no target",
+    "Clock event at 16:00 queues exit; strictly later valid quote fills. Without a clock, decision is made at first later observation and requires a subsequent quote",
+    "One decision attempt per contract session, including missing-data or risk rejection; no re-entry",
+    "Same reviewed cost, whole-contract, equity, margin, pause and causal exit gates"
+  ],
+  "limitations": [
+    "Synthetic one-shot runner only; real-data admission deliberately blocked",
+    "Not yet integrated into generic training/validation selection runner",
+    "Complete independently verified session calendar, bar availability, quote path and costs still required",
+    "Inherited completed-bar signal convention must be disclosed separately from exact last-trade-tick source strategy",
+    "No effective-dated fee update adapter",
+    "Validation provenance requires one governed journal when integrating walk-forward research",
+    "Complete administrative history required at future fold boundaries",
+    "Quote execution method is a scoped copy; CLOSING-QUOTE-DIFF.txt records differences for independent review",
+    "Run identity claims are local to the supplied ledger; they are not a global data-provenance registry."
+  ],
+  "reproduce": [
+    "python -m unittest discover -s tests -p test_closing_execution.py",
+    "python verify_closing.py",
+    "python -m trading_pipeline.closing_run --output local-results/new-synthetic-run"
+  ],
+  "published_baseline_files_preserved": 37,
+  "durable_one_shot": {
+    "status": "completed_synthetic_verification",
+    "synthetic": true,
+    "claim_count": 1,
+    "runner_version": "2.0.0",
+    "unresolved_positions": 0,
+    "profit_claim": false
+  },
+  "test_history": [
+    {
+      "tests": 20,
+      "errors": 1,
+      "cause": "Gap fixture accidentally overlapped prior bar; fixture corrected, engine unchanged"
+    },
+    {
+      "tests": 24,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "tests": 106,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsed_seconds": 73.329,
+      "passed": true,
+      "synthetic_only": true
+    },
+    {
+      "increment": "v2",
+      "claim_tests": 6,
+      "claim_tests_passed": 6,
+      "full_suite": {
+        "tests": 112,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "elapsed_seconds": 76.987,
+        "passed": true,
+        "synthetic_only": true
+      }
+    }
+  ],
+  "runner_version": "2.0.0",
+  "claim_tests": 6,
+  "run_identity_fix": {
+    "atomic": true,
+    "scope": "run ID and complete input hash",
+    "claim_before": "admission and engine creation",
+    "failure_and_interruption": "claim and started trial retained; no automatic reclaim",
+    "concurrency": "BEGIN IMMEDIATE and unique primary key; exactly one winner",
+    "legacy_records": "Existing runs and trial metadata also block reuse",
+    "immutability": "Claim update and delete triggers reject mutation"
+  },
+  "historical_journal_preservation": "No preexisting journals opened for modification by this increment; external historical preservation not independently established",
+  "software_status": "reviewed_for_scoped_publication",
+  "publication_note": "Reviewed code and tests unchanged. This status document updated after review. Existing baseline status files describe the prior generic research milestone.",
+  "independent_suite_passed": 112,
+  "independent_original_probes_passed": 10,
+  "independent_additional_claim_probes_passed": 4
+}

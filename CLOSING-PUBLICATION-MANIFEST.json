@@ -1,0 +1,15 @@
+{
+  "CLOSING-INDEPENDENT-REVIEW.json": "909d87d8f17ac62717115c9ebe0d876d59c240e3fc8395067e4ed851edab4a8c",
+  "CLOSING-QUOTE-DIFF.txt": "1db8be63111e41de1b44fef6519b620215b4aed20e04bd0978ea4113559e09c5",
+  "CLOSING-REVIEWED-MANIFEST.json": "4ff80a032509fe34e97ec6746729df007f871ba51b8e1c73f544004b08537cf2",
+  "CLOSING-STATUS.json": "91a1370e186dbcbfdba2e67103c2d5954405a30e2508d94604eba9ce53a58a7e",
+  "CLOSING-TEST-RESULT.json": "44a3c5714ec950ee54e7424f8f816c60e47b794e339d7181b9f37b639a551b6d",
+  "PRIOR-CLOSING-V1-MANIFEST.json": "3224d08a0d3f2269128a54df7cbd2019dc1416df759ece5df5172aa4690ed6ce",
+  "PUBLISHED-BASELINE-MANIFEST.json": "54e5130b3c61abb10018258cfd10073c9b27cad3f9fe2e6498237f8376e26dd9",
+  "tests/test_closing_claims.py": "29480017b433883329b33cf2819ef0d5201ff964800fdeec56fcf5c3be903c75",
+  "tests/test_closing_execution.py": "15f0d4875930d1399e9091f309d9fe48c9eef2a1db8d11d32cf7a6298145b9de",
+  "trading_pipeline/closing_execution.py": "260fb493376f5ad51259af0e8e97ae165ed2ae54e9c912442f6f7c948fa4e568",
+  "trading_pipeline/closing_fixtures.py": "0bb6f3bf2dba2b973751eb7721d88076e6d59b5561ad695b505fc4df8975fcab",
+  "trading_pipeline/closing_run.py": "4127ef9964345163d16679f22feb04b81e8563459e5941fc579b1d05d1866988",
+  "verify_closing.py": "be58deea19767aa4bca095f6b680c83958b41a9d6ec28dfe617c9ab5d0bd24d1"
+}
