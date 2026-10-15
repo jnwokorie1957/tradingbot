@@ -1,0 +1,54 @@
+{
+  "status": "superseded_by_TEN_CANDIDATES.md",
+  "source_scope": "Delegated research summaries; source claims not independently reproduced by this pipeline",
+  "implemented_in_runner": [
+    "baseline breakout1.0.0",
+    "baseline pullback1.0.0"
+  ],
+  "seeds": [
+    {
+      "id": "directional-orb5-atr14-v1",
+      "status": "specification_only",
+      "sources": [
+        "https://www.alexandria.unisg.ch/server/api/core/bitstreams/3c2989c4-688d-4d78-8a71-f02690990d51/content",
+        "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4729284"
+      ],
+      "rules": "NY09:30-16:00; freeze first5mOHLC. Up candle arms longH+tick; down arms shortL-tick; doji skip. One trade/day, exit16:00. Stop ceil-to-tick0.10xmean true range of prior14 completed daily sessions. Future quote and gap/slippage rules required.",
+      "adaptation": "Stock evidence does not transfer to futures; tick buffer and futures implementation are hypotheses."
+    },
+    {
+      "id": "last-half-hour-continuation-v1",
+      "status": "specification_only",
+      "sources": [
+        "https://academicweb.nd.edu/~zda/intramom.pdf"
+      ],
+      "rules": "At15:30NY sign of price/priorRTH16:00close-1, next causal quote entry, exit16:00. No reentry/target. Protective stop1xATR of last20 completed5m bars is an added hypothesis. Requires timezone/session calendar and earlier close evidence."
+    },
+    {
+      "id": "noise-band-vwap-v1",
+      "status": "specification_only",
+      "sources": [
+        "https://concretumgroup.com/wp-content/uploads/2026/02/Beat-the-Market.pdf"
+      ],
+      "rules": "Check10:00 then30min through15:30NY. Prior14sessions mean absolute same-clock return from09:30 supplies m. U=max(todayopen,priorRTHclose)*(1+m), L=min*(1-m). Long above max(U,VWAP), short below min(L,VWAP); next quote. Structural band/VWAP stop and ratchet/session exit are explicit adaptations. Real trade volume required, not FX tick volume."
+    },
+    {
+      "id": "fx-fixing-reversal-negative-control",
+      "status": "negative_control_not_profitable_claim",
+      "sources": [
+        "https://onlinelibrary.wiley.com/doi/full/10.1111/jofi.13306"
+      ],
+      "finding": "Delegated research reports liquidity-taking reversal fails after costs. Do not classify as proven retail profitability."
+    },
+    {
+      "id": "es-overnight-drift-negative-control",
+      "status": "negative_control_not_profitable_claim",
+      "sources": [
+        "https://www.newyorkfed.org/medialibrary/media/research/staff_reports/sr917.pdf"
+      ],
+      "finding": "Delegated research reports02:00-03:00ES drift grossSharpe1.1 versus net-0.5 after costs. Not reproduced here."
+    }
+  ],
+  "constraints": "Do not compress structural stops to fitUSD2.50. NQ/ES full-sized contract economics do not justify fractional substitutes. No automatic qualification, broker activation or live-money use.",
+  "note": "Retained early source notes; use the complete ten-candidate specification for exact rules."
+}

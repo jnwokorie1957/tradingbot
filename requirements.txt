@@ -1,0 +1,2 @@
+# IANA timezone data for the signal-only continuation kernel, tested version.
+tzdata==2026.3

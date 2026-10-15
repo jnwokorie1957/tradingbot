@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+*.sqlite
+*.sqlite-*
+local-results/
+private-data/
+*.png
+*.dpapi
+.env*

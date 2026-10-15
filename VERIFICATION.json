@@ -1,0 +1,79 @@
+{
+  "verified_at": "2026-10-15T22:26:00.312483+00:00",
+  "scope": "Offline research pipeline, not broker paper execution",
+  "tests": {
+    "command": "python -m unittest discover -s tests",
+    "python": "3.15",
+    "tzdata": "2026.3",
+    "run": 64,
+    "passed": 64,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 52.831
+  },
+  "prior_verification": [
+    {
+      "run": 54,
+      "passed": 54,
+      "seconds": 54.351
+    },
+    {
+      "run": 61,
+      "passed": 61,
+      "seconds": 79.524
+    },
+    {
+      "command": "python -m unittest discover -s tests -p test_metrics.py -v",
+      "run": 3,
+      "passed": 3,
+      "seconds": 0.241
+    }
+  ],
+  "development_failure_retained": "Initial new15pipeline fixtures failed with Windows access errors in system temporary directories; fixture storage changed to ignored workspace-local results. No denied folders were reopened manually. Original39simulator regressions passed in that run.",
+  "cli_checks": [
+    {
+      "command": "python -m trading_pipeline synthetic-check --output local-results/synthetic-cli-v2",
+      "result": "completed_research_not_qualified",
+      "synthetic": true,
+      "trial_count": 5,
+      "real_performance_evidence": false
+    },
+    {
+      "command": "python -m trading_pipeline.audit_legacy --source PRIVATE_SNAPSHOT --output local-results/september-admission-v1",
+      "result": "blocked_for_performance_backtest",
+      "source_hash_matched": true,
+      "market_backtests": 0,
+      "fills": 0
+    }
+  ],
+  "original_engine_sha256": "b01fc9091c59e42eaddcc555c6433d14c3e775413fb9e0b40ad107568535c9e2",
+  "original_engine_unchanged": true,
+  "implementation_status": {
+    "baseline_strategies_in_runner": 2,
+    "new_candidate_signal_kernel": 1,
+    "new_candidates_fully_integrated": 0,
+    "candidate_specifications_archived": 10,
+    "independent_review_pending": true
+  },
+  "gateway_status": "Existing installation opened once; Startup Error before login, Java IllegalStateException in Log4j rolling-file initialization; underlying filesystem/config cause unconfirmed; no API listener. No credentials, grants or settings changes.",
+  "safety": {
+    "broker_orders": 0,
+    "live_money": false,
+    "protected_observer_data_scored": false,
+    "risk_policy_relaxed": false,
+    "atlas_runtime_modified": false,
+    "pthhs_accessed": false,
+    "scheduler_activated": false,
+    "external_notifications": false
+  },
+  "publication_exclusions": [
+    "local-results",
+    "private data",
+    "SQLite journals",
+    "screenshots",
+    "credentials",
+    "account identifiers",
+    "Gateway machine/process identities"
+  ],
+  "ci": "No CI run claimed; this is an actual local test result."
+}
