@@ -1,5 +1,5 @@
 {
-  "as_of_utc": "2026-10-15T22:24:54.593959+00:00",
+  "as_of_utc": "2026-10-15T22:48:10.288621+00:00",
   "strategy_specifications": 10,
   "runner_baseline_strategies": 2,
   "new_signal_only_components": 1,
@@ -28,9 +28,24 @@
     "Effective-dated account costs, margins and eligibility unavailable",
     "Bar timestamp/availability semantics still require independent verification",
     "September is reused development data, not unseen out-of-sample validation",
-    "Independent pipeline/strategy review pending",
     "Candidate2 is a tested signal component only; its exact fill/exit adapter remains pending",
-    "Gateway encountered Java/Log4j rolling-file startup error before login; authenticated paper endpoint unavailable"
+    "Gateway encountered Java/Log4j rolling-file startup error before login; authenticated paper endpoint unavailable",
+    "Strategy and real-data validation remain unqualified; software audit pass is not performance approval",
+    "One governed journal and complete administrative history required; effective-dated fee updates unsupported"
   ],
-  "smallest_next_milestone": "Independently review runner and admit one provenance-verified bar/quote dataset with fresh validation and effective costs; preserve rejected results and risk limits."
+  "smallest_next_milestone": "Admit a new independently verified bar/quote dataset with complete administrative history and effective costs; retain all prior exposure and failed results.",
+  "candidate": "audit-v3",
+  "release_held": false,
+  "independent_review": "PASS: exact audit-v3 software candidate; 82 suite tests and 8 adversarial probes",
+  "latest_audit_tests": {
+    "tests": 82,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 76.634,
+    "passed": true,
+    "synthetic_only": true
+  },
+  "baseline_results_only": true,
+  "software_publication_authorized": true
 }

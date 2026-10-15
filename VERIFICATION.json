@@ -1,79 +1,43 @@
 {
-  "verified_at": "2026-10-15T22:26:00.312483+00:00",
-  "scope": "Offline research pipeline, not broker paper execution",
+  "candidate": "audit-v3",
   "tests": {
-    "command": "python -m unittest discover -s tests",
-    "python": "3.15",
-    "tzdata": "2026.3",
-    "run": 64,
-    "passed": 64,
-    "failed": 0,
+    "tests": 82,
+    "failures": 0,
+    "errors": 0,
     "skipped": 0,
-    "seconds": 52.831
+    "elapsed_seconds": 76.634,
+    "passed": true,
+    "synthetic_only": true
   },
-  "prior_verification": [
-    {
-      "run": 54,
-      "passed": 54,
-      "seconds": 54.351
+  "independent_review": {
+    "candidate": "audit-v3",
+    "archive_sha256": "48633fc662ec260eaa86b687094d2c4378688073d3d031bdeaf845d0ee72bf61",
+    "manifest_sha256": "9a3a8ef4dd2b8099dc71cda6b421e1add1656c8c7ded2b4959c51a0f3ae7a6b0",
+    "hashed_candidate_files": 34,
+    "independent_probes_passed": 8,
+    "prior_engine_resume_rejected_without_mutation": true,
+    "baseline_files_preserved": 28,
+    "v2_files_preserved": 33,
+    "six_fix_scope": "PASS; no remaining blocking defect found",
+    "residual_limits": [
+      "One governed durable journal required",
+      "Complete administrative history required",
+      "Effective-dated fee updates unsupported",
+      "Synthetic verification only; no performance or execution qualification"
+    ],
+    "suite": {
+      "tests": 82,
+      "passed": 82,
+      "failed": 0,
+      "skipped": 0
     },
-    {
-      "run": 61,
-      "passed": 61,
-      "seconds": 79.524
-    },
-    {
-      "command": "python -m unittest discover -s tests -p test_metrics.py -v",
-      "run": 3,
-      "passed": 3,
-      "seconds": 0.241
-    }
-  ],
-  "development_failure_retained": "Initial new15pipeline fixtures failed with Windows access errors in system temporary directories; fixture storage changed to ignored workspace-local results. No denied folders were reopened manually. Original39simulator regressions passed in that run.",
-  "cli_checks": [
-    {
-      "command": "python -m trading_pipeline synthetic-check --output local-results/synthetic-cli-v2",
-      "result": "completed_research_not_qualified",
-      "synthetic": true,
-      "trial_count": 5,
-      "real_performance_evidence": false
-    },
-    {
-      "command": "python -m trading_pipeline.audit_legacy --source PRIVATE_SNAPSHOT --output local-results/september-admission-v1",
-      "result": "blocked_for_performance_backtest",
-      "source_hash_matched": true,
-      "market_backtests": 0,
-      "fills": 0
-    }
-  ],
-  "original_engine_sha256": "b01fc9091c59e42eaddcc555c6433d14c3e775413fb9e0b40ad107568535c9e2",
-  "original_engine_unchanged": true,
-  "implementation_status": {
-    "baseline_strategies_in_runner": 2,
-    "new_candidate_signal_kernel": 1,
-    "new_candidates_fully_integrated": 0,
-    "candidate_specifications_archived": 10,
-    "independent_review_pending": true
+    "candidate_files_unchanged_after_tests": true
   },
-  "gateway_status": "Existing installation opened once; Startup Error before login, Java IllegalStateException in Log4j rolling-file initialization; underlying filesystem/config cause unconfirmed; no API listener. No credentials, grants or settings changes.",
-  "safety": {
-    "broker_orders": 0,
-    "live_money": false,
-    "protected_observer_data_scored": false,
-    "risk_policy_relaxed": false,
-    "atlas_runtime_modified": false,
-    "pthhs_accessed": false,
-    "scheduler_activated": false,
-    "external_notifications": false
-  },
-  "publication_exclusions": [
-    "local-results",
-    "private data",
-    "SQLite journals",
-    "screenshots",
-    "credentials",
-    "account identifiers",
-    "Gateway machine/process identities"
-  ],
-  "ci": "No CI run claimed; this is an actual local test result."
+  "software_publication_authorized": true,
+  "qualified_for_paper": false,
+  "broker_execution_enabled": false,
+  "loop_enabled": false,
+  "reviewed_manifest_sha256": "9a3a8ef4dd2b8099dc71cda6b421e1add1656c8c7ded2b4959c51a0f3ae7a6b0",
+  "reviewed_archive_sha256": "48633fc662ec260eaa86b687094d2c4378688073d3d031bdeaf845d0ee72bf61",
+  "publication_note": "Reviewed code and tests are byte-identical. Public documentation and status metadata updated after review. Historical receipts and frozen candidates preserved separately."
 }

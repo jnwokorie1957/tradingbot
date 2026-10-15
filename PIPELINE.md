@@ -1,3 +1,5 @@
+> Reviewed audit-v3 software: 82/82 suite tests and 8/8 independent adversarial probes passed. Plan version 2.0.0; engine configuration version 5 in engine_v4.py. Planned all-in trade risk is min($2.50, equity * 0.005, equity * configured trade_risk). This is software verification, not a profitability or execution qualification. See AUDIT-CHANGES.json and INDEPENDENT-REVIEW.json for scope and residual limits. The original baseline description below is superseded where audit corrections differ.
+
 # Executable offline research pipeline
 
 Core runner uses the Python standard library; tested on Python 3.15 on Windows. The separately tested closing-continuation signal kernel uses IANA timezone data (system timezone database or the `tzdata` package on Windows). No broker client, network transport, order API, account login, automatic recovery, or trading loop is included. Atlas and its runtime paths remain separate. Existing README.md and RESEARCH.md are preserved.

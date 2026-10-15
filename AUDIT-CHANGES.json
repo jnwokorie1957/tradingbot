@@ -1,0 +1,77 @@
+{
+  "baseline": "6f6475104eb830f6c91b88eb58b6555c5881d989",
+  "baseline_manifest_files_verified": 28,
+  "baseline_changed_files": [],
+  "release_held": false,
+  "broker_execution_enabled": false,
+  "loop_enabled": false,
+  "profit_claim": false,
+  "findings": [
+    {
+      "id": 1,
+      "status": "review_passed",
+      "change": "Engine configuration version 5 caps all-in planned risk at min(2.50, current equity * 0.005, current equity * configured trade_risk)."
+    },
+    {
+      "id": 2,
+      "status": "review_passed",
+      "change": "Persist administrative exit decision at observation time; only quote_at strictly later can fill. Existing resting stops and targets retain quote-driven execution."
+    },
+    {
+      "id": 3,
+      "status": "review_passed_with_disclosed_limits",
+      "change": "Replay known pre-window margin announcements from admitted train and validation streams. No signals or positions carried. Effective dates resolved at event time.",
+      "limitation": "No independent administrative input file for gaps outside supplied partition coverage; eligibility/contract updates unsupported, static verified metadata only. Real admission requires complete administrative provenance."
+    },
+    {
+      "id": 4,
+      "status": "review_passed_with_disclosed_limits",
+      "change": "Atomic append-only validation consumption in experiment journal before validation open. Reject same hash or overlapping time interval on same stable contract ID across new experiment IDs. Shared baseline/stress comparisons only inside single registered experiment. Legacy validation records without registry require reconciliation.",
+      "limitation": "Registry scope is one persistent journal. Separate journals or earlier external data exposure cannot be discovered automatically; governed canonical registry and independent provenance review required. No cross-experiment shared comparisons implemented."
+    },
+    {
+      "id": 5,
+      "status": "review_passed",
+      "change": "Parse explicit UTC timestamps before daily bootstrap grouping."
+    },
+    {
+      "id": 6,
+      "status": "review_passed_with_disclosed_limits",
+      "change": "Check cost evidence validity independently of exit reason. Retain diagnostic fill but invalidate trial and training selection if any fill uses expired evidence.",
+      "limitation": "No effective-dated fee schedule adapter; cannot turn invalid diagnostic PnL into a valid result."
+    }
+  ],
+  "tests": {
+    "tests": 82,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 76.634,
+    "passed": true,
+    "synthetic_only": true
+  },
+  "candidate": "audit-v3",
+  "prior_candidate": "audit-v2",
+  "preservation_checks": {
+    "tradingbot-pipeline": {
+      "verified_files": 28,
+      "changed_files": [],
+      "manifest_sha256": "bffa18612924edcdbea44f996b60cb0c78a8aef221352254651bb9336668642c"
+    },
+    "tradingbot-audit-candidate-v2": {
+      "verified_files": 33,
+      "changed_files": [],
+      "manifest_sha256": "4ca3d2279c345aa9cc0ad334610528276d3c47913d7b3b3e45b73b5431d292c0"
+    }
+  },
+  "increment": {
+    "finding": "Direct engine configurable trade_risk could relax the 0.5% invariant",
+    "correction": "min(2.50, equity * 0.005, equity * policy.trade_risk)",
+    "engine_config_version": 5,
+    "source_file": "trading_pipeline/engine_v4.py",
+    "reason_for_version_bump": "Reject resuming prior engine configurations under changed risk semantics",
+    "new_tests": 5
+  },
+  "independent_review": "PASS: exact audit-v3 software candidate; 82 suite tests and 8 adversarial probes",
+  "software_publication_authorized": true
+}

@@ -1,6 +1,7 @@
 """Descriptive diagnostics with dependence-aware daily block resampling."""
 import math,random,statistics
 from collections import defaultdict
+from .engine_v3 import utc
 
 def wilson(wins,n,z=1.959963984540054):
  if not n:return None
@@ -14,7 +15,7 @@ def summarize(trades,equity_path,synthetic=False):
  peak=500.;dd=0.
  for equity in equity_path:peak=max(peak,equity);dd=max(dd,(peak-equity)/peak)
  days=defaultdict(list)
- for t in trades:days[t['exit_at'][:10]].append(t['net_pnl'])
+ for t in trades:days[utc(t['exit_at']).date().isoformat()].append(t['net_pnl'])
  expectancy_ci=None
  if len(days)>=5:
   groups=list(days.values());rng=random.Random(1729);samples=[]

@@ -2,12 +2,17 @@
 import copy,json,hashlib,math
 from pathlib import Path
 from collections import Counter
-from .engine_v3 import Engine,Hypothesis,Policy,Ledger,utc
+from .engine_v4 import Engine,Hypothesis,Policy,Ledger,utc
 from .dataset import validate_manifest,load_partition,AdmissionError
 from .journal import digest
 from .metrics import summarize,assess
 
 ENGINE_SHA='b01fc9091c59e42eaddcc555c6433d14c3e775413fb9e0b40ad107568535c9e2'
+def fold_rows(events,window):
+ start,end=utc(window["start"]),utc(window["end"])
+ # Replay administrative announcements only; engine applies effective dates as-of.
+ return [r for r in events if (r["kind"]=="margin_update" and utc(r["available_at"])<start) or start<=utc(r["available_at"])<end]
+
 def code_identity():
  root=Path(__file__).parent
  return digest({p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(root.glob('*.py'))})
@@ -26,7 +31,7 @@ class ResearchEngine(Engine):
   return super()._quote(e,now,c)
 
 def validate_plan(plan,manifest,contracts):
- if plan.get('version')!='1.0.0' or plan.get('project')!='tradingbot':raise ValueError('wrong_pipeline_scope')
+ if plan.get('version')!='2.0.0' or plan.get('project')!='tradingbot':raise ValueError('wrong_pipeline_scope')
  if plan.get('code_identity')!=code_identity():raise ValueError('source_changed_since_registration')
  if plan.get('manifest_hash')!=digest(manifest) or plan.get('contracts_hash')!=digest(contracts):raise ValueError('registered_input_changed')
  if plan.get('final_holdout_access')!='locked':raise ValueError('final_holdout_locked')
@@ -56,7 +61,7 @@ def validate_plan(plan,manifest,contracts):
 
 def register(journal,experiment,plan,manifest,contracts):
  frozen=copy.deepcopy(plan)
- frozen.update(version='1.0.0',project='tradingbot',code_identity=code_identity(),manifest_hash=digest(manifest),contracts_hash=digest(contracts),final_holdout_access='locked')
+ frozen.update(version='2.0.0',project='tradingbot',code_identity=code_identity(),manifest_hash=digest(manifest),contracts_hash=digest(contracts),final_holdout_access='locked')
  # Registration intentionally records deficient data plans too; admission logs failures.
  journal.append(experiment,'registered',{'plan':frozen,'plan_hash':digest(frozen)})
  return frozen
@@ -87,10 +92,10 @@ def run(journal,experiment,plan,manifest,contracts,dataset_base,output_dir):
      out=engine.apply(event);equity.append(engine.state['equity'])
      if out['status']=='entry':last_entry=event['available_at']
      if out['status']=='exit':
-      fills.append(dict(entry_at=last_entry,exit_at=event['available_at'],net_pnl=out['net_pnl'],reason=out['reason'],quantity=1));last_entry=None
+      fills.append(dict(entry_at=last_entry,exit_at=event['available_at'],net_pnl=out['net_pnl'],reason=out['reason'],cost_evidence_valid=out['cost_evidence_valid'],quantity=1));last_entry=None
      if out['status']=='skip':skips[out['reason']]+=1
-    clean=not engine.state['positions'];m=summarize(fills,equity,report['synthetic'])
-    result=dict(trial_id=trial_id,**identity,status='completed_exploratory' if clean and fills else 'inconclusive',unresolved_positions=len(engine.state['positions']),metrics=m,skip_counts=dict(skips),trades=fills,assessment=assess(m,synthetic=report['synthetic'],clean=clean))
+    clean=not engine.state['positions'] and not engine.state['invalid_cost_fills'];m=summarize(fills,equity,report['synthetic'])
+    result=dict(trial_id=trial_id,**identity,status='completed_exploratory' if clean and fills else 'inconclusive',unresolved_positions=len(engine.state['positions']),invalid_cost_fills=engine.state['invalid_cost_fills'],metrics=m,skip_counts=dict(skips),trades=fills,assessment=assess(m,synthetic=report['synthetic'],clean=clean))
    except Exception as exc:result=dict(trial_id=trial_id,**identity,status='failed',error_class=type(exc).__name__)
    finally:
     if ledger:ledger.close()
@@ -106,10 +111,11 @@ def run(journal,experiment,plan,manifest,contracts,dataset_base,output_dir):
    winner=sorted(candidates,key=lambda t:(-t['metrics']['net_pnl'],t['metrics']['maximum_drawdown_fraction'],digest(t['hypothesis'])))[0]['hypothesis']
    journal.append(experiment,'selection_frozen',{'hypothesis':winner,'selection_data':'training_only'})
    report['selected_hypothesis']=winner
+   journal.consume_validation(experiment,manifest,contracts)
    validation,vq=load_partition(Path(dataset_base),manifest,'validation',contracts);report['validation_quality']=vq
    if {r['id'] for r in validation}&{r['id'] for r in training}:raise AdmissionError('cross_partition_duplicate_id')
    for i,window in enumerate(plan['validation_windows']):
-    rows=[r for r in validation if utc(window['start'])<=utc(r['available_at'])<utc(window['end'])]
+    rows=fold_rows(training+validation,window)
     for scenario in plan['scenarios']:trial(rows,winner,'validation',scenario,i)
    validation_results=[t for t in report['trials'] if t['phase']=='validation']
    report['status']='completed_research_not_qualified'

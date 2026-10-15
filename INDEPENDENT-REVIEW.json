@@ -1,0 +1,24 @@
+{
+  "candidate": "audit-v3",
+  "archive_sha256": "48633fc662ec260eaa86b687094d2c4378688073d3d031bdeaf845d0ee72bf61",
+  "manifest_sha256": "9a3a8ef4dd2b8099dc71cda6b421e1add1656c8c7ded2b4959c51a0f3ae7a6b0",
+  "hashed_candidate_files": 34,
+  "independent_probes_passed": 8,
+  "prior_engine_resume_rejected_without_mutation": true,
+  "baseline_files_preserved": 28,
+  "v2_files_preserved": 33,
+  "six_fix_scope": "PASS; no remaining blocking defect found",
+  "residual_limits": [
+    "One governed durable journal required",
+    "Complete administrative history required",
+    "Effective-dated fee updates unsupported",
+    "Synthetic verification only; no performance or execution qualification"
+  ],
+  "suite": {
+    "tests": 82,
+    "passed": 82,
+    "failed": 0,
+    "skipped": 0
+  },
+  "candidate_files_unchanged_after_tests": true
+}
