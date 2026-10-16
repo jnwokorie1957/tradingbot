@@ -1,0 +1,86 @@
+{
+  "candidate": "closing-walkforward-v3",
+  "baseline": "09a4ea5a07dc2bb5b4740ab30a7bb51035047d8d",
+  "scope": "Strict admission and fixed-hypothesis anchored chronological validation",
+  "independent_review": "PASS: 152 suite tests and 15 independent probes",
+  "published": true,
+  "release_held": false,
+  "broker_execution_enabled": false,
+  "loop_enabled": false,
+  "qualified_for_paper": false,
+  "profit_claim": false,
+  "synthetic_experiment": {
+    "status": "completed_research_not_qualified",
+    "synthetic": true,
+    "trials": 5,
+    "training_trials": 1,
+    "validation_trials": 4,
+    "failed_trials": 0,
+    "inconclusive_trials": 0,
+    "journal_counts": {
+      "records": 21,
+      "claims": 1,
+      "consumed_validation": 1,
+      "reserved_training": 1
+    },
+    "journal_chain_verified": true,
+    "qualified_for_paper": false,
+    "final_holdout": "untouched_locked"
+  },
+  "new_acceptance_tests": 40,
+  "full_suite": {
+    "tests": 152,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 120.125,
+    "passed": true,
+    "synthetic_only": true
+  },
+  "existing_strategy_and_generic_engines_unchanged": true,
+  "real_market_data_admitted": 0,
+  "real_market_backtests_completed": 0,
+  "limitations": [
+    "One governed journal; uninstrumented old training readers/direct file access and external exposure are outside enforceable protocol",
+    "Legacy exposure requires explicit reconciliation, never automatic clearing",
+    "Complete independent session/calendar/admin and causal quote evidence required",
+    "Verified constant fee coverage only; no effective-dated fee-update adapter",
+    "Synthetic verification only; no real-market performance or execution qualification",
+    "Separate validation cohorts are not compounded account returns"
+  ],
+  "reproduce": [
+    "python verify_walkforward.py",
+    "python -m trading_pipeline.closing_walkforward_demo --output local-results/new-synthetic-study"
+  ],
+  "new_acceptance_tests_passed": 40,
+  "protocol_version": "closing-walkforward-1.0.2",
+  "incremental_durable_provenance_tests": 2,
+  "prior_review": "V2 passed original probes but failed a two-connection provenance race",
+  "provenance_corrections": [
+    "Reject unreconciled legacy validation history before any training/admin evidence read",
+    "Reject exact consumed training hash independently of contract identity or interval; retain overlap checks"
+  ],
+  "production_delta": [
+    "trading_pipeline/journal.py: atomic durable exposures and cross-table guards",
+    "trading_pipeline/closing_walkforward.py: reserve before any dataset reads",
+    "trading_pipeline/runner.py: generic training reader uses same reservation"
+  ],
+  "incremental_atomic_exposure_tests": 12,
+  "existing_generic_runner_changed_for_protocol": true,
+  "sqlite_version": "3.53.2",
+  "atomic_exposure_protocol": {
+    "lock": "BEGIN IMMEDIATE",
+    "training_reservations": "durable and immutable; no timeout/reclaim",
+    "validation_consumers": "same transaction protocol plus database conflict triggers",
+    "unknown_legacy_exposure": "fail closed pending reconciliation",
+    "reader_coverage": "Both repository training runners; external direct file reads outside governance are not detectable"
+  },
+  "baseline_candidate_protocol_changes": [
+    "trading_pipeline/journal.py",
+    "trading_pipeline/runner.py"
+  ],
+  "baseline_snapshots_unchanged": true,
+  "manifest_scope_note": "WALKFORWARD-PUBLICATION-MANIFEST covers this publication. WALKFORWARD-REVIEWED-MANIFEST preserves the exact reviewed candidate; only public status documents and manifests differ.",
+  "software_publication_authorized": true,
+  "real_market_paper_profit": null
+}

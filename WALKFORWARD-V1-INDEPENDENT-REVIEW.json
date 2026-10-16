@@ -1,0 +1,70 @@
+{
+  "candidate": "closing-walkforward-v1",
+  "verdict": "BLOCK: two P2 training provenance defects",
+  "archive_sha256": "a30bf3c8eaa2ac098c8faa1b4152a12d38f6bca49b441a225ba799e937cee052",
+  "manifest_sha256": "5bc6074449b91ddb9553ed3ff4f0ddcdaac6abfcc4f7fcee88239edbc1defa8a",
+  "preregistration_sha256": "f011ba418aab1e5201a726df556d572d3b6efae93cd866440a19e479e2fda46d",
+  "candidate_hashed_files": 62,
+  "baseline_manifest_entries_preserved": 51,
+  "existing_production_code_changed": false,
+  "candidate_files_unchanged_after_tests": true,
+  "provided_suite": {
+    "passed": 138,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 76.962
+  },
+  "independent_probes": {
+    "passed": 8,
+    "failed": 2
+  },
+  "reproductions": [
+    {
+      "case": "legacy_exposure",
+      "status": "blocked_or_failed",
+      "reason": "legacy_validation_exposure_requires_registry_reconciliation",
+      "training_trials": 1,
+      "validation_trials": 0,
+      "qualified_for_paper": false
+    },
+    {
+      "case": "exact_hash_other_contract",
+      "status": "completed_research_not_qualified",
+      "reason": null,
+      "training_trials": 1,
+      "validation_trials": 4,
+      "qualified_for_paper": false
+    }
+  ],
+  "findings": [
+    {
+      "severity": "P2",
+      "file": "trading_pipeline/closing_walkforward.py",
+      "lines": "29-34, 59-63",
+      "issue": "Legacy trial_started validation entries lacking consumption records are not reconciled until after training and selection.",
+      "fix": "Fail closed on unreconciled legacy validation history before reading or evaluating training."
+    },
+    {
+      "severity": "P2",
+      "file": "trading_pipeline/closing_walkforward.py",
+      "lines": "31-32",
+      "issue": "Training guard ignores stored content_hash and only compares overlapping intervals with matching contract IDs. Exact consumed bytes can be reused as training under another declared contract ID.",
+      "fix": "Reject matching train sha256 independently of contract identity, as consume_validation already does; retain overlap detection."
+    }
+  ],
+  "limitations": [
+    "Synthetic software verification only; zero real datasets evaluated in this review",
+    "Calendar, availability, static cost and administrative provenance remain externally asserted",
+    "No effective-dated fee adapter",
+    "Claims and validation consumption local to one governed journal",
+    "Separate validation cohorts are not a compounded account",
+    "Final holdout remains locked; no qualification or execution approval"
+  ],
+  "actions": {
+    "network": false,
+    "broker": false,
+    "publication": false,
+    "protected_holdout_read": false,
+    "author_files_modified": false
+  }
+}

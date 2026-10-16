@@ -1,0 +1,65 @@
+{
+  "candidate": "closing-walkforward-v2",
+  "verdict": "BLOCK pending shared-journal provenance concurrency protection",
+  "archive_sha256": "35a28132975f3b8435bb101c702e5552c9cd4a9cdce8862ed06ac70c084c9e40",
+  "manifest_sha256": "c3404487af02fa8c2d0162b450985aced5a27462b60603a3dfd400ec84b5b4ce",
+  "hashed_files_verified": 66,
+  "baseline_files_verified": 51,
+  "candidate_unchanged_after_tests": true,
+  "original_v1_archive_unchanged": true,
+  "production_delta": [
+    "closing_walkforward.py"
+  ],
+  "protocol_version": "closing-walkforward-1.0.1",
+  "suite": {
+    "passed": 140,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 88.068
+  },
+  "original_independent_probes": {
+    "passed": 10,
+    "failed": 0
+  },
+  "expanded_independent_probes": {
+    "passed": 10,
+    "failed": 1,
+    "seconds": 9.518
+  },
+  "resolved_findings": [
+    "Legacy validation reconciliation now precedes admin and training reads",
+    "Exact consumed training hash blocked independently of contract ID or interval"
+  ],
+  "remaining_findings": [
+    {
+      "severity": "P2",
+      "file": "trading_pipeline/closing_walkforward.py",
+      "lines": "31-40",
+      "issue": "Training provenance scan is not synchronized with other experiments committing validation consumption in the same journal.",
+      "reproduction": "After the scan and before administrative/training reads, a second SQLite connection consumes the exact training file for peer-validation. The current experiment still runs one training and four validation trials.",
+      "observed": {
+        "status": "completed_research_not_qualified",
+        "reason": null,
+        "training_trials": 1,
+        "validation_trials": 4,
+        "peer_consumption": 1,
+        "journal_verified": true
+      },
+      "fix": "Use a shared atomic exposure reservation/serialization protocol covering all training readers and validation consumers. An unlocked repeated scan alone still races. Add a deterministic two-connection regression."
+    }
+  ],
+  "residual_limits": [
+    "No real-data admission or performance established by this synthetic review",
+    "External provenance and complete calendar/admin history required",
+    "Constant fee coverage only; no fee-update adapter",
+    "One governed journal required; external exposure not automatically detectable",
+    "Holdout locked and qualification/execution disabled"
+  ],
+  "actions": {
+    "author_files_modified": false,
+    "network": false,
+    "broker": false,
+    "publication": false,
+    "protected_holdout_read": false
+  }
+}

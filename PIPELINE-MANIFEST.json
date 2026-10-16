@@ -29,10 +29,10 @@
   "trading_pipeline/engine_v3.py": "b01fc9091c59e42eaddcc555c6433d14c3e775413fb9e0b40ad107568535c9e2",
   "trading_pipeline/engine_v4.py": "752e62f8a9863ed0fb1316ce56ed4483db0b476cb2ee5375ea895af5d488f4e5",
   "trading_pipeline/fixtures.py": "5f97a3c3f2c5339cc31b038faae4bf617a11a83314f12def58fc9ac9184a5d6e",
-  "trading_pipeline/journal.py": "9178feca04ae3dbedac969d2ceac236ecede9585bdc31db7bd1f7f84053e57f9",
+  "trading_pipeline/journal.py": "3d839e561c46db02ff34963e8b448014e165f067b1a2707480231e0bed444f41",
   "trading_pipeline/legacy_data_quality.py": "a36c965003e9182bc3315f819ed46221e092a1969fe38470230f9fc57a3ef407",
   "trading_pipeline/legacy_research.py": "1bf282f6209ab8a90528a25b27d72db9b5ee0750babefba8133c7de6852bf116",
   "trading_pipeline/metrics.py": "0faa5adf1bcb89bbf57d2d65d30d7f9d510de3a2811c834e5f3881223b26f1e5",
-  "trading_pipeline/runner.py": "cc36d3fa5e649867aabce9802cdaea5d2a533e2605d7bf7154b7b69cc5892702",
+  "trading_pipeline/runner.py": "6c442484869e09a013ee26befd410c2d2f58f6a8ce83dcbfac11da7a5c3eb4c4",
   "verify_audit.py": "4e07f53900d1ca443c93fb7b0e1568aeccbf6ba31b81bc2a5bdf626d56db7e30"
 }

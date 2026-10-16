@@ -76,6 +76,7 @@ def run(journal,experiment,plan,manifest,contracts,dataset_base,output_dir):
   validate_manifest(manifest,report['synthetic']);validate_plan(plan,manifest,contracts)
   if hashlib.sha256(Path(__file__).with_name('engine_v3.py').read_bytes()).hexdigest()!=ENGINE_SHA:raise ValueError('preserved_engine_changed')
   output.mkdir(parents=True,exist_ok=True)
+  journal.reserve_training(experiment,manifest,contracts)
   training,tq=load_partition(Path(dataset_base),manifest,'train',contracts);report['training_quality']=tq
   def trial(rows,h,phase,scenario,fold):
    identity={'hypothesis':h,'phase':phase,'scenario':scenario,'fold':fold};trial_id=digest(identity)[:20]

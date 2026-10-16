@@ -1,0 +1,60 @@
+{
+  "candidate": "closing-walkforward-v3",
+  "verdict": "PASS within reviewed offline research and shared-journal exposure protocol scope",
+  "publication_recommendation": "No remaining blocking defect found for publication of this exact offline candidate; this is not authorization to publish or activate trading.",
+  "protocol": "closing-walkforward-1.0.2",
+  "exposure_protocol": "atomic_exposure_v1",
+  "archive_sha256": "5c2ec0e71b139cb3808a0f8921479a2de6d43c9683fdab81337c829d99cd16ae",
+  "manifest_sha256": "5a261441ef9be942be8fe6b23b4fb66b5ef6de1480062d06e6f3bbf639a08254",
+  "hashed_candidate_files_verified": 70,
+  "candidate_unchanged_after_tests": true,
+  "baseline_manifest_entries": 51,
+  "intentional_changes_to_baseline": [
+    "trading_pipeline/journal.py",
+    "trading_pipeline/runner.py"
+  ],
+  "frozen_author_v2_archive_unchanged": true,
+  "production_delta_from_v2": [
+    "trading_pipeline/closing_walkforward.py",
+    "trading_pipeline/journal.py",
+    "trading_pipeline/runner.py"
+  ],
+  "strategy_execution_risk_code_unchanged": true,
+  "provided_suite": {
+    "passed": 152,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 109.514
+  },
+  "independent_suite": {
+    "passed": 15,
+    "failed": 0,
+    "seconds": 15.236
+  },
+  "critical_evidence": [
+    "Previous read-boundary race blocks peer consumption after durable training reservation",
+    "Actual legacy v2 Journal.consume_validation rejected by new database trigger",
+    "Generic validation cannot consume closing-reserved data",
+    "Different-encoding overlapping training/validation race has exactly one winner",
+    "Legacy training and validation exposure requires reconciliation before evidence reads",
+    "Exact consumed hash is rejected independently of contract identity",
+    "Claims survive failed admission/reopen and interruption",
+    "Holdout read guard passes; qualification and profit claims remain false"
+  ],
+  "blocking_findings": [],
+  "residual_limits": [
+    "One governed journal; uninstrumented old training readers/direct file access and external exposure are outside enforceable protocol",
+    "Legacy exposure requires explicit reconciliation, never automatic clearing",
+    "Complete independent session/calendar/admin and causal quote evidence required",
+    "Verified constant fee coverage only; no effective-dated fee-update adapter",
+    "Synthetic verification only; no real-market performance or execution qualification",
+    "Separate validation cohorts are not compounded account returns"
+  ],
+  "actions": {
+    "author_files_modified": false,
+    "network": false,
+    "broker": false,
+    "publication": false,
+    "protected_holdout_read": false
+  }
+}

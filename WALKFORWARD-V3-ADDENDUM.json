@@ -1,0 +1,21 @@
+{
+  "registered_at": "2026-10-16T01:09:38.607752+00:00",
+  "scope": "Atomic durable provenance reservations in shared journal, used by closing and generic training readers and validation consumers",
+  "protocol_version": "closing-walkforward-1.0.2",
+  "atomicity": "BEGIN IMMEDIATE serializes conflict check, reservation and receipt; reservations persist across failure/restart",
+  "acceptance": [
+    "Validation-first blocks training before data reads",
+    "Training-first blocks competing exact-hash or overlapping validation consumption",
+    "Both runners reserve before training reads",
+    "Two-connection deterministic interleaving and simultaneous contention have exactly one winner",
+    "Reservation survives reopen and interruption; failed read does not release exposure",
+    "Cross-table SQL guards also reject incompatible inserts from older validation consumer code",
+    "Existing nonconflicting behavior and snapshots retained"
+  ],
+  "excluded": [
+    "Automatic reservation expiry",
+    "Automatic reconciliation of unknown legacy exposure",
+    "Any broker/data-download/live activation",
+    "Publication before independent review"
+  ]
+}

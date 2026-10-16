@@ -24,6 +24,21 @@ class Journal:
    CREATE TRIGGER IF NOT EXISTS consumed_no_update BEFORE UPDATE ON consumed_validation BEGIN SELECT RAISE(ABORT,'immutable'); END;
    CREATE TRIGGER IF NOT EXISTS consumed_no_delete BEFORE DELETE ON consumed_validation BEGIN SELECT RAISE(ABORT,'immutable'); END;
   """)
+  self.db.executescript("""
+   CREATE TABLE IF NOT EXISTS reserved_training(experiment TEXT PRIMARY KEY,content_hash TEXT NOT NULL,start TEXT NOT NULL,end TEXT NOT NULL,contracts TEXT NOT NULL);
+   CREATE TRIGGER IF NOT EXISTS training_no_update BEFORE UPDATE ON reserved_training BEGIN SELECT RAISE(ABORT,'immutable training reservation'); END;
+   CREATE TRIGGER IF NOT EXISTS training_no_delete BEFORE DELETE ON reserved_training BEGIN SELECT RAISE(ABORT,'immutable training reservation'); END;
+   CREATE TRIGGER IF NOT EXISTS training_conflict_guard BEFORE INSERT ON reserved_training
+   WHEN EXISTS(SELECT 1 FROM consumed_validation v WHERE v.content_hash=NEW.content_hash OR
+    (julianday(NEW.start)<julianday(v.end) AND julianday(v.start)<julianday(NEW.end) AND
+     EXISTS(SELECT 1 FROM json_each(NEW.contracts) a JOIN json_each(v.contracts) b ON a.value=b.value)))
+   BEGIN SELECT RAISE(ABORT,'training_reuses_consumed_validation'); END;
+   CREATE TRIGGER IF NOT EXISTS validation_training_conflict_guard BEFORE INSERT ON consumed_validation
+   WHEN EXISTS(SELECT 1 FROM reserved_training t WHERE t.content_hash=NEW.content_hash OR
+    (julianday(NEW.start)<julianday(t.end) AND julianday(t.start)<julianday(NEW.end) AND
+     EXISTS(SELECT 1 FROM json_each(NEW.contracts) a JOIN json_each(t.contracts) b ON a.value=b.value)))
+   BEGIN SELECT RAISE(ABORT,'validation_reuses_reserved_training'); END;
+  """)
   self.verify()
  def append(self,experiment,kind,payload):
   with self.db:
@@ -39,20 +54,33 @@ class Journal:
    self.db.execute('BEGIN IMMEDIATE')
    self.db.execute('INSERT INTO claims VALUES(?,?)',(experiment,plan_hash))
    self._append(experiment,'started',{'plan_hash':plan_hash})
- def consume_validation(self,experiment,manifest,contracts):
-  spec=manifest['files']['validation'];start=utc(spec['start']);end=utc(spec['end'])
-  # Broker contract IDs are stable across file encodings, aliases and dataset names.
+ def _require_reconciled_exposure(self):
+  for exp,payload in self.db.execute("SELECT experiment,payload FROM records WHERE kind='trial_started'"):
+   phase=json.loads(payload).get('phase')
+   table={'training':'reserved_training','validation':'consumed_validation'}.get(phase)
+   if table and not self.db.execute('SELECT 1 FROM '+table+' WHERE experiment=?',(exp,)).fetchone():
+    raise ValueError('legacy_'+phase+'_exposure_requires_registry_reconciliation')
+ def _exposure(self,experiment,manifest,contracts,phase):
+  spec=manifest['files'][phase];start=utc(spec['start']);end=utc(spec['end'])
   ids=sorted({str(c['contract_id']) for c in contracts.values()})
+  if not start<end:raise ValueError('invalid_exposure_interval')
+  # All readers/consumers serialize on the same database write lock, then commit
+  # an immutable exposure record. Never release on failed admission or restart.
   with self.db:
    self.db.execute('BEGIN IMMEDIATE')
-   for exp,payload in self.db.execute("SELECT experiment,payload FROM records WHERE kind='trial_started'"):
-    if json.loads(payload).get('phase')=='validation' and not self.db.execute('SELECT 1 FROM consumed_validation WHERE experiment=?',(exp,)).fetchone():
-     raise ValueError('legacy_validation_exposure_requires_registry_reconciliation')
-   for exp,h,a,b,keys in self.db.execute('SELECT * FROM consumed_validation'):
-    if h==spec['sha256'] or (set(ids)&set(json.loads(keys)) and start<utc(b) and utc(a)<end):
-     raise ValueError('validation_consumed_or_overlapping')
-   self.db.execute('INSERT INTO consumed_validation VALUES(?,?,?,?,?)',(experiment,spec['sha256'],start.isoformat(),end.isoformat(),canonical(ids)))
-   self._append(experiment,'validation_consumed',dict(content_hash=spec['sha256'],start=start.isoformat(),end=end.isoformat(),contract_ids=ids,shared_comparisons='registered_scenarios_within_this_experiment_only'))
+   self._require_reconciled_exposure()
+   checks=[('consumed_validation','training_reuses_consumed_validation' if phase=='train' else 'validation_consumed_or_overlapping')]
+   if phase=='validation':checks.append(('reserved_training','validation_reuses_reserved_training'))
+   for table,reason in checks:
+    for exp,h,a,b,keys in self.db.execute('SELECT * FROM '+table):
+     if h==spec['sha256'] or (set(ids)&set(json.loads(keys)) and start<utc(b) and utc(a)<end):raise ValueError(reason)
+   table,kind=('reserved_training','training_reserved') if phase=='train' else ('consumed_validation','validation_consumed')
+   self.db.execute('INSERT INTO '+table+' VALUES(?,?,?,?,?)',(experiment,spec['sha256'],start.isoformat(),end.isoformat(),canonical(ids)))
+   self._append(experiment,kind,dict(content_hash=spec['sha256'],start=start.isoformat(),end=end.isoformat(),contract_ids=ids,protocol='atomic_exposure_v1',shared_comparisons='registered_scenarios_within_this_experiment_only'))
+ def reserve_training(self,experiment,manifest,contracts):
+  self._exposure(experiment,manifest,contracts,'train')
+ def consume_validation(self,experiment,manifest,contracts):
+  self._exposure(experiment,manifest,contracts,'validation')
  def verify(self):
   previous='0'*64
   for exp,kind,at,payload,prev,h in self.db.execute('SELECT experiment,kind,at,payload,previous,hash FROM records ORDER BY seq'):

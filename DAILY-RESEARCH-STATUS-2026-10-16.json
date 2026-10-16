@@ -1,0 +1,87 @@
+{
+  "date_utc": "2026-10-16",
+  "updated_at_utc": "2026-10-16T01:12:12.097838+00:00",
+  "projectatlas_main": "16fa1816fe349fe1b688358cc209c1438761ba57",
+  "current_candidate": "closing-walkforward-v3",
+  "publication_state": "reviewed_offline_software_published",
+  "tested_hypotheses_current_study": 1,
+  "completed_synthetic_experiments": 1,
+  "synthetic_trials": 5,
+  "real_market_backtests_completed": 0,
+  "qualified_strategies": 0,
+  "live_or_broker_orders": 0,
+  "win_rate": null,
+  "net_profit": null,
+  "profit_factor": null,
+  "performance_ranking": [],
+  "synthetic_study": {
+    "status": "completed_research_not_qualified",
+    "synthetic": true,
+    "trials": 5,
+    "training_trials": 1,
+    "validation_trials": 4,
+    "failed_trials": 0,
+    "inconclusive_trials": 0,
+    "journal_counts": {
+      "records": 21,
+      "claims": 1,
+      "consumed_validation": 1,
+      "reserved_training": 1
+    },
+    "journal_chain_verified": true,
+    "qualified_for_paper": false,
+    "final_holdout": "untouched_locked"
+  },
+  "tests": {
+    "tests": 152,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 120.125,
+    "passed": true,
+    "synthetic_only": true
+  },
+  "observed_failures_and_blockers": [
+    "Existing Gateway Startup Error unchanged; no restart attempted",
+    "No admitted real bid/ask dataset with verified availability, cost, margin and calendar evidence",
+    "Effective-dated fee changes unsupported"
+  ],
+  "next_hypotheses": [
+    "Admit a fresh independently verified causal dataset only after calendar, administrative, cost and margin evidence is complete",
+    "Evaluate the fixed preregistered closing strategy under unchanged risk limits; do not tune from reused validation"
+  ],
+  "continuing_loop_enabled": false,
+  "performance_claim": false,
+  "new_acceptance_tests_passed": 40,
+  "previous_independent_review": {
+    "candidate": "closing-walkforward-v2",
+    "suite_passed": 140,
+    "original_probes_passed": 10,
+    "expanded_probes_passed": 10,
+    "expanded_probes_failed": 1,
+    "verdict": "blocked",
+    "candidate_v3_fix_status": "Twelve atomic-exposure tests pass; repeat independent review pending"
+  },
+  "baseline_candidate_protocol_changes": [
+    "trading_pipeline/journal.py",
+    "trading_pipeline/runner.py"
+  ],
+  "baseline_snapshots_unchanged": true,
+  "manifest_scope_note": "Current public bundle is covered by WALKFORWARD-PUBLICATION-MANIFEST; original reviewed snapshot manifest is retained separately.",
+  "baseline_commit": "09a4ea5a07dc2bb5b4740ab30a7bb51035047d8d",
+  "independent_review": {
+    "suite_passed": 152,
+    "probes_passed": 15,
+    "blocking_findings": 0
+  },
+  "real_market_paper_profit": null,
+  "historical_review_defects": "Prior provenance defects and race fixed; v3 independent review passed. Historical review receipts retained.",
+  "limitations": [
+    "One governed journal; uninstrumented old training readers/direct file access and external exposure are outside enforceable protocol",
+    "Legacy exposure requires explicit reconciliation, never automatic clearing",
+    "Complete independent session/calendar/admin and causal quote evidence required",
+    "Verified constant fee coverage only; no effective-dated fee-update adapter",
+    "Synthetic verification only; no real-market performance or execution qualification",
+    "Separate validation cohorts are not compounded account returns"
+  ]
+}

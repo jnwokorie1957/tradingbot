@@ -1,0 +1,12 @@
+{
+  "registered_at": "2026-10-16T01:02:00.779083+00:00",
+  "scope": "Two pre-training provenance guards only; retain original strategy and risk specification",
+  "protocol_version": "closing-walkforward-1.0.1",
+  "acceptance": [
+    "Unreconciled legacy validation history blocks before any training or administrative data read",
+    "Exact consumed training content hash blocks irrespective of declared contract or interval",
+    "Durable journal close/reopen retains rejection, exclusive claim and absence of training trials",
+    "Existing overlap guard and baseline regressions continue passing"
+  ],
+  "publication": "held pending repeat independent review"
+}

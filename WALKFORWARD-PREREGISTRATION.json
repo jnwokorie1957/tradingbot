@@ -1,0 +1,47 @@
+{
+  "id": "closing-walkforward-integration-v1-20261016",
+  "registered_at": "2026-10-16T00:50:28.794650+00:00",
+  "baseline": "09a4ea5a07dc2bb5b4740ab30a7bb51035047d8d",
+  "scope": "Separate strict admission and anchored chronological validation for fixed closing adapter; existing engine/runner untouched",
+  "hypothesis": "closing_half_hour_continuation/1.0.0; completed-bar signal convention; no parameter search",
+  "risk": {
+    "budget": 500,
+    "trade_risk": 0.005,
+    "absolute_trade_cap": 2.5,
+    "portfolio_risk": 0.01,
+    "daily_pause": 0.02,
+    "drawdown_pause": 0.1
+  },
+  "training_gate": "One fixed hypothesis, completed nonempty trial, valid costs and positive net expectancy. Otherwise never open validation.",
+  "validation": "At least two ordered nonoverlapping full-session folds with one-hour embargo; independent 500 cohorts, baseline and stress; no selection from validation.",
+  "stress": {
+    "fee_factor": 1.5,
+    "slippage_ticks": 2
+  },
+  "admission": [
+    "Hash-bound separate train/validation files and per-phase verified calendars",
+    "Only completed 300-second trade bars and verified strictly progressing bid/ask quotes",
+    "Reject protected receipts, legacy observer source, uncertain timestamps or prior validation exposure",
+    "Contract evidence known before training, static costs verified unchanged through validation; missing effective coverage blocks",
+    "Separate hashed full administrative margin history with source/coverage evidence; replay only known announcements as-of each fold",
+    "Exclusive experiment claims and validation-consumption registry; no reset/reuse across new experiment IDs in same journal",
+    "Final holdout commitment remains locked; never open holdout file"
+  ],
+  "acceptance": [
+    "Existing 112 regression tests remain passing",
+    "Synthetic end-to-end training then two validation folds across both cost scenarios",
+    "Negative tests for admission/hash/calendar/cost/admin/causality/overlap/claim/reuse failures",
+    "Pre-window effective margin blocks entry; future-announced margin cannot leak backward",
+    "Training failure leaves validation unopened",
+    "All trials and failed admissions journaled; synthetic results never qualify",
+    "Public-safe daily status has actual counts and explicit unqualified/missing metrics"
+  ],
+  "excluded": [
+    "Broker calls",
+    "Gateway restarts",
+    "Real-data downloads",
+    "Live execution",
+    "Recurring loops",
+    "Code publication before independent review"
+  ]
+}
