@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "report_date_houston": "2026-10-20",
+  "report_timezone": "America/Chicago",
+  "created_at_utc": "2026-10-20T18:59:19.208481+00:00",
+  "artifact_state": "saved_locally_pending_independent_publication_review",
+  "scope": "Current saved-state reconciliation; no experiment or dependency probe executed",
+  "repository_evidence": {
+    "observed_at_utc": "2026-10-20T18:57:00Z",
+    "timestamp_precision": "minute",
+    "source": "Parent supplied fresh public GitHub read; not independently reread in this reconciliation",
+    "tradingbot_main": "6d7d7916d9fe67437b2fb15803c6e73b0aa016cc",
+    "projectatlas_main": "16fa1816fe349fe1b688358cc209c1438761ba57"
+  },
+  "current_local_checks": {
+    "observed_at_utc": "2026-10-20T18:59:19.208481+00:00",
+    "frozen_files_verified": 70,
+    "hash_mismatches": 0,
+    "ledger_counts": {
+      "records": 21,
+      "claims": 1,
+      "consumed_validation": 1,
+      "reserved_training": 1
+    },
+    "ledger_chain_verified": true,
+    "ledger_unchanged_after_read": true
+  },
+  "historical_study": {
+    "completed_at_utc": "2026-10-16T01:12:41.512772+00:00",
+    "strategy": "closing_half_hour_continuation/1.0.0",
+    "fixed_hypotheses": 1,
+    "synthetic": true,
+    "trials": 5,
+    "status": "completed_research_not_qualified",
+    "qualified_for_paper": false,
+    "final_holdout": "untouched_locked",
+    "new_trials_this_review": 0
+  },
+  "historical_software_validation": {
+    "evidence_date_utc": "2026-10-16",
+    "suite_passed": 152,
+    "independent_probes_passed": 15,
+    "tests_rerun_this_review": false,
+    "qualification_scope": "Offline software verification only"
+  },
+  "real_market_data_admitted": 0,
+  "qualified_real_market_strategies": 0,
+  "real_market_paper_profit": null,
+  "win_rate": null,
+  "performance_ranking": [],
+  "runtime": {
+    "checked_this_review": false,
+    "last_observed_at_utc": "2026-10-20T00:44:29.7865938Z",
+    "last_observation": "No Gateway, Java or Python process visible",
+    "current_state": "unverified",
+    "cause_of_absence": "unknown",
+    "pause_or_recovery_inferred": false,
+    "restart_attempted": false
+  },
+  "risk": {
+    "simulated_initial_equity_usd": 500,
+    "planned_all_in_trade_risk_cap": "min(USD 2.50, 0.5% current equity, lower configured cap)",
+    "portfolio_risk_fraction": 0.01,
+    "daily_pause_fraction": 0.02,
+    "drawdown_pause_fraction": 0.1,
+    "whole_contracts_only": true,
+    "live_execution_locked": true,
+    "ibkr_read_only": true
+  },
+  "blockers": [
+    "No admitted independently verified causal bid/ask dataset with eligibility, cost, margin and calendar coverage",
+    "Effective-dated fee changes unsupported; verified constant-fee coverage required"
+  ],
+  "artifact_reconciliation": {
+    "previous_local_daily_report": "daily-research-status-2026-10-16.json",
+    "prior_reports_preserved": true,
+    "historical_missing_days_backfilled": false,
+    "weekly_artifact_created": false,
+    "weekly_due_state": "No verified weekly deadline in available task context; not inferred from date alone"
+  },
+  "actions": {
+    "orders_sent": 0,
+    "holdout_opened": false,
+    "gateway_probed": false,
+    "code_changed": false,
+    "remote_publication": false,
+    "notifications_sent": false
+  }
+}
