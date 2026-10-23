@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "report_date_houston": "2026-10-23",
+  "report_timezone": "America/Chicago",
+  "created_at_utc": "2026-10-23T06:49:29.556008+00:00",
+  "artifact_state": "candidate_pending_independent_review_not_published",
+  "scope": "Fresh saved-state integrity verification only; no runtime acceptance or experiment execution",
+  "repository_evidence": {
+    "source": "Fresh connected GitHub ref reads during this reconciliation",
+    "tradingbot_main": "32680407b49d5f772c983fa48e2e44d7cae15544",
+    "projectatlas_main": "16fa1816fe349fe1b688358cc209c1438761ba57"
+  },
+  "current_local_checks": {
+    "observed_at_utc": "2026-10-23T06:49:29.556008+00:00",
+    "frozen_files_verified": 70,
+    "hash_mismatches": 0,
+    "ledger_counts": {
+      "records": 21,
+      "claims": 1,
+      "consumed_validation": 1,
+      "reserved_training": 1
+    },
+    "ledger_chain_verified": true,
+    "ledger_unchanged_after_read": true,
+    "method": "SHA-256 file comparison against frozen manifest; read-only SQLite record-chain recomputation and before/after database SHA-256 comparison",
+    "workspace_state": "Frozen snapshot matches manifest; workspace is not a Git checkout"
+  },
+  "historical_study": {
+    "completed_at_utc": "2026-10-16T01:12:41.512772+00:00",
+    "strategy": "closing_half_hour_continuation/1.0.0",
+    "fixed_hypotheses": 1,
+    "synthetic": true,
+    "trials": 5,
+    "status": "completed_research_not_qualified",
+    "qualified_for_paper": false,
+    "final_holdout": "untouched_locked",
+    "new_trials_this_review": 0,
+    "trial_outcomes": {
+      "training_trials": 1,
+      "validation_trials": 4,
+      "failed_trials": 0,
+      "inconclusive_trials": 0
+    },
+    "interpretation": "The synthetic run exercised training and four validation/cost-scenario paths without failed or inconclusive trials; this is software-fixture evidence only, not real-market profitability or qualification."
+  },
+  "historical_software_validation": {
+    "evidence_date_utc": "2026-10-16",
+    "suite_passed": 152,
+    "independent_probes_passed": 15,
+    "tests_rerun_this_review": false,
+    "scope": "Offline software verification; not real-market runtime acceptance"
+  },
+  "real_market_data_admitted": 0,
+  "qualified_real_market_strategies": 0,
+  "real_market_paper_profit": null,
+  "win_rate": null,
+  "performance_ranking": [],
+  "runtime": {
+    "checked_this_review": false,
+    "current_state": "unverified",
+    "runtime_acceptance_executed_this_review": false,
+    "reconnection_proves_runtime_recovery": false,
+    "pause_or_recovery_inferred": false
+  },
+  "risk": {
+    "simulated_initial_equity_usd": 500,
+    "planned_all_in_trade_risk_cap": "min(0.5% current equity, USD 2.50, any lower configured cap)",
+    "portfolio_risk_fraction": 0.01,
+    "daily_pause_fraction": 0.02,
+    "drawdown_pause_fraction": 0.1,
+    "whole_contracts_only": true,
+    "live_execution_locked": true,
+    "ibkr_read_only": true
+  },
+  "blockers": [
+    "No admitted independently verified causal quotes with eligibility, costs, margins and calendar coverage",
+    "Effective-dated fee changes unsupported; verified constant-fee coverage required"
+  ],
+  "artifact_reconciliation": {
+    "previous_daily_report": "daily-research-status-2026-10-22.json",
+    "prior_reports_preserved": true,
+    "weekly_artifact_created": false,
+    "weekly_due_state": "No verified weekly deadline established; no deadline inferred",
+    "existing_october_23_report_found": false
+  },
+  "actions": {
+    "orders_sent": 0,
+    "holdout_opened": false,
+    "runtime_probed": false,
+    "dependency_probed": false,
+    "new_data_acquired": false,
+    "code_changed": false,
+    "remote_publication": false,
+    "notifications_sent": false
+  },
+  "next_step": {
+    "hypothesis": "closing_half_hour_continuation/1.0.0",
+    "new_hypothesis_registered": false,
+    "action": "Retain the fixed preregistered hypothesis. Admit independently verified causal quotes and administrative evidence before any real-market evaluation; do not retune from consumed validation."
+  }
+}
