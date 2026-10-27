@@ -1,0 +1,63 @@
+{
+  "created_at_utc": "2026-10-27T15:57:53.222192+00:00",
+  "base_commit": "573ecbb350e49f31b0b8d359306e406cdb4f1332",
+  "scope": "additive research governance; no broker activation",
+  "independent_review": false,
+  "publication_state": "prepared_snapshot_before_publication",
+  "source_cycle_completed_at": "2026-10-27T15:52:24.256112+00:00",
+  "source_cycle_entries": 11,
+  "market_experiments_this_cycle": 0,
+  "qualified_real_strategies": 0,
+  "champion": null,
+  "live_execution_enabled": false,
+  "broker_orders_enabled": false,
+  "simulation_running": false,
+  "synthetic_prior_attempt": {
+    "started_trials": 5,
+    "finished_trial_records": 4,
+    "complete": false,
+    "retried": false
+  },
+  "scheduler": {
+    "existing_id": "6ad15669fdb08191ae4526c00081e97b",
+    "configured": true,
+    "enabled": true,
+    "cadence": "every two hours",
+    "prompt_updated_at_utc": "2026-10-27T15:45:58.281229+00:00",
+    "next_run_time_reported": null,
+    "continuous_worker_verified": false
+  },
+  "gateway": {
+    "tcp_only_check_at_utc": "2026-10-27T15:30:02.9156830Z",
+    "port_reachable": true,
+    "api_handshake_verified": false,
+    "review_gate_open": false
+  },
+  "validation_history": [
+    {
+      "attempt": "focused initial",
+      "passed": false,
+      "reason": "temporary folder access; moved tests to workspace without permission changes"
+    },
+    {
+      "attempt": "focused revised",
+      "tests": 17,
+      "passed": true
+    },
+    {
+      "attempt": "first broad",
+      "tests": 119,
+      "errors": 5,
+      "passed": false,
+      "reason": "staging omitted existing root compatibility modules; restored unchanged"
+    }
+  ],
+  "remaining": [
+    "Independent exact-source activation review",
+    "Admitted causal market dataset and dated cost/margin/eligibility evidence",
+    "Automatic trade-result ingestion and full daily-return Sharpe",
+    "Additional deterministic strategy implementations and validated challenger comparisons",
+    "End-to-end persistent simulation worker acceptance"
+  ],
+  "existing_python_files_verified_unchanged": 36
+}

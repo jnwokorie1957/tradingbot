@@ -1,0 +1,12 @@
+{
+  "kind": "weekly",
+  "created_at": "2026-10-27T15:52:24.256112+00:00",
+  "period_start": "2026-10-19",
+  "period_end": "2026-10-25",
+  "timezone": "America/Chicago",
+  "observed_cycles": 0,
+  "last_observed_snapshot": null,
+  "evidence_gap": true,
+  "note": "No cycles means no evidence for this period, not zero trading activity. Older reports remain separate historical evidence.",
+  "broker_execution_enabled": false
+}

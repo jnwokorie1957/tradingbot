@@ -1,0 +1,195 @@
+{
+  "observed_at": "2026-10-27T15:52:24.256112+00:00",
+  "new_strategies": [
+    {
+      "strategy": "existing-card-1",
+      "version": "1.0.0",
+      "spec": {
+        "title": "Directional five-minute opening-range breakout",
+        "source": "[Zarattini, Barbon and Aziz, SSRN 4729284](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4729284), [university-hosted full paper, sections 2\u20134](https://www.alexandria.unisg.ch/server/api/core/bitstreams/3c2989c4-688d-4d78-8a71-f02690990d51/content). Research used over 7,000 stocks in 2016\u20132023, not a $500 futures account. Stock-portfolio findings are not evidence for this adaptation.",
+        "entry": "At 09:35 New York freeze OHLC of [09:30,09:35). If C>O, arm one buy-stop at H+one tick; if C<O, one sell-stop at L\u2212one tick; doji means no trade. Use the first qualifying executable crossing after arming, with gap/slippage handling. Cancel pending entry at 15:55. One fill per day. Initial fixed stop distance is ceil-to-tick(0.10\u00d7ATR-SMA(14) from the previous fourteen complete regular sessions). No target; exit at 16:00 or stop.",
+        "exit": "At 09:35 New York freeze OHLC of [09:30,09:35). If C>O, arm one buy-stop at H+one tick; if C<O, one sell-stop at L\u2212one tick; doji means no trade. Use the first qualifying executable crossing after arming, with gap/slippage handling. Cancel pending entry at 15:55. One fill per day. Initial fixed stop distance is ceil-to-tick(0.10\u00d7ATR-SMA(14) from the previous fourteen complete regular sessions). No target; exit at 16:00 or stop.",
+        "stop": "At 09:35 New York freeze OHLC of [09:30,09:35). If C>O, arm one buy-stop at H+one tick; if C<O, one sell-stop at L\u2212one tick; doji means no trade. Use the first qualifying executable crossing after arming, with gap/slippage handling. Cancel pending entry at 15:55. One fill per day. Initial fixed stop distance is ceil-to-tick(0.10\u00d7ATR-SMA(14) from the previous fourteen complete regular sessions). No target; exit at 16:00 or stop.",
+        "target": "At 09:35 New York freeze OHLC of [09:30,09:35). If C>O, arm one buy-stop at H+one tick; if C<O, one sell-stop at L\u2212one tick; doji means no trade. Use the first qualifying executable crossing after arming, with gap/slippage handling. Cancel pending entry at 15:55. One fill per day. Initial fixed stop distance is ceil-to-tick(0.10\u00d7ATR-SMA(14) from the previous fourteen complete regular sessions). No target; exit at 16:00 or stop.",
+        "regime": "Initial directional imbalance persists. Fails on opening reversals, quiet chop and cost-dominated tiny budgets. Never include today's daily range in ATR. Tick buffer, cutoff, futures transfer and account sizing are our additions; the paper's stock selection is absent.",
+        "evidence": "Existing October 15 specification; no new market test",
+        "track": "Tradingbot"
+      }
+    },
+    {
+      "strategy": "existing-card-2",
+      "version": "1.0.0",
+      "spec": {
+        "title": "Closing-half-hour continuation",
+        "source": "[Baltussen, Da, Lammers and Martens, JFE 2021, sections 2 and 3.4](https://academicweb.nd.edu/~zda/intramom.pdf). Their cross-asset futures evidence spans 1974\u20132020. The added ATR stop and this small-account execution are not the paper's strategy; no source portfolio Sharpe is inherited.",
+        "entry": "At 15:30 New York, r=last trade price available at 15:30 / previous regular-session 16:00 close\u22121. Long if r>0, short if r<0, zero skip. Enter after the decision. Fixed stop distance=ATR-SMA(20) of the last twenty completed five-minute bars, rounded upward to a tick. Exit 16:00 or stop; no target or re-entry.",
+        "exit": "At 15:30 New York, r=last trade price available at 15:30 / previous regular-session 16:00 close\u22121. Long if r>0, short if r<0, zero skip. Enter after the decision. Fixed stop distance=ATR-SMA(20) of the last twenty completed five-minute bars, rounded upward to a tick. Exit 16:00 or stop; no target or re-entry.",
+        "stop": "At 15:30 New York, r=last trade price available at 15:30 / previous regular-session 16:00 close\u22121. Long if r>0, short if r<0, zero skip. Enter after the decision. Fixed stop distance=ATR-SMA(20) of the last twenty completed five-minute bars, rounded upward to a tick. Exit 16:00 or stop; no target or re-entry.",
+        "target": "At 15:30 New York, r=last trade price available at 15:30 / previous regular-session 16:00 close\u22121. Long if r>0, short if r<0, zero skip. Enter after the decision. Fixed stop distance=ATR-SMA(20) of the last twenty completed five-minute bars, rounded upward to a tick. Exit 16:00 or stop; no target or re-entry.",
+        "regime": "Late hedging/rebalancing continues the day's move. Closing reversals and positive-gamma environments can defeat it. Do not use later futures settlement as the 16:00 cash close; do not fill at a price used to finish the signal.",
+        "evidence": "Existing October 15 specification; no new market test",
+        "track": "Tradingbot"
+      }
+    },
+    {
+      "strategy": "existing-card-3",
+      "version": "1.0.0",
+      "spec": {
+        "title": "Noise-band momentum with VWAP protection",
+        "source": "[Zarattini, Aziz and Barbon, Beat the Market, September 2025 revision](https://concretumgroup.com/wp-content/uploads/2026/02/Beat-the-Market.pdf). SPY research uses 2007\u2013early-2024 data and stock commission assumptions, not micro-futures costs.",
+        "entry": "At each 10:00,10:30,\u2026,15:30 New York, m(t)=mean(abs(P_d(t)/O_d\u22121)) over fourteen prior valid regular sessions. U=max(today 09:30 open, previous 16:00 close)\u00d7(1+m); L=min(open,previous close)\u00d7(1\u2212m). Compute current regular-session VWAP from one-minute typical-price\u00d7actual-volume bars, anchored at 09:30. While flat, long if P>max(U,VWAP); short if P<min(L,VWAP). Enter next quote. Initial stop is max(U,VWAP) for long or min(L,VWAP) for short, rounded away from entry. At later checkpoints ratchet the stop only favorably; if already breached, exit immediately. Protective stops remain active intrabar. No target; flatten 16:00. After exit, wait until a later checkpoint before another entry; no instantaneous reversal.",
+        "exit": "At each 10:00,10:30,\u2026,15:30 New York, m(t)=mean(abs(P_d(t)/O_d\u22121)) over fourteen prior valid regular sessions. U=max(today 09:30 open, previous 16:00 close)\u00d7(1+m); L=min(open,previous close)\u00d7(1\u2212m). Compute current regular-session VWAP from one-minute typical-price\u00d7actual-volume bars, anchored at 09:30. While flat, long if P>max(U,VWAP); short if P<min(L,VWAP). Enter next quote. Initial stop is max(U,VWAP) for long or min(L,VWAP) for short, rounded away from entry. At later checkpoints ratchet the stop only favorably; if already breached, exit immediately. Protective stops remain active intrabar. No target; flatten 16:00. After exit, wait until a later checkpoint before another entry; no instantaneous reversal.",
+        "stop": "At each 10:00,10:30,\u2026,15:30 New York, m(t)=mean(abs(P_d(t)/O_d\u22121)) over fourteen prior valid regular sessions. U=max(today 09:30 open, previous 16:00 close)\u00d7(1+m); L=min(open,previous close)\u00d7(1\u2212m). Compute current regular-session VWAP from one-minute typical-price\u00d7actual-volume bars, anchored at 09:30. While flat, long if P>max(U,VWAP); short if P<min(L,VWAP). Enter next quote. Initial stop is max(U,VWAP) for long or min(L,VWAP) for short, rounded away from entry. At later checkpoints ratchet the stop only favorably; if already breached, exit immediately. Protective stops remain active intrabar. No target; flatten 16:00. After exit, wait until a later checkpoint before another entry; no instantaneous reversal.",
+        "target": "At each 10:00,10:30,\u2026,15:30 New York, m(t)=mean(abs(P_d(t)/O_d\u22121)) over fourteen prior valid regular sessions. U=max(today 09:30 open, previous 16:00 close)\u00d7(1+m); L=min(open,previous close)\u00d7(1\u2212m). Compute current regular-session VWAP from one-minute typical-price\u00d7actual-volume bars, anchored at 09:30. While flat, long if P>max(U,VWAP); short if P<min(L,VWAP). Enter next quote. Initial stop is max(U,VWAP) for long or min(L,VWAP) for short, rounded away from entry. At later checkpoints ratchet the stop only favorably; if already breached, exit immediately. Protective stops remain active intrabar. No target; flatten 16:00. After exit, wait until a later checkpoint before another entry; no instantaneous reversal.",
+        "regime": "Abnormal movement beyond historical same-clock noise persists; whipsaws, jumps and stale volatility estimates are failure modes. Intrabar protection, monotonic ratcheting, bar-VWAP convention and futures transfer are explicit deviations from the published semi-hourly strategy.",
+        "evidence": "Existing October 15 specification; no new market test",
+        "track": "Tradingbot"
+      }
+    },
+    {
+      "strategy": "existing-card-4",
+      "version": "1.0.0",
+      "spec": {
+        "title": "Twelve-month price-trend benchmark",
+        "source": "[Moskowitz, Ooi and Pedersen, AQR research](https://www.aqr.com/Insights/Research/Journal-Article/Time-Series-Momentum), [original factor-data description](https://www.aqr.com/Insights/Datasets/Time-Series-Momentum-Original-Paper-Data). Original benchmark uses twelve-month signals/one-month holdings across 58 instruments, 1985\u20132009; factor returns cannot substitute for executable pair-level data.",
+        "entry": "Build daily midpoint OHLC on 17:00-to-17:00 New York sessions. After the final trading day's 17:00 close of month m, S=log(C_m/C_(m\u221212)), requiring thirteen month-end prices. At 08:00 London on the next available weekday, long for S>0, short for S<0, zero skip. Fixed stop distance=2\u00d7ATR-SMA(20) of completed daily midpoint bars, measured from the entry midpoint. Long stop uses bid crossing below; short uses ask crossing above. Hold until stop or the next month's scheduled 08:00 rebalance. No target and no re-entry after a stop within that month. A same-direction monthly renewal still closes/reopens and pays both sets of costs in this deliberately simple implementation.",
+        "exit": "Build daily midpoint OHLC on 17:00-to-17:00 New York sessions. After the final trading day's 17:00 close of month m, S=log(C_m/C_(m\u221212)), requiring thirteen month-end prices. At 08:00 London on the next available weekday, long for S>0, short for S<0, zero skip. Fixed stop distance=2\u00d7ATR-SMA(20) of completed daily midpoint bars, measured from the entry midpoint. Long stop uses bid crossing below; short uses ask crossing above. Hold until stop or the next month's scheduled 08:00 rebalance. No target and no re-entry after a stop within that month. A same-direction monthly renewal still closes/reopens and pays both sets of costs in this deliberately simple implementation.",
+        "stop": "Build daily midpoint OHLC on 17:00-to-17:00 New York sessions. After the final trading day's 17:00 close of month m, S=log(C_m/C_(m\u221212)), requiring thirteen month-end prices. At 08:00 London on the next available weekday, long for S>0, short for S<0, zero skip. Fixed stop distance=2\u00d7ATR-SMA(20) of completed daily midpoint bars, measured from the entry midpoint. Long stop uses bid crossing below; short uses ask crossing above. Hold until stop or the next month's scheduled 08:00 rebalance. No target and no re-entry after a stop within that month. A same-direction monthly renewal still closes/reopens and pays both sets of costs in this deliberately simple implementation.",
+        "target": "Build daily midpoint OHLC on 17:00-to-17:00 New York sessions. After the final trading day's 17:00 close of month m, S=log(C_m/C_(m\u221212)), requiring thirteen month-end prices. At 08:00 London on the next available weekday, long for S>0, short for S<0, zero skip. Fixed stop distance=2\u00d7ATR-SMA(20) of completed daily midpoint bars, measured from the entry midpoint. Long stop uses bid crossing below; short uses ask crossing above. Hold until stop or the next month's scheduled 08:00 rebalance. No target and no re-entry after a stop within that month. A same-direction monthly renewal still closes/reopens and pays both sets of costs in this deliberately simple implementation.",
+        "regime": "Slow information diffusion produces persistent trends; sideways markets, sharp reversals and financing can dominate. Spot price returns, the stop, execution time, fixed-risk sizing and two-pair universe differ from original excess-return, volatility-scaled multi-asset portfolios.",
+        "evidence": "Existing October 15 specification; no new market test",
+        "track": "Tradingbot"
+      }
+    },
+    {
+      "strategy": "existing-card-5",
+      "version": "1.0.0",
+      "spec": {
+        "title": "Session VWAP excursion and reclaim",
+        "source": "[TradingView official VWAP definition](https://www.tradingview.com/support/solutions/43000502018-volume-weighted-average-price-vwap/). It establishes the indicator, not this entry/stop/target strategy or profitability. The two-SD reclaim rules and all parameters are ours.",
+        "entry": "Five-minute bars; reset at 09:30 New York. For session bars p=(H+L+C)/3, W=sum(volume), \u03bc=sum(volume\u00d7p)/W, \u03c3=sqrt(sum(volume\u00d7(p\u2212\u03bc)^2)/W). Require six completed session bars and W,\u03c3>0. Long when previous close was below its then-current \u03bc\u22122\u03c3 and current \u03bc\u22122\u03c3\u2264C<\u03bc. Short symmetrically when previous close was above \u03bc+2\u03c3 and current \u03bc<C\u2264\u03bc+2\u03c3. Enter next quote. Long stop=min(previous low,current low)\u2212one tick; short stop=max(highs)+one tick. Freeze target at current \u03bc. Exit stop, target, twelve full holding bars or 15:55, earliest wins.",
+        "exit": "Five-minute bars; reset at 09:30 New York. For session bars p=(H+L+C)/3, W=sum(volume), \u03bc=sum(volume\u00d7p)/W, \u03c3=sqrt(sum(volume\u00d7(p\u2212\u03bc)^2)/W). Require six completed session bars and W,\u03c3>0. Long when previous close was below its then-current \u03bc\u22122\u03c3 and current \u03bc\u22122\u03c3\u2264C<\u03bc. Short symmetrically when previous close was above \u03bc+2\u03c3 and current \u03bc<C\u2264\u03bc+2\u03c3. Enter next quote. Long stop=min(previous low,current low)\u2212one tick; short stop=max(highs)+one tick. Freeze target at current \u03bc. Exit stop, target, twelve full holding bars or 15:55, earliest wins.",
+        "stop": "Five-minute bars; reset at 09:30 New York. For session bars p=(H+L+C)/3, W=sum(volume), \u03bc=sum(volume\u00d7p)/W, \u03c3=sqrt(sum(volume\u00d7(p\u2212\u03bc)^2)/W). Require six completed session bars and W,\u03c3>0. Long when previous close was below its then-current \u03bc\u22122\u03c3 and current \u03bc\u22122\u03c3\u2264C<\u03bc. Short symmetrically when previous close was above \u03bc+2\u03c3 and current \u03bc<C\u2264\u03bc+2\u03c3. Enter next quote. Long stop=min(previous low,current low)\u2212one tick; short stop=max(highs)+one tick. Freeze target at current \u03bc. Exit stop, target, twelve full holding bars or 15:55, earliest wins.",
+        "target": "Five-minute bars; reset at 09:30 New York. For session bars p=(H+L+C)/3, W=sum(volume), \u03bc=sum(volume\u00d7p)/W, \u03c3=sqrt(sum(volume\u00d7(p\u2212\u03bc)^2)/W). Require six completed session bars and W,\u03c3>0. Long when previous close was below its then-current \u03bc\u22122\u03c3 and current \u03bc\u22122\u03c3\u2264C<\u03bc. Short symmetrically when previous close was above \u03bc+2\u03c3 and current \u03bc<C\u2264\u03bc+2\u03c3. Enter next quote. Long stop=min(previous low,current low)\u2212one tick; short stop=max(highs)+one tick. Freeze target at current \u03bc. Exit stop, target, twelve full holding bars or 15:55, earliest wins.",
+        "regime": "A failed extreme excursion returns toward the session mean. Persistent trend/news days and stale means are the main failures.",
+        "evidence": "Existing October 15 specification; no new market test",
+        "track": "Tradingbot"
+      }
+    },
+    {
+      "strategy": "existing-card-6",
+      "version": "1.0.0",
+      "spec": {
+        "title": "Volatility compression-to-expansion breakout",
+        "source": "[John Bollinger author documentation, pp.2\u20133](https://www.bollingerbands.com/_files/ugd/58be43_d09c50b6e8ea4afd9af0523ef94de876.pdf), [author's rules](https://www.bollingerbands.com/bollinger-band-rules). His described Method IV includes ADX; omitting it, intraday rescaling, arm lifetime, ATR stop and target are our choices. No source profitability is claimed.",
+        "entry": "Fifteen-minute bars. M=SMA20(close), s=population SD of those closes, U=M+2s, L=M\u22122s, B=(U\u2212L)/M. After 125 valid B values, while flat/unarmed in the entry window, arm when B\u2264minimum(previous 124 B). The arm expires after eight subsequent bars and cannot refresh. Enter long after two consecutive post-arm closes above their respective U, short after two below L; consume the arm on that signal. Second close must occur by arm+8. Fixed stop distance=ATR-Wilder(14) through signal bar; target=2\u00d7that distance from actual entry. Exit stop, target, sixteen full holding bars or session flatten. No immediate re-arm until the next bar after exit.",
+        "exit": "Fifteen-minute bars. M=SMA20(close), s=population SD of those closes, U=M+2s, L=M\u22122s, B=(U\u2212L)/M. After 125 valid B values, while flat/unarmed in the entry window, arm when B\u2264minimum(previous 124 B). The arm expires after eight subsequent bars and cannot refresh. Enter long after two consecutive post-arm closes above their respective U, short after two below L; consume the arm on that signal. Second close must occur by arm+8. Fixed stop distance=ATR-Wilder(14) through signal bar; target=2\u00d7that distance from actual entry. Exit stop, target, sixteen full holding bars or session flatten. No immediate re-arm until the next bar after exit.",
+        "stop": "Fifteen-minute bars. M=SMA20(close), s=population SD of those closes, U=M+2s, L=M\u22122s, B=(U\u2212L)/M. After 125 valid B values, while flat/unarmed in the entry window, arm when B\u2264minimum(previous 124 B). The arm expires after eight subsequent bars and cannot refresh. Enter long after two consecutive post-arm closes above their respective U, short after two below L; consume the arm on that signal. Second close must occur by arm+8. Fixed stop distance=ATR-Wilder(14) through signal bar; target=2\u00d7that distance from actual entry. Exit stop, target, sixteen full holding bars or session flatten. No immediate re-arm until the next bar after exit.",
+        "target": "Fifteen-minute bars. M=SMA20(close), s=population SD of those closes, U=M+2s, L=M\u22122s, B=(U\u2212L)/M. After 125 valid B values, while flat/unarmed in the entry window, arm when B\u2264minimum(previous 124 B). The arm expires after eight subsequent bars and cannot refresh. Enter long after two consecutive post-arm closes above their respective U, short after two below L; consume the arm on that signal. Second close must occur by arm+8. Fixed stop distance=ATR-Wilder(14) through signal bar; target=2\u00d7that distance from actual entry. Exit stop, target, sixteen full holding bars or session flatten. No immediate re-arm until the next bar after exit.",
+        "regime": "See versioned TEN_CANDIDATES.md; not independently reverified this cycle",
+        "evidence": "Existing October 15 specification; no new market test",
+        "track": "Tradingbot"
+      }
+    },
+    {
+      "strategy": "existing-card-7",
+      "version": "1.0.0",
+      "spec": {
+        "title": "RSI-2 pullback reversal",
+        "source": "[Larry Connors's R2 article](https://tradingmarkets.com/recent/the_improved_r2_strategy_84_correct_with_just_6_rules_-674361), [official RSI formula](https://www.tradingview.com/support/solutions/43000502338-relative-strength-index-rsi/). The author example is daily and long-only; headline historical correctness is not evidence for this implementation.",
+        "entry": "Five-minute bars; require 200 completed closes. RSI2 uses Wilder average gains/losses with coefficient 1/2, seeded by the first two changes. RSI=100\u2212100/(1+gain/loss); define loss=0,gain>0 as 100; gain=0,loss>0 as 0; both zero as 50. Long if C>SMA200, RSI_(t\u22122)<65, and RSI_(t\u22122)>RSI_(t\u22121)>RSI_t. Short if C<SMA200, RSI_(t\u22122)>35, and RSI_(t\u22122)<RSI_(t\u22121)<RSI_t. Enter after signal. Fixed stop distance=ATR-Wilder(14). Long exit after a completed RSI>75, short after RSI<25; execute next quote. Also exit on stop, twelve full holding bars or session flatten. No profit target.",
+        "exit": "Five-minute bars; require 200 completed closes. RSI2 uses Wilder average gains/losses with coefficient 1/2, seeded by the first two changes. RSI=100\u2212100/(1+gain/loss); define loss=0,gain>0 as 100; gain=0,loss>0 as 0; both zero as 50. Long if C>SMA200, RSI_(t\u22122)<65, and RSI_(t\u22122)>RSI_(t\u22121)>RSI_t. Short if C<SMA200, RSI_(t\u22122)>35, and RSI_(t\u22122)<RSI_(t\u22121)<RSI_t. Enter after signal. Fixed stop distance=ATR-Wilder(14). Long exit after a completed RSI>75, short after RSI<25; execute next quote. Also exit on stop, twelve full holding bars or session flatten. No profit target.",
+        "stop": "Five-minute bars; require 200 completed closes. RSI2 uses Wilder average gains/losses with coefficient 1/2, seeded by the first two changes. RSI=100\u2212100/(1+gain/loss); define loss=0,gain>0 as 100; gain=0,loss>0 as 0; both zero as 50. Long if C>SMA200, RSI_(t\u22122)<65, and RSI_(t\u22122)>RSI_(t\u22121)>RSI_t. Short if C<SMA200, RSI_(t\u22122)>35, and RSI_(t\u22122)<RSI_(t\u22121)<RSI_t. Enter after signal. Fixed stop distance=ATR-Wilder(14). Long exit after a completed RSI>75, short after RSI<25; execute next quote. Also exit on stop, twelve full holding bars or session flatten. No profit target.",
+        "target": "Five-minute bars; require 200 completed closes. RSI2 uses Wilder average gains/losses with coefficient 1/2, seeded by the first two changes. RSI=100\u2212100/(1+gain/loss); define loss=0,gain>0 as 100; gain=0,loss>0 as 0; both zero as 50. Long if C>SMA200, RSI_(t\u22122)<65, and RSI_(t\u22122)>RSI_(t\u22121)>RSI_t. Short if C<SMA200, RSI_(t\u22122)>35, and RSI_(t\u22122)<RSI_(t\u22121)<RSI_t. Enter after signal. Fixed stop distance=ATR-Wilder(14). Long exit after a completed RSI>75, short after RSI<25; execute next quote. Also exit on stop, twelve full holding bars or session flatten. No profit target.",
+        "regime": "See versioned TEN_CANDIDATES.md; not independently reverified this cycle",
+        "evidence": "Existing October 15 specification; no new market test",
+        "track": "Tradingbot"
+      }
+    },
+    {
+      "strategy": "existing-card-8",
+      "version": "1.0.0",
+      "spec": {
+        "title": "London post-fix USD reversal",
+        "source": "[Krohn, Mueller and Whelan, final Journal of Finance 2024 paper, V.E/Table X](https://onlinelibrary.wiley.com/doi/full/10.1111/jofi.13306); [LSEG fixing description](https://www.lseg.com/en/ftse-russell/benchmarks/wmr-fx-benchmarks). Crucially, the final paper's tested liquidity-taking AUD/GBP reversal strategies become negative after costs. Dealer liquidity provision is a different activity. No net retail edge is established.",
+        "entry": "On weekdays with a normal scheduled 16:00 London WMR fixing, buy at 16:05 Europe/London. Exit 16:00 America/New_York or the common stop. No condition on the pre-fix price direction. The delay and exit time are deliberate choices.",
+        "exit": "On weekdays with a normal scheduled 16:00 London WMR fixing, buy at 16:05 Europe/London. Exit 16:00 America/New_York or the common stop. No condition on the pre-fix price direction. The delay and exit time are deliberate choices.",
+        "stop": "On weekdays with a normal scheduled 16:00 London WMR fixing, buy at 16:05 Europe/London. Exit 16:00 America/New_York or the common stop. No condition on the pre-fix price direction. The delay and exit time are deliberate choices.",
+        "target": "On weekdays with a normal scheduled 16:00 London WMR fixing, buy at 16:05 Europe/London. Exit 16:00 America/New_York or the common stop. No condition on the pre-fix price direction. The delay and exit time are deliberate choices.",
+        "regime": "USD demand concentrated around the fix later unwinds. Persistent dollar demand, news, changing flow and transaction costs can erase it.",
+        "evidence": "Existing October 15 specification; no new market test",
+        "track": "Tradingbot"
+      }
+    },
+    {
+      "strategy": "existing-card-9",
+      "version": "1.0.0",
+      "spec": {
+        "title": "European morning local-currency selling",
+        "source": "[Breedon and Ranaldo, SNB Working Paper 2011-04](https://www.snb.ch/public/publication/fr/www-snb-ch/publications/research/working-papers/2011/working_paper_2011_04/publications0_fr/working_paper_2011_04.n.pdf). Its 1997\u20132007 cost results favor EURUSD relative to other examples; GBPUSD morning/afternoon variants lose after quoted spreads. EBS represented under 5% of GBPUSD turnover in that sample. This is old interdealer evidence, not current broker validation.",
+        "entry": "Monday\u2013Friday, short at 07:00 Europe/London; exit 08:00 America/New_York or common stop. One trade, no afternoon reverse trade, no hindsight news-day deletions. Respect the actual elapsed interval as US/UK daylight-saving dates differ.",
+        "exit": "Monday\u2013Friday, short at 07:00 Europe/London; exit 08:00 America/New_York or common stop. One trade, no afternoon reverse trade, no hindsight news-day deletions. Respect the actual elapsed interval as US/UK daylight-saving dates differ.",
+        "stop": "Monday\u2013Friday, short at 07:00 Europe/London; exit 08:00 America/New_York or common stop. One trade, no afternoon reverse trade, no hindsight news-day deletions. Respect the actual elapsed interval as US/UK daylight-saving dates differ.",
+        "target": "Monday\u2013Friday, short at 07:00 Europe/London; exit 08:00 America/New_York or common stop. One trade, no afternoon reverse trade, no hindsight news-day deletions. Respect the actual elapsed interval as US/UK daylight-saving dates differ.",
+        "regime": "Local investors' foreign-asset purchases create local-currency selling pressure. Opposing macro trends, policy surprises, changed session flows and spread costs can dominate.",
+        "evidence": "Existing October 15 specification; no new market test",
+        "track": "Tradingbot"
+      }
+    },
+    {
+      "strategy": "existing-card-10",
+      "version": "1.0.0",
+      "spec": {
+        "title": "Month-end equity-hedging flow",
+        "source": "[Melvin and Prins, ECB-hosted author paper](https://www.ecb.europa.eu/events/pdf/conferences/131216/Third_FX_Workshop_MELVIN_PRINS_Equity%20hedging%20and%20exchange%20rates%20Nov%202013.pdf?37cad5300a1a2b823aec4ad71d721cec=), subsequently Journal of Financial Markets 2015. Public sample: April 2004\u2013December 2012; pooled explanatory R\u00b2 only 0.03. [Ben Zeev and Nathan 2023](https://www.bgu.ac.il/media/qsgjpsib/2315.pdf) finds Israeli institutional hedging throughout the month, limiting universal month-end assumptions. Neither validates this retail implementation.",
+        "entry": "Trade only the last scheduled London WMR fixing business day of each month, if its fix is at normal 16:00. Fix equity proxies as S&P 500 USD price index, EURO STOXX 50 EUR price index, FTSE 100 GBP price index. Compute each index's log return from its final official close before month start to its latest official close published before 00:00 London on fixing day. S=US return\u2212relevant EUR/UK return. Buy pair if S\u22650.02; sell if S\u2264\u22120.02; otherwise skip. Enter 15:00 London; exit 16:00 or common stop. Missing index observations invalidate the month.",
+        "exit": "Trade only the last scheduled London WMR fixing business day of each month, if its fix is at normal 16:00. Fix equity proxies as S&P 500 USD price index, EURO STOXX 50 EUR price index, FTSE 100 GBP price index. Compute each index's log return from its final official close before month start to its latest official close published before 00:00 London on fixing day. S=US return\u2212relevant EUR/UK return. Buy pair if S\u22650.02; sell if S\u2264\u22120.02; otherwise skip. Enter 15:00 London; exit 16:00 or common stop. Missing index observations invalidate the month.",
+        "stop": "Trade only the last scheduled London WMR fixing business day of each month, if its fix is at normal 16:00. Fix equity proxies as S&P 500 USD price index, EURO STOXX 50 EUR price index, FTSE 100 GBP price index. Compute each index's log return from its final official close before month start to its latest official close published before 00:00 London on fixing day. S=US return\u2212relevant EUR/UK return. Buy pair if S\u22650.02; sell if S\u2264\u22120.02; otherwise skip. Enter 15:00 London; exit 16:00 or common stop. Missing index observations invalidate the month.",
+        "target": "Trade only the last scheduled London WMR fixing business day of each month, if its fix is at normal 16:00. Fix equity proxies as S&P 500 USD price index, EURO STOXX 50 EUR price index, FTSE 100 GBP price index. Compute each index's log return from its final official close before month start to its latest official close published before 00:00 London on fixing day. S=US return\u2212relevant EUR/UK return. Buy pair if S\u22650.02; sell if S\u2264\u22120.02; otherwise skip. Enter 15:00 London; exit 16:00 or common stop. Missing index observations invalidate the month.",
+        "regime": "Outperforming-country equity exposure prompts currency hedge sales. Different hedge ratios/timing, bond flows and anticipatory crowding can defeat this proxy.",
+        "evidence": "Existing October 15 specification; no new market test",
+        "track": "Tradingbot"
+      }
+    },
+    {
+      "strategy": "tsmom-literature-review",
+      "version": "1.0.0",
+      "spec": {
+        "source": "https://www.aqr.com/Insights/Datasets/Time-Series-Momentum-Original-Paper-Data",
+        "entry": "Research-only: sign of prior 12-month excess return; exact execution adaptation not preregistered",
+        "exit": "Source study describes one-month holding; no local execution rules admitted",
+        "stop": "Not specified on the dataset summary; implementation blocked pending precise specification",
+        "target": "Not specified; no target invented",
+        "regime": "Trend-following hypothesis; local regime results unknown",
+        "evidence": "Monthly factor dataset description read October 27; no price data downloaded or performance reproduced",
+        "track": "Tradingbot"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.aqr.com/Insights/Datasets/Time-Series-Momentum-Original-Paper-Data",
+      "status": "read_metadata",
+      "admitted": false,
+      "reason": "monthly factors lack expiry-specific causal executable quotes"
+    },
+    {
+      "url": "https://www.cmegroup.com/articles/faqs/faq-1-oz-gold-futures.html",
+      "status": "read_public_specification",
+      "admitted": false,
+      "reason": "not account-specific fees/margin/eligibility or historical quote evidence"
+    },
+    {
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2440866",
+      "status": "full_page_http_403",
+      "admitted": false
+    }
+  ],
+  "blockers": [
+    "Collector exact-source independent review and one-use authorization gate remain closed",
+    "No newly admitted real chronological bar-and-quote dataset",
+    "Effective account-applicable margin, costs and instrument eligibility remain unverified",
+    "Interrupted October 27 synthetic attempt preserved: five started, four finished, no completed report",
+    "This governance extension is author-tested; independent activation review is pending"
+  ]
+}

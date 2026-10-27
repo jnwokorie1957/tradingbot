@@ -1,0 +1,175 @@
+{
+  "observed_at": "2026-10-27T15:52:24.256112+00:00",
+  "reporting_date": "2026-10-27",
+  "reporting_week": "2026-W44",
+  "sources": [
+    {
+      "url": "https://www.aqr.com/Insights/Datasets/Time-Series-Momentum-Original-Paper-Data",
+      "status": "read_metadata",
+      "admitted": false,
+      "reason": "monthly factors lack expiry-specific causal executable quotes"
+    },
+    {
+      "url": "https://www.cmegroup.com/articles/faqs/faq-1-oz-gold-futures.html",
+      "status": "read_public_specification",
+      "admitted": false,
+      "reason": "not account-specific fees/margin/eligibility or historical quote evidence"
+    },
+    {
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2440866",
+      "status": "full_page_http_403",
+      "admitted": false
+    }
+  ],
+  "blockers": [
+    "Collector exact-source independent review and one-use authorization gate remain closed",
+    "No newly admitted real chronological bar-and-quote dataset",
+    "Effective account-applicable margin, costs and instrument eligibility remain unverified",
+    "Interrupted October 27 synthetic attempt preserved: five started, four finished, no completed report",
+    "This governance extension is author-tested; independent activation review is pending"
+  ],
+  "registry": [
+    {
+      "strategy": "existing-card-1",
+      "version": "1.0.0",
+      "state": "RESEARCH"
+    },
+    {
+      "strategy": "existing-card-10",
+      "version": "1.0.0",
+      "state": "RESEARCH"
+    },
+    {
+      "strategy": "existing-card-2",
+      "version": "1.0.0",
+      "state": "RESEARCH"
+    },
+    {
+      "strategy": "existing-card-3",
+      "version": "1.0.0",
+      "state": "RESEARCH"
+    },
+    {
+      "strategy": "existing-card-4",
+      "version": "1.0.0",
+      "state": "RESEARCH"
+    },
+    {
+      "strategy": "existing-card-5",
+      "version": "1.0.0",
+      "state": "RESEARCH"
+    },
+    {
+      "strategy": "existing-card-6",
+      "version": "1.0.0",
+      "state": "RESEARCH"
+    },
+    {
+      "strategy": "existing-card-7",
+      "version": "1.0.0",
+      "state": "RESEARCH"
+    },
+    {
+      "strategy": "existing-card-8",
+      "version": "1.0.0",
+      "state": "RESEARCH"
+    },
+    {
+      "strategy": "existing-card-9",
+      "version": "1.0.0",
+      "state": "RESEARCH"
+    },
+    {
+      "strategy": "tsmom-literature-review",
+      "version": "1.0.0",
+      "state": "RESEARCH"
+    }
+  ],
+  "leaderboards_by_protocol": {},
+  "leaderboard": [],
+  "leaderboard_note": "Only compare a common preregistered protocol; no pooled ranking across protocols",
+  "champion": null,
+  "review_metrics": {
+    "historical_backtest": {
+      "trades": 0,
+      "win_rate": null,
+      "net_expectancy": null,
+      "average_profit": null,
+      "average_loss": null,
+      "profit_factor": null,
+      "realized_payoff_ratio": null,
+      "consecutive_losses": 0,
+      "sharpe": null,
+      "sharpe_reason": "Requires a complete dated equity-return series and declared annualization convention",
+      "regimes": {}
+    },
+    "ibkr_paper": {
+      "trades": 0,
+      "win_rate": null,
+      "net_expectancy": null,
+      "average_profit": null,
+      "average_loss": null,
+      "profit_factor": null,
+      "realized_payoff_ratio": null,
+      "consecutive_losses": 0,
+      "sharpe": null,
+      "sharpe_reason": "Requires a complete dated equity-return series and declared annualization convention",
+      "regimes": {}
+    },
+    "local_forward": {
+      "trades": 0,
+      "win_rate": null,
+      "net_expectancy": null,
+      "average_profit": null,
+      "average_loss": null,
+      "profit_factor": null,
+      "realized_payoff_ratio": null,
+      "consecutive_losses": 0,
+      "sharpe": null,
+      "sharpe_reason": "Requires a complete dated equity-return series and declared annualization convention",
+      "regimes": {}
+    },
+    "out_of_sample": {
+      "trades": 0,
+      "win_rate": null,
+      "net_expectancy": null,
+      "average_profit": null,
+      "average_loss": null,
+      "profit_factor": null,
+      "realized_payoff_ratio": null,
+      "consecutive_losses": 0,
+      "sharpe": null,
+      "sharpe_reason": "Requires a complete dated equity-return series and declared annualization convention",
+      "regimes": {}
+    },
+    "synthetic": {
+      "trades": 0,
+      "win_rate": null,
+      "net_expectancy": null,
+      "average_profit": null,
+      "average_loss": null,
+      "profit_factor": null,
+      "realized_payoff_ratio": null,
+      "consecutive_losses": 0,
+      "sharpe": null,
+      "sharpe_reason": "Requires a complete dated equity-return series and declared annualization convention",
+      "regimes": {}
+    }
+  },
+  "policy": {
+    "starting_equity": 500,
+    "aspirational_equity": 10000,
+    "trade_fraction": 0.005,
+    "trade_dollar_cap": 2.5,
+    "portfolio_fraction": 0.01,
+    "daily_pause": 0.02,
+    "drawdown_pause": 0.1,
+    "live_execution_enabled": false,
+    "broker_orders_enabled": false
+  },
+  "broker_execution_enabled": false,
+  "journal_chain": "e229843844799e35e065eef90ec9c612c4a549c8560e5620b1c646af0885a9f9",
+  "market_experiments_executed": 0,
+  "simulation_running": false,
+  "cycle_scope": "source/admission/governance review; not a trading worker"
+}
