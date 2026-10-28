@@ -41,6 +41,19 @@ The first15 observed sessions are development. The remaining sessions are a reus
 
 The balance display is an **isolated cap-only simulation**, before unknown commissions and with margin unverified. It does not enforce or alter the original bot's remaining portfolio/daily/drawdown restrictions and is not a deployable account result. No broker connection, live execution, permission change or engine modification is included.
 
+## Prioritized reruns and entry-quality follow-up
+
+Two additional finite producers use the same local view and private inputs:
+
+```sh
+python -m research_monitor.priority_run --data-dir private-data/mt5 --metadata private-data/symbol_metadata.json --state-dir local-results/research-monitor
+python -m research_monitor.review_run --data-dir private-data/mt5 --metadata private-data/symbol_metadata.json --state-dir local-results/research-monitor --after-file local-results/research-monitor/priority-results.json
+```
+
+The priority producer re-runs the prior NAS100 morning1R and SPX500 day-session2R leaders, then repeats both with higher costs. The follow-up waits for completion before taking over the snapshot; two producers must not write the same view concurrently. It compares the original1R morning rule with explicit hypotheses derived from development wins/losses: NAS directional candle-close strength and long-only entries separately/combined; SPX short-only and a1.5ATR maximum natural stop distance separately/combined. The price stop is never shrunk. The threshold is applied using only the volatility estimate and current entry quote already available.
+
+These are tiny, post-hoc strata from previously seen prices, not established edges. Freeze choices on the development block before later-period and higher-cost checks. Keep all rejected configurations and failures. Completed/private records contain per-outcome prices and reasons for later diagnosis; none belongs in the public source folder. A transient Windows reader lock is retried before atomically replacing a snapshot.
+
 ## Attach another runner
 
 `Reporter` provides atomic private snapshots; `EngineObserver` adapts the existing event/output/state shapes. Call it only after an event has actually been admitted and processed:

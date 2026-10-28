@@ -1,6 +1,6 @@
 {
   "local_validation_date": "2026-10-27",
-  "dashboard_checks": "7 passed",
+  "dashboard_checks": "10 passed, including transient Windows file-lock retry and causal filter checks",
   "existing_repository_checks": "172 passed",
   "frontend_syntax": "node --check passed",
   "browser_title": "Trade Dashboard",

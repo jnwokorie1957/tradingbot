@@ -43,7 +43,12 @@ class Reporter:
         encoded=json.dumps(snapshot,allow_nan=False)
         target=self.directory/'state.json';temporary=self.directory/(uuid.uuid4().hex+'.tmp')
         try:
-            temporary.write_text(encoded,encoding='utf-8');os.replace(temporary,target)
+            temporary.write_text(encoded,encoding='utf-8')
+            for attempt in range(30):
+                try:os.replace(temporary,target);break
+                except PermissionError:
+                    if attempt==29:raise
+                    time.sleep(.01)
         finally:
             if temporary.exists():temporary.unlink()
         self.last_write=now

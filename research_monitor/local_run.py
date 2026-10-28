@@ -20,23 +20,33 @@ def read_bars(path,offset):
     if any(b['t']<=a['t'] for a,b in zip(rows,rows[1:])):raise ValueError('Price rows must be chronological and unique')
     return rows
 
-def signals(native,symbol,minutes,lookback,filter_):
+def signals(native,symbol,minutes,lookback,filter_,end_clock=720):
     engine=object.__new__(Engine);engine.state={'bars':{},'pending':{},'positions':{}}
     engine.hypothesis=Hypothesis(family='pullback' if symbol=='NAS100' else 'breakout',lookback=lookback)
-    engine.policy=Policy();out={};ema=None;history=deque(maxlen=6)
+    engine.policy=Policy();out={};ema=None;history=deque(maxlen=6);previous=None;atr=None;true_ranges=[]
     for b in native:
         end=b['t']+minutes*60;at=datetime.fromtimestamp(end,timezone.utc);local=at.astimezone(NY)
         ema=b['close'] if ema is None else ema+(2/51)*(b['close']-ema);history.append(ema)
+        tr=max(b['high']-b['low'],abs(b['high']-previous),abs(b['low']-previous)) if previous is not None else b['high']-b['low']
+        previous=b['close'];true_ranges.append(tr)
+        if len(true_ranges)==14:atr=sum(true_ranges)/14
+        elif len(true_ranges)>14:atr=(13*atr+tr)/14
         e=dict(contract=symbol,start=iso(b['t']),end=iso(end),available_at=iso(end),**{k:b[k] for k in ('open','high','low','close','volume')})
         result=Engine._bar(engine,e,at,{})
         side=result['side'];clock=local.hour*60+local.minute
         trend=(side==1 and b['close']>ema and len(history)==6 and ema>history[0]) or (side==-1 and b['close']<ema and len(history)==6 and ema<history[0])
-        if side and 600<=clock<=720 and (filter_=='none' or trend):
-            out[end]=dict(side=side,stop=b['low'] if side==1 else b['high'],reference=b['close'],decision=end,entry_at=end+60)
+        width=b['high']-b['low'];location=(b['close']-b['low'])/width if width else .5
+        strong=(side==1 and location>=.65) or (side==-1 and location<=.35)
+        passes={'none':True,'ema50':trend,'close65':strong,'long_only':side==1,'close65_long':strong and side==1,
+            'short_only':side==-1,'max_stop_atr':True,'short_range':side==-1}.get(filter_)
+        if passes is None:raise ValueError('Unknown preregistered entry filter')
+        if side and 600<=clock<=end_clock and passes:
+            out[end]=dict(side=side,stop=b['low'] if side==1 else b['high'],reference=b['close'],decision=end,entry_at=end+60,atr14=atr)
     return out
 
 def run_case(source,symbol,minutes,metadata,variant,phase,days,reporter,pace,queue_index,queue_total,stress=False):
-    one=source[(symbol,1)];native=source[(symbol,minutes)];sig=signals(native,symbol,minutes,variant['lookback'],variant['filter'])
+    end_clock=variant.get('end_clock',720)
+    one=source[(symbol,1)];native=source[(symbol,minutes)];sig=signals(native,symbol,minutes,variant['lookback'],variant['filter'],end_clock)
     chosen=set(days);rows=[]
     for b in one:
         local=datetime.fromtimestamp(b['t'],timezone.utc).astimezone(NY);clock=local.hour*60+local.minute
@@ -44,14 +54,15 @@ def run_case(source,symbol,minutes,metadata,variant,phase,days,reporter,pace,que
     tick=metadata['trade_tick_size'];mult=metadata['trade_tick_value_loss']/tick;slip=tick*(2 if stress else 1)
     spread_factor=1.5 if stress else 1;cash=500.;position=None;pending=None;busy=-1;fills=[];skips=Counter();peak=500.;dd=0.;risk=25.
     rid=f'{symbol}-{phase}-L{variant["lookback"]}-{variant["rr"]}-{variant["filter"]}-'+('wide' if stress else 'base')
-    reporter.begin(rid,symbol,f'{minutes}m',('Pullback' if symbol=='NAS100' else 'Breakout')+' · Morning session',500,
+    reporter.begin(rid,symbol,f'{minutes}m',('Pullback' if symbol=='NAS100' else 'Breakout')+(' · Morning session' if end_clock==720 else ' · Day session'),500,
         evidence='Historical simulation',phase=phase,queue_index=queue_index,queue_total=queue_total,assumptions='Isolated dollar ceiling; portfolio and daily halts not applied. Before commissions; margin unverified.')
     reporter.state.update(risk_cap=risk,rr=f'1:{variant["rr"]:g}',timeframe_minutes=minutes,
         variant=f'L{variant["lookback"]} · '+('EMA50' if variant['filter']!='none' else 'Unfiltered'),queue_index=queue_index,queue_total=queue_total)
+    reporter.state['variant']='L'+str(variant['lookback'])+' · '+variant['filter'].replace('_',' ').title()
     def close(price,at,reason):
         nonlocal cash,position,busy
         p=position;fill=price-p['side']*slip;pnl=(fill-p['entry'])*p['side']*p['quantity']*mult
-        cash+=pnl;R=(fill-p['entry'])*p['side']/p['distance'];fills.append(dict(entry_at=iso(p['at']),exit_at=iso(at),pnl=pnl,R=R,reason=reason))
+        cash+=pnl;R=(fill-p['entry'])*p['side']/p['distance'];fills.append(dict(entry_at=iso(p['at']),exit_at=iso(at),pnl=pnl,R=R,reason=reason,side=p['side'],entry_price=p['entry'],exit_price=fill,stop=p['stop'],target=p['target'],quantity=p['quantity'],initial_risk_points=p['distance']))
         reporter.state.update(balance=cash,equity=cash,plan=None)
         reporter.event('exit',time=iso(at),price=fill,side=p['side'],pnl=pnl,quantity=p['quantity'],reason=reason)
         position=None;busy=at
@@ -59,16 +70,19 @@ def run_case(source,symbol,minutes,metadata,variant,phase,days,reporter,pace,que
         t=b['t'];now=t+60;spread=up(b['spread']*metadata['point']*spread_factor,tick)
         if pending and t>=pending['entry_at']:
             if t!=pending['entry_at']:skips['missing_entry']+=1
-            elif not 600<=datetime.fromtimestamp(t,timezone.utc).astimezone(NY).hour*60+datetime.fromtimestamp(t,timezone.utc).astimezone(NY).minute<=720:skips['entry_outside_window']+=1
+            elif not 600<=datetime.fromtimestamp(t,timezone.utc).astimezone(NY).hour*60+datetime.fromtimestamp(t,timezone.utc).astimezone(NY).minute<=end_clock:skips['entry_outside_window']+=1
             elif not position and pending['decision']>busy:
                 side=pending['side'];entry=b['open']+(spread if side==1 else 0)+side*slip
                 stop=down(pending['stop'],tick) if side==1 else up(pending['stop'],tick);distance=side*(entry-stop)
                 perlot=(distance+slip)*mult;quantity=down(min(risk,max(cash,0))/perlot,metadata['volume_step']) if perlot>0 else 0
                 if distance<tick-1e-8:skips['invalid_stop']+=1
+                elif variant['filter'] in ('max_stop_atr','short_range') and (not pending.get('atr14') or distance/pending['atr14']>1.5):skips['oversized_stop_relative_to_volatility']+=1
                 elif quantity<metadata['volume_min']-1e-8:skips['minimum_lot_above_cap']+=1
                 else:
                     reward=down(variant['rr']*distance,tick)
-                    position=dict(side=side,entry=entry,stop=stop,target=entry+side*reward,distance=distance,quantity=quantity,at=t,expiry=t+3600)
+                    local=datetime.fromtimestamp(t,timezone.utc).astimezone(NY)
+                    flatten=int(local.replace(hour=15,minute=55,second=0,microsecond=0).timestamp())
+                    position=dict(side=side,entry=entry,stop=stop,target=entry+side*reward,distance=distance,quantity=quantity,at=t,expiry=min(t+3600,flatten))
                     reporter.state['plan']=dict(side=side,entry=entry,stop=stop,target=position['target'],time=iso(t))
                     reporter.event('entry',time=iso(t),price=entry,side=side,quantity=quantity,stop=stop,target=position['target'])
             pending=None

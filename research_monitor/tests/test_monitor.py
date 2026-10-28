@@ -6,9 +6,34 @@ from html.parser import HTMLParser
 from datetime import datetime,timezone
 from research_monitor.telemetry import Reporter
 from research_monitor.server import make_handler,STATIC
-from research_monitor.local_run import run_case
+from research_monitor.local_run import run_case,signals
 
 class MonitorChecks(unittest.TestCase):
+    def test_feature_filters_are_causal_and_direction_is_explicit(self):
+        begin=int(datetime(2026,10,1,12,0,tzinfo=timezone.utc).timestamp())
+        bars=[dict(t=begin+i*900,open=100+i*.2,high=100+i*.2+.02,low=100+i*.2-.8,close=100+i*.2,volume=1) for i in range(30)]
+        base=signals(bars,'SPX500',15,10,'none')
+        prefix=signals(bars[:14],'SPX500',15,10,'none')
+        self.assertTrue(base);self.assertEqual(prefix,{k:v for k,v in base.items() if k<=bars[13]['t']+900})
+        self.assertEqual(signals(bars,'SPX500',15,10,'short_only'),{})
+        strong=signals(bars,'SPX500',15,10,'close65')
+        self.assertTrue(set(strong).issubset(base))
+        for row in strong.values():self.assertEqual(row['side'],1)
+    def test_unknown_filter_cannot_silently_change_rules(self):
+        begin=int(datetime(2026,10,1,14,0,tzinfo=timezone.utc).timestamp())
+        bar=dict(t=begin,open=100,high=101,low=99,close=100,volume=1)
+        with self.assertRaises(ValueError):signals([bar],'SPX500',15,10,'unregistered')
+    def test_windows_reader_lock_is_retried_without_losing_snapshot(self):
+        import os
+        original=os.replace;calls=[]
+        def transient(a,b):
+            calls.append(1)
+            if len(calls)<=2:raise PermissionError('Concurrent reader')
+            return original(a,b)
+        with tempfile.TemporaryDirectory() as d,patch('research_monitor.telemetry.os.replace',side_effect=transient):
+            r=Reporter(d);r.begin('a','NAS100','5m','Pullback')
+            self.assertEqual(json.loads((Path(d)/'state.json').read_text())['id'],'a')
+            self.assertEqual(len(calls),3)
     def test_snapshot_is_atomic_and_finite(self):
         with tempfile.TemporaryDirectory() as d:
             r=Reporter(d,0);r.begin('one','NAS100','5m','Pullback')
