@@ -4,7 +4,7 @@ A local, read-only view of causal research runs: candlesticks, planned market in
 
 ## Open locally
 
-From the repository root with Python3.10+:
+From the repository root with Python3.12+:
 
 ```sh
 python -m research_monitor.server --port 8765
@@ -40,6 +40,20 @@ The current minute alone triggers fills. Stop/target collisions choose the stop;
 The first15 observed sessions are development. The remaining sessions are a reused later-period check, **not an untouched holdout**. Selection is exploratory: highest development meanR with at least10 outcomes, otherwise the configuration with most outcomes. Neither this selector nor any displayed win rate satisfies the separate governed qualification rules. All variants and losing results remain in dated private batch JSON records.
 
 The balance display is an **isolated cap-only simulation**, before unknown commissions and with margin unverified. It does not enforce or alter the original bot's remaining portfolio/daily/drawdown restrictions and is not a deployable account result. No broker connection, live execution, permission change or engine modification is included.
+
+## Four concurrent lanes
+
+`parallel_run` runs four separate worker processes: NAS100 M5 pullback, NAS100 M15 breakout, SPX500 M15 breakout and SPX500 M5 pullback. Each has its own private snapshot, checkpoint and independent$500 simulation. Their balances must not be summed into one portfolio. Four cards stay visible; select a card to follow its candles and fills.
+
+```sh
+python -m research_monitor.parallel_run --data-dir private-data/mt5 --metadata private-data/symbol_metadata.json --state-dir local-results/research-monitor --stop-at 2026-11-02T06:34:51+00:00
+```
+
+The explicit UTC deadline is the observed usage-window reset for this particular research session; it is not a general Codex reset schedule. The supervisor stops/checkpoints workers at the deadline or when `stop.request` appears in its state directory. It refuses an already-active supervisor checkpoint; inspect process identity before recovery. No credential, paid API call or reset-credit consumption is involved.
+
+Each lane has54 fixed development configurations (lookbacks10/20/30, rewards1/1.5/2R, none/EMA50/candle-close filters, morning/day windows), then two later-period cost checks using a selection frozen on development. Completed per-session jobs are not rerun. After a grid completes, the worker waits for a newly completed trading session rather than manufacturing progress. Updated data must be supplied locally; this supervisor does not log in to a broker or fetch prices. An hourly thread heartbeat was configured separately for health/research continuation until this user's reset. That scheduler is not part of the Python package, and scheduled availability is not a guarantee of host uptime or Codex capacity.
+
+The original snapshot endpoint remains compatible. `/api/lanes` adds the four allowlisted private snapshots without enabling arbitrary file reads or remote writes.
 
 ## Prioritized reruns and entry-quality follow-up
 

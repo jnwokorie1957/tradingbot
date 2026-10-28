@@ -13,7 +13,15 @@ def make_handler(directory):
             if self.headers.get('Host','').split(':')[0] not in ('127.0.0.1','localhost'):
                 self.send_error(403);return
             path=urlsplit(self.path).path
-            if path in ('/api/state','/api/replays'):
+            if path=='/api/lanes':
+                lanes=[]
+                for name in ['nas-pullback','nas-breakout','spx-breakout','spx-pullback']:
+                    try:
+                        value=json.loads((directory/'lanes'/name/'state.json').read_text(encoding='utf-8'))
+                        lanes.append(dict(value,lane_id=name))
+                    except (OSError,ValueError):pass
+                payload=json.dumps({'lanes':lanes},allow_nan=False).encode();mime='application/json'
+            elif path in ('/api/state','/api/replays'):
                 file=directory/('state.json' if path=='/api/state' else 'replays.json')
                 fallback={'status':'idle','mode':'observed','candles':[],'events':[]} if path=='/api/state' else {'runs':[]}
                 try:data=json.loads(file.read_text(encoding='utf-8'))

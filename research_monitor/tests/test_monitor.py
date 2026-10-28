@@ -7,8 +7,22 @@ from datetime import datetime,timezone
 from research_monitor.telemetry import Reporter
 from research_monitor.server import make_handler,STATIC
 from research_monitor.local_run import run_case,signals
+from research_monitor.parallel_run import LANES
 
 class MonitorChecks(unittest.TestCase):
+    def test_four_lanes_have_separate_strategy_and_storage_identities(self):
+        self.assertEqual(len(LANES),4);self.assertEqual(len({x['id'] for x in LANES}),4)
+        self.assertEqual(len({(x['symbol'],x['minutes'],x['family']) for x in LANES}),4)
+    def test_parallel_endpoint_returns_only_allowlisted_lane_snapshots(self):
+        with tempfile.TemporaryDirectory() as d:
+            for lane in LANES:
+                r=Reporter(Path(d)/'lanes'/lane['id']);r.begin(lane['id'],lane['symbol'],str(lane['minutes'])+'m',lane['family'])
+            server=ThreadingHTTPServer(('127.0.0.1',0),make_handler(d));thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
+            try:
+                value=json.load(urllib.request.urlopen(f'http://127.0.0.1:{server.server_port}/api/lanes'))
+                self.assertEqual({x['lane_id'] for x in value['lanes']},{x['id'] for x in LANES})
+                self.assertTrue(all(x['status']=='running' for x in value['lanes']))
+            finally:server.shutdown();server.server_close();thread.join()
     def test_feature_filters_are_causal_and_direction_is_explicit(self):
         begin=int(datetime(2026,10,1,12,0,tzinfo=timezone.utc).timestamp())
         bars=[dict(t=begin+i*900,open=100+i*.2,high=100+i*.2+.02,low=100+i*.2-.8,close=100+i*.2,volume=1) for i in range(30)]

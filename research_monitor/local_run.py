@@ -20,9 +20,9 @@ def read_bars(path,offset):
     if any(b['t']<=a['t'] for a,b in zip(rows,rows[1:])):raise ValueError('Price rows must be chronological and unique')
     return rows
 
-def signals(native,symbol,minutes,lookback,filter_,end_clock=720):
+def signals(native,symbol,minutes,lookback,filter_,end_clock=720,family=None):
     engine=object.__new__(Engine);engine.state={'bars':{},'pending':{},'positions':{}}
-    engine.hypothesis=Hypothesis(family='pullback' if symbol=='NAS100' else 'breakout',lookback=lookback)
+    engine.hypothesis=Hypothesis(family=family or ('pullback' if symbol=='NAS100' else 'breakout'),lookback=lookback)
     engine.policy=Policy();out={};ema=None;history=deque(maxlen=6);previous=None;atr=None;true_ranges=[]
     for b in native:
         end=b['t']+minutes*60;at=datetime.fromtimestamp(end,timezone.utc);local=at.astimezone(NY)
@@ -44,9 +44,10 @@ def signals(native,symbol,minutes,lookback,filter_,end_clock=720):
             out[end]=dict(side=side,stop=b['low'] if side==1 else b['high'],reference=b['close'],decision=end,entry_at=end+60,atr14=atr)
     return out
 
-def run_case(source,symbol,minutes,metadata,variant,phase,days,reporter,pace,queue_index,queue_total,stress=False):
+def run_case(source,symbol,minutes,metadata,variant,phase,days,reporter,pace,queue_index,queue_total,stress=False,stop_event=None):
     end_clock=variant.get('end_clock',720)
-    one=source[(symbol,1)];native=source[(symbol,minutes)];sig=signals(native,symbol,minutes,variant['lookback'],variant['filter'],end_clock)
+    family=variant.get('family') or ('pullback' if symbol=='NAS100' else 'breakout')
+    one=source[(symbol,1)];native=source[(symbol,minutes)];sig=signals(native,symbol,minutes,variant['lookback'],variant['filter'],end_clock,family)
     chosen=set(days);rows=[]
     for b in one:
         local=datetime.fromtimestamp(b['t'],timezone.utc).astimezone(NY);clock=local.hour*60+local.minute
@@ -54,7 +55,7 @@ def run_case(source,symbol,minutes,metadata,variant,phase,days,reporter,pace,que
     tick=metadata['trade_tick_size'];mult=metadata['trade_tick_value_loss']/tick;slip=tick*(2 if stress else 1)
     spread_factor=1.5 if stress else 1;cash=500.;position=None;pending=None;busy=-1;fills=[];skips=Counter();peak=500.;dd=0.;risk=25.
     rid=f'{symbol}-{phase}-L{variant["lookback"]}-{variant["rr"]}-{variant["filter"]}-'+('wide' if stress else 'base')
-    reporter.begin(rid,symbol,f'{minutes}m',('Pullback' if symbol=='NAS100' else 'Breakout')+(' · Morning session' if end_clock==720 else ' · Day session'),500,
+    reporter.begin(rid,symbol,f'{minutes}m',family.title()+(' · Morning session' if end_clock==720 else ' · Day session'),500,
         evidence='Historical simulation',phase=phase,queue_index=queue_index,queue_total=queue_total,assumptions='Isolated dollar ceiling; portfolio and daily halts not applied. Before commissions; margin unverified.')
     reporter.state.update(risk_cap=risk,rr=f'1:{variant["rr"]:g}',timeframe_minutes=minutes,
         variant=f'L{variant["lookback"]} · '+('EMA50' if variant['filter']!='none' else 'Unfiltered'),queue_index=queue_index,queue_total=queue_total)
@@ -67,6 +68,7 @@ def run_case(source,symbol,minutes,metadata,variant,phase,days,reporter,pace,que
         reporter.event('exit',time=iso(at),price=fill,side=p['side'],pnl=pnl,quantity=p['quantity'],reason=reason)
         position=None;busy=at
     for index,b in enumerate(rows):
+        if stop_event is not None and stop_event.is_set():break
         t=b['t'];now=t+60;spread=up(b['spread']*metadata['point']*spread_factor,tick)
         if pending and t>=pending['entry_at']:
             if t!=pending['entry_at']:skips['missing_entry']+=1
@@ -110,7 +112,7 @@ def run_case(source,symbol,minutes,metadata,variant,phase,days,reporter,pace,que
         peak=max(peak,equity);dd=max(dd,(peak-equity)/peak)
         reporter.update(balance=cash,equity=equity,progress=(index+1)/max(len(rows),1),processed=index+1,total=len(rows),cursor_time=iso(now),closed_positions=len(fills))
         if pace:time.sleep(pace)
-    status='completed' if position is None else 'incomplete'
+    status='interrupted' if stop_event is not None and stop_event.is_set() else 'completed' if position is None else 'incomplete'
     wins=sum(f['R']>0 for f in fills);sumR=sum(f['R'] for f in fills)
     result=dict(id=rid,symbol=symbol,variant=variant,phase=phase,stress=stress,status=status,
         outcomes=len(fills),win_rate=100*wins/len(fills) if fills else None,sum_R=sumR,mean_R=sumR/len(fills) if fills else None,

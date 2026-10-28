@@ -67,7 +67,29 @@ function drawChart(){const {ctx,w,h}=canvasContext($('chart'));if(w<30)return;ct
  if(!reduceMotion&&Math.abs(sweepTarget-sweepX)>.2&&!sweepFrame)sweepFrame=requestAnimationFrame(()=>{sweepFrame=null;drawChart();});
 }
 function drawEquity(values){const {ctx,w,h}=canvasContext($('equityChart'));ctx.clearRect(0,0,w,h);if(!values.length)return;let min=Math.min(...values),max=Math.max(...values);if(min===max){min-=1;max+=1;}const x=i=>i/(Math.max(values.length-1,1))*(w-4)+2,y=v=>h-8-(v-min)/(max-min)*(h-18);const color=values.at(-1)>=values[0]?'#5de0a4':'#ff7c84';ctx.beginPath();values.forEach((v,i)=>i?ctx.lineTo(x(i),y(v)):ctx.moveTo(x(i),y(v)));ctx.lineTo(w-2,h);ctx.lineTo(2,h);ctx.closePath();const gradient=ctx.createLinearGradient(0,0,0,h);gradient.addColorStop(0,color+'35');gradient.addColorStop(1,color+'00');ctx.fillStyle=gradient;ctx.fill();ctx.beginPath();values.forEach((v,i)=>i?ctx.lineTo(x(i),y(v)):ctx.moveTo(x(i),y(v)));ctx.strokeStyle=color;ctx.lineWidth=1.6;ctx.stroke();}
-async function poll(){try{const response=await fetch('/api/state',{cache:'no-store'});if(!response.ok)throw Error('Unavailable');const live=await response.json();const age=Date.now()-Date.parse(live.updated_at??'');text('connection','Local connection');$('connection').classList.remove('offline');if(live.id&&state.feedId!==live.id&&live.status==='running'&&age<15000){state.feedId=live.id;state.mode='observed';transition();}if(state.mode==='observed'){render(live);if(age>15000&&live.status==='running'){text('modeDescription','Awaiting a fresh observation');text('connection','Stream paused');}}}catch{ text('connection','Connection paused');$('connection').classList.add('offline');}finally{setTimeout(poll,750);}}
+function renderLanes(lanes){
+ const grid=$('laneGrid');grid.hidden=!lanes.length;grid.replaceChildren();
+ for(const lane of lanes){
+  const button=document.createElement('button');button.className='lane-card'+(state.laneId===lane.lane_id?' selected':'');
+  const title=document.createElement('strong');title.textContent=cleanLabel(`${lane.symbol} · ${lane.timeframe} ${lane.strategy?.split(' · ')[0]??''}`);
+  const status=document.createElement('small');status.textContent=lane.status==='running'?'Processing':lane.status==='waiting'?'Awaiting fresh session':lane.status==='failed'?'Needs attention':lane.status==='completed'?'Completed':'Paused';
+  const cash=document.createElement('b');cash.textContent=money.format(lane.equity??lane.balance??500);cash.className=tone((lane.equity??500)-(lane.starting_balance??500));
+  const detail=document.createElement('span');detail.textContent=`Run ${lane.queue_index??'—'}/${lane.queue_total??'—'} · ${Math.round((lane.progress??0)*100)}%`;
+  button.append(title,status,cash,detail);button.addEventListener('click',()=>{state.laneId=lane.lane_id;state.feedId=null;transition();render(lane);});grid.append(button);
+ }
+}
+async function poll(){
+ try{
+  const [response,laneResponse]=await Promise.all([fetch('/api/state',{cache:'no-store'}),fetch('/api/lanes',{cache:'no-store'})]);
+  if(!response.ok)throw Error('Unavailable');let live=await response.json();
+  const lanes=laneResponse.ok?(await laneResponse.json()).lanes??[]:[];
+  if(lanes.length){if(!state.laneId||!lanes.some(x=>x.lane_id===state.laneId))state.laneId=lanes[0].lane_id;live=lanes.find(x=>x.lane_id===state.laneId);state.mode='observed';}
+  renderLanes(lanes);const age=Date.now()-Date.parse(live.updated_at??'');text('connection',lanes.length?`${lanes.filter(x=>x.status==='running').length} lanes processing`:'Local connection');$('connection').classList.remove('offline');
+  if(live.id&&state.feedId!==live.id){state.feedId=live.id;state.mode='observed';transition();}
+  if(state.mode==='observed'){render(live);if(live.status==='waiting'){text('modeBadge','CHECKPOINT SAVED');text('modeDescription','Awaiting a fresh completed market session');}if(age>15000&&live.status==='running'){text('modeDescription','Awaiting a fresh observation');text('connection','Stream paused');}}
+ }catch{text('connection','Connection paused');$('connection').classList.add('offline');}
+ finally{setTimeout(poll,750);}
+}
 async function init(){try{const response=await fetch('/api/replays',{cache:'no-store'});const data=await response.json();state.runs=data.runs??[];if(state.runs.length){$('runSelect').replaceChildren(...state.runs.map((r,i)=>Object.assign(document.createElement('option'),{value:String(i),textContent:cleanLabel(r.label)})));selectRun(0);}else{state.mode='observed';$('playButton').disabled=true;$('nextButton').disabled=true;}}catch{state.mode='observed';}poll();}
 $('runSelect').addEventListener('change',e=>selectRun(Number(e.target.value)));
 $('nextButton').addEventListener('click',()=>selectRun(state.run+1));
