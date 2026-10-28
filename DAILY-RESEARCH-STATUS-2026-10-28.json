@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "kind": "daily_research_status",
+  "reporting_date": "2026-10-28",
+  "timezone": "America/Chicago",
+  "artifact_state": "prepublication_snapshot_pending_independent_document_review",
+  "base_commit": "0f7fc575591dcf09b2967a2baf39d58fda372d0a",
+  "previous_daily_report": "DAILY-RESEARCH-STATUS-2026-10-27.json",
+  "scope": "Documentation reconciliation only; no experiments or tests rerun for this report.",
+  "evidence": {
+    "repository": "Main and complete tree read during the October 28 review confirmed the base commit and absence of the October 28 daily report. Recheck before publication.",
+    "coordination": "Research owner confirmed no competing daily report or Tradingbot main publication in its completed October 28 handoff. No jobs were run or restarted for that check.",
+    "baseline_batch": {
+      "owner_reported_completed_at": "2026-10-28T15:27-05:00",
+      "timestamp_precision": "minute",
+      "variants": 224,
+      "qualified_strategies": 0,
+      "compliant_admissions": 0
+    },
+    "expanded_batch": {
+      "owner_reported_completed_at": "2026-10-28T15:49-05:00",
+      "timestamp_precision": "minute",
+      "variants": 672,
+      "qualified_strategies": 0,
+      "compliant_admissions": 0
+    },
+    "interpretation": "Historical-data exploratory research under assumed costs, including unfunded reference diagnostics. Variant counts are not independent strategies, completed funded trades, synthetic fixture counts or proof of profitability. Do not sum overlapping batches as independent evidence.",
+    "tests": {
+      "date": "2026-10-28",
+      "author_recorded_passes": 28,
+      "source": "Research task command output, corroborated by owner handoff",
+      "standalone_machine_readable_receipt": false,
+      "independently_rerun": false,
+      "qualification_review": false
+    },
+    "earlier_verification": "At 18:50 UTC on October 28 the bot owner read correction code/test logs and the 18:34:52 UTC baseline batch: 224 variants, zero compliant admissions and zero qualified strategies. This is prior evidence, not a new run."
+  },
+  "risk_policy": {
+    "starting_simulated_equity_usd": 500,
+    "planned_all_in_trade_risk": "min(0.005 * current equity, 2.50 USD, any lower configured cap)",
+    "portfolio_risk_fraction": 0.01,
+    "daily_pause_fraction": 0.02,
+    "drawdown_pause_fraction": 0.10,
+    "whole_contracts_required": true,
+    "structural_stops_preserved": true,
+    "session_duplicate_opposite_exposure_guards": "retained",
+    "missing_or_infeasible_execution_evidence": "skip",
+    "broker_read_only_required": true,
+    "live_execution_enabled": false,
+    "broker_order_submission_authorized": false
+  },
+  "preservation": {
+    "legacy_25_usd": "Owner reports the unrun 25 USD draft archived and earlier reports retained, excluded from qualification; no historical result relabeled.",
+    "validation": "Consumed validation remains consumed; repeated snapshots do not create independent evidence. Final 2026 holdout remains excluded according to owner records; no holdout contents inspected for this report.",
+    "prior_failures": "Prior failed and interrupted experiment claims are not cleared or restarted by this report.",
+    "atlas": "Atlas ICT governance and original Atlas/PTHHS files remain separate and unchanged by this documentation task.",
+    "weekly_report": "Existing weekly report retained; no duplicate weekly artifact created."
+  },
+  "qualification": {
+    "champion": null,
+    "qualified_leaderboard": [],
+    "current_account_profitability_demonstrated": false,
+    "actual_forward_activity_verified_by_this_review": false,
+    "paper_returns": null,
+    "current_simulated_equity": null,
+    "current_drawdown": null,
+    "note": "Starting capital is a policy value, not a verified current account balance. No inferred runtime uptime or actual paper fills."
+  },
+  "remaining_requirements": [
+    "Dated applicable costs, margins, eligibility and session evidence",
+    "Causal executable quotes; XAUUSD midpoint data remain reference-only and are not 1OZ futures fills",
+    "Sufficient unseen chronological validation, robustness and independent review",
+    "Independent activation review and verified forward evidence before qualification"
+  ],
+  "actions_in_this_snapshot": {
+    "tests_run": 0,
+    "experiments_started": 0,
+    "broker_calls": 0,
+    "settings_changed": false,
+    "remote_publication": false,
+    "scope_note": "Preparation-time actions only; any later review and publication must be recorded separately. No raw licensed data, private accounts or credentials included."
+  }
+}
