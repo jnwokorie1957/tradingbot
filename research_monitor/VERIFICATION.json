@@ -1,0 +1,18 @@
+{
+  "local_validation_date": "2026-10-27",
+  "dashboard_checks": "7 passed",
+  "existing_repository_checks": "172 passed",
+  "frontend_syntax": "node --check passed",
+  "browser_title": "Trade Dashboard",
+  "browser_observations": [
+    "Observed run changed automatically from queue item 1 to 2 and 3",
+    "Candle chart, eased processing cursor, progress and entry/exit log displayed",
+    "Equity, cash and signed dollar/percent P&L followed local producer snapshots",
+    "Responsive layout inspected in the Codex browser",
+    "Visible static wording excludes the two user-prohibited terms"
+  ],
+  "raw_market_data_committed": false,
+  "broker_orders_enabled": false,
+  "existing_pipeline_files_changed": false,
+  "qualification_claim": false
+}

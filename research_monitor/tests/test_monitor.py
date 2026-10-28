@@ -1,0 +1,75 @@
+import json,tempfile,threading,unittest,urllib.request,urllib.error
+from pathlib import Path
+from unittest.mock import patch
+from http.server import ThreadingHTTPServer
+from html.parser import HTMLParser
+from datetime import datetime,timezone
+from research_monitor.telemetry import Reporter
+from research_monitor.server import make_handler,STATIC
+from research_monitor.local_run import run_case
+
+class MonitorChecks(unittest.TestCase):
+    def test_snapshot_is_atomic_and_finite(self):
+        with tempfile.TemporaryDirectory() as d:
+            r=Reporter(d,0);r.begin('one','NAS100','5m','Pullback')
+            for i in range(305):r.candle(i,1,2,.5,1.5)
+            r.update(balance=501,equity=502);r.finish()
+            value=json.loads((Path(d)/'state.json').read_text())
+            self.assertEqual(value['status'],'completed');self.assertEqual(len(value['candles']),300)
+            self.assertEqual(value['candle_count'],305);self.assertFalse(list(Path(d).glob('*.tmp')))
+    def test_partial_candle_does_not_increment_count(self):
+        with tempfile.TemporaryDirectory() as d:
+            r=Reporter(d);r.begin('a','NAS100','5m','Pullback');r.candle(0,1,2,.5,1.2);r.candle(0,1,3,.5,2.2)
+            self.assertEqual(r.state['candle_count'],1);self.assertEqual(r.state['candles'][0]['high'],3)
+    def test_new_id_resets_state(self):
+        with tempfile.TemporaryDirectory() as d:
+            r=Reporter(d);r.begin('one','NAS100','5m','Pullback');r.event('entry',time=0,price=10)
+            r.begin('two','SPX500','15m','Breakout');self.assertEqual(r.state['events'],[])
+            self.assertEqual(r.state['balance'],500);self.assertEqual(r.state['id'],'two')
+    def test_server_denies_private_files_and_writes(self):
+        with tempfile.TemporaryDirectory() as d:
+            (Path(d)/'secret.txt').write_text('private')
+            server=ThreadingHTTPServer(('127.0.0.1',0),make_handler(d));thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
+            try:
+                root=f'http://127.0.0.1:{server.server_port}'
+                self.assertEqual(json.load(urllib.request.urlopen(root+'/api/state'))['status'],'idle')
+                for path in ['/secret.txt','/../secret.txt','/api/../secret.txt']:
+                    with self.assertRaises(urllib.error.HTTPError) as e:urllib.request.urlopen(root+path)
+                    self.assertEqual(e.exception.code,404)
+                with self.assertRaises(urllib.error.HTTPError) as e:urllib.request.urlopen(urllib.request.Request(root+'/api/state',data=b'{}',method='POST'))
+                self.assertEqual(e.exception.code,501)
+                with self.assertRaises(urllib.error.HTTPError) as e:urllib.request.urlopen(urllib.request.Request(root+'/',headers={'Host':'outside.example'}))
+                self.assertEqual(e.exception.code,403)
+            finally:server.shutdown();server.server_close();thread.join()
+    def test_visible_words_and_title(self):
+        class Text(HTMLParser):
+            def __init__(self):super().__init__();self.text=[]
+            def handle_data(self,data):self.text.append(data)
+        p=Text();p.feed((STATIC/'index.html').read_text(encoding='utf-8-sig'));value=' '.join(p.text).lower()
+        self.assertIn('trade dashboard',value)
+        for word in ['demo','test']:self.assertNotIn(word,value)
+    def case(self,decision,high=100,low=100):
+        start=decision-60
+        rows=[dict(t=start+i*60,open=100,high=high if i==2 else 100,low=low if i==2 else 100,close=100,spread=0,volume=1) for i in range(10)]
+        source={('NAS100',1):rows,('NAS100',5):[]}
+        meta=dict(trade_tick_size=.1,trade_tick_value_loss=.1,volume_min=1,volume_step=1,point=.1)
+        sig={decision:dict(side=1,stop=99,reference=100,decision=decision,entry_at=decision+60)}
+        with tempfile.TemporaryDirectory() as d:
+            r=Reporter(d,0)
+            with patch('research_monitor.local_run.signals',return_value=sig):
+                result=run_case(source,'NAS100',5,meta,dict(lookback=10,rr=1.,filter='none'),'Development',['2026-10-01'],r,0,1,1)
+            return result,r.state
+    def test_entry_has_real_causal_delay_and_adverse_ordering(self):
+        at=int(datetime(2026,10,1,14,0,tzinfo=timezone.utc).timestamp())
+        result,state=self.case(at,102,98)
+        entries=[e for e in state['events'] if e['kind']=='entry'];plans=[e for e in state['events'] if e['kind']=='plan']
+        self.assertEqual(len(entries),1);self.assertGreater(entries[0]['time'],plans[0]['time'])
+        self.assertEqual(result['outcomes'],1);self.assertLess(result['sum_R'],0)
+        self.assertEqual(result['status'],'completed');self.assertFalse(result['qualified'])
+    def test_decision_at_noon_cannot_fill_after_window(self):
+        at=int(datetime(2026,10,1,16,0,tzinfo=timezone.utc).timestamp())
+        result,state=self.case(at,102,98)
+        self.assertEqual(result['outcomes'],0);self.assertEqual(result['skips']['entry_outside_window'],1)
+        self.assertFalse(any(e['kind']=='entry' for e in state['events']))
+
+if __name__=='__main__':unittest.main()
