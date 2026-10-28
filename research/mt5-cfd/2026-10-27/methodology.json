@@ -1,0 +1,315 @@
+{
+  "registered_utc": "2026-10-28T02:44:25.458268+00:00",
+  "code_sha256": "f1ab6760f660514bc3e2968ee6944ed58b8ac3af99a17f929ac90070a75619ed",
+  "source_commit": "215ba44ba0a9119aaece4ff5823e0747b50f525f",
+  "authorized_cap_USD": 25.0,
+  "cap_scope": "User-authorized $25 per-trade screening ceiling only. No live/repository risk settings changed. 5% of initial $500. Remaining 1% portfolio ($5 initially), 2% daily pause and 10% equity-drawdown pause were not waived and are not simulated here.",
+  "original_risk_equity_cap_note": "The original 0.5% equity per-trade restriction is superseded only for this isolated $25 diagnostic. No claim that the remaining account rules permit these lots.",
+  "data_scope": "Same 30-day sample, all previously exposed. First15 observed NY sessions select variants; last7 are a reused chronological stability check, never an untouched holdout.",
+  "source_hashes": {
+    "NAS100_M15_30days.csv": "93293f225c92af36a198890c4eb917603b3661fb24bb94625203e6697868530c",
+    "NAS100_M1_30days.csv": "c310b0a0c7fd7ad93992d942c7eb58bbcb5f7a1805e1681f3689ff37f21dd2ab",
+    "NAS100_M5_30days.csv": "3b5443b77a478b12781b2499802cb6e604afa4b53a46ed09118363963b2565c6",
+    "SPX500_M15_30days.csv": "7a8621018765b09186c94bbb60f5e8d3fe5f0ae6d19b2f308ebc4facf713d04f",
+    "SPX500_M1_30days.csv": "471c0fad94cb3c30f61e56c71cb9a037b1450144b9b87fbdc765086e147311b3",
+    "SPX500_M5_30days.csv": "5465cf9fee875ac33b2da6e1c3b2966d59672745bc2af15501e57e15f0d1905c"
+  },
+  "variants_per_strategy": 24,
+  "variants": [
+    {
+      "id": "rr0.75_none_900",
+      "reward_risk": 0.75,
+      "filter": "none",
+      "end_clock": 900
+    },
+    {
+      "id": "rr0.75_none_720",
+      "reward_risk": 0.75,
+      "filter": "none",
+      "end_clock": 720
+    },
+    {
+      "id": "rr0.75_ema50_900",
+      "reward_risk": 0.75,
+      "filter": "ema50",
+      "end_clock": 900
+    },
+    {
+      "id": "rr0.75_ema50_720",
+      "reward_risk": 0.75,
+      "filter": "ema50",
+      "end_clock": 720
+    },
+    {
+      "id": "rr0.75_strong_close_900",
+      "reward_risk": 0.75,
+      "filter": "strong_close",
+      "end_clock": 900
+    },
+    {
+      "id": "rr0.75_strong_close_720",
+      "reward_risk": 0.75,
+      "filter": "strong_close",
+      "end_clock": 720
+    },
+    {
+      "id": "rr1.0_none_900",
+      "reward_risk": 1.0,
+      "filter": "none",
+      "end_clock": 900
+    },
+    {
+      "id": "rr1.0_none_720",
+      "reward_risk": 1.0,
+      "filter": "none",
+      "end_clock": 720
+    },
+    {
+      "id": "rr1.0_ema50_900",
+      "reward_risk": 1.0,
+      "filter": "ema50",
+      "end_clock": 900
+    },
+    {
+      "id": "rr1.0_ema50_720",
+      "reward_risk": 1.0,
+      "filter": "ema50",
+      "end_clock": 720
+    },
+    {
+      "id": "rr1.0_strong_close_900",
+      "reward_risk": 1.0,
+      "filter": "strong_close",
+      "end_clock": 900
+    },
+    {
+      "id": "rr1.0_strong_close_720",
+      "reward_risk": 1.0,
+      "filter": "strong_close",
+      "end_clock": 720
+    },
+    {
+      "id": "rr1.5_none_900",
+      "reward_risk": 1.5,
+      "filter": "none",
+      "end_clock": 900
+    },
+    {
+      "id": "rr1.5_none_720",
+      "reward_risk": 1.5,
+      "filter": "none",
+      "end_clock": 720
+    },
+    {
+      "id": "rr1.5_ema50_900",
+      "reward_risk": 1.5,
+      "filter": "ema50",
+      "end_clock": 900
+    },
+    {
+      "id": "rr1.5_ema50_720",
+      "reward_risk": 1.5,
+      "filter": "ema50",
+      "end_clock": 720
+    },
+    {
+      "id": "rr1.5_strong_close_900",
+      "reward_risk": 1.5,
+      "filter": "strong_close",
+      "end_clock": 900
+    },
+    {
+      "id": "rr1.5_strong_close_720",
+      "reward_risk": 1.5,
+      "filter": "strong_close",
+      "end_clock": 720
+    },
+    {
+      "id": "rr2.0_none_900",
+      "reward_risk": 2.0,
+      "filter": "none",
+      "end_clock": 900
+    },
+    {
+      "id": "rr2.0_none_720",
+      "reward_risk": 2.0,
+      "filter": "none",
+      "end_clock": 720
+    },
+    {
+      "id": "rr2.0_ema50_900",
+      "reward_risk": 2.0,
+      "filter": "ema50",
+      "end_clock": 900
+    },
+    {
+      "id": "rr2.0_ema50_720",
+      "reward_risk": 2.0,
+      "filter": "ema50",
+      "end_clock": 720
+    },
+    {
+      "id": "rr2.0_strong_close_900",
+      "reward_risk": 2.0,
+      "filter": "strong_close",
+      "end_clock": 900
+    },
+    {
+      "id": "rr2.0_strong_close_720",
+      "reward_risk": 2.0,
+      "filter": "strong_close",
+      "end_clock": 720
+    }
+  ],
+  "selection": "Development only: n>=20, win rate>60%, PF_R>=1.2, positive meanR, positive development stress sumR; choose highest baseline meanR, then more outcomes, then lexicographic id. If none meet these criteria, retain RR2/none/full-window as no-improvement comparator.",
+  "validation": "Freeze selected ids before executing last7. No re-selection after last7, alternate clock or stress results.",
+  "parameter_limits": "Fixed signal lookback20 and structural candle extreme stops. Rewards 0.75/1/1.5/2R; filters none/EMA50 direction+slope/strong directional close; windows10-15 or10-12 NY. One position per trial. Maximum holding1h, flatten15:55. No stop compression, martingale or averaged entries.",
+  "execution": "Same M1 bid bar model as previous test, next open60sec after completed signal, modeled ask=bid+spread. This revision rounds stress ask-spread up to tick and target distance toward entry. Stop-first collisions. Unknown commissions omitted, never treated as verified zero. Historical broker clock +3 primary, +2 sensitivity.",
+  "eligibility": "Current lot step/minimum and multiplier only; historical applicability, fees, margin and quotes unverified. Dollar sizing is a pre-fee illustration, no account equity return.",
+  "confidence": "Report Wilson binomial intervals descriptively; outcomes are dependent and selection is multiple testing, so intervals are not evidence of a >60% true win probability.",
+  "frozen_selection": {
+    "frozen_utc": "2026-10-28T02:44:28.049903+00:00",
+    "selected": {
+      "NAS100": {
+        "variant": {
+          "id": "rr2.0_none_900",
+          "reward_risk": 2.0,
+          "filter": "none",
+          "end_clock": 900
+        },
+        "passed_development_screen": false
+      },
+      "SPX500": {
+        "variant": {
+          "id": "rr2.0_none_900",
+          "reward_risk": 2.0,
+          "filter": "none",
+          "end_clock": 900
+        },
+        "passed_development_screen": false
+      }
+    },
+    "selection_data": "first15 only; previously exposed data"
+  },
+  "followup_and_balance_protocol": {
+    "registered_utc": "2026-10-28T02:46:22.155706+00:00",
+    "kind": "small_sample_followup_not_a_screen_pass",
+    "variants": {
+      "NAS100": {
+        "id": "rr1.0_none_720",
+        "reward_risk": 1.0,
+        "filter": "none",
+        "end_clock": 720
+      },
+      "SPX500": {
+        "id": "rr1.0_none_720",
+        "reward_risk": 1.0,
+        "filter": "none",
+        "end_clock": 720
+      }
+    },
+    "reason": "Development-only morning1R variants exceeded60%, with only11 NAS and19 SPX outcomes. Both had positive stress development R. The n>=20 rule remains unchanged; no qualification or selected-winner replacement.",
+    "balance_method": "Each row restarts at $500. Full30day rows carry cash continuously. Two conditional models: isolated $25 per-trade cap, and remaining-limits model with min($25,1% current equity), 2% daily pause and 10% drawdown halt. Current minimum lots/steps, frozen natural stops and modeled costs. Minute-open equity marks. Fees excluded and margin assumed feasible, never verified. No balance is a claimed real account return.",
+    "source_code_sha256": "665c6ec897ae95b91ff8c420a52b68972641dea66401e0655d056f6d37b7ef47",
+    "original_freeze": {
+      "registered_utc": "2026-10-28T02:45:57.475996+00:00",
+      "kind": "small_sample_followup_not_a_screen_pass",
+      "variants": {
+        "NAS100": {
+          "id": "rr1.0_none_720",
+          "reward_risk": 1.0,
+          "filter": "none",
+          "end_clock": 720
+        },
+        "SPX500": {
+          "id": "rr1.0_none_720",
+          "reward_risk": 1.0,
+          "filter": "none",
+          "end_clock": 720
+        }
+      },
+      "reason": "Development-only morning1R variants exceeded60%, with only11 NAS and19 SPX outcomes. Both had positive stress development R. The n>=20 rule remains unchanged; no qualification or selected-winner replacement.",
+      "balance_method": "Each row restarts at $500. Full30day rows carry cash continuously. Two conditional models: isolated $25 per-trade cap, and remaining-limits model with min($25,1% current equity), 2% daily pause and 10% drawdown halt. Current minimum lots/steps, frozen natural stops and modeled costs. Minute-open equity marks. Fees excluded and margin assumed feasible, never verified. No balance is a claimed real account return.",
+      "source_code_sha256": "c37c06ed69e70d320cbcc8a53de316f2a1c04d3e25f31adfc23a3c9c8bbec3cf"
+    },
+    "implementation_repair": "Latch a triggered daily pause for the rest of the day, including a recovery before the next-open exit. No signal, target, filter, selection, cap or cost parameter changed."
+  },
+  "initial_screen_protocol": {
+    "registered_at_utc": "2026-10-28T02:37:44.096473+00:00",
+    "repo": "https://github.com/jnwokorie1957/tradingbot",
+    "commit": "215ba44ba0a9119aaece4ff5823e0747b50f525f",
+    "purpose": "CFD transfer, unconstrained signal-outcome diagnostics; not a governed account backtest or strategy qualification",
+    "evaluated_data_hashes": {
+      "NAS100_M15_30days.csv": "93293f225c92af36a198890c4eb917603b3661fb24bb94625203e6697868530c",
+      "NAS100_M1_30days.csv": "c310b0a0c7fd7ad93992d942c7eb58bbcb5f7a1805e1681f3689ff37f21dd2ab",
+      "NAS100_M5_30days.csv": "3b5443b77a478b12781b2499802cb6e604afa4b53a46ed09118363963b2565c6",
+      "SPX500_M15_30days.csv": "7a8621018765b09186c94bbb60f5e8d3fe5f0ae6d19b2f308ebc4facf713d04f",
+      "SPX500_M1_30days.csv": "471c0fad94cb3c30f61e56c71cb9a037b1450144b9b87fbdc765086e147311b3",
+      "SPX500_M5_30days.csv": "5465cf9fee875ac33b2da6e1c3b2966d59672745bc2af15501e57e15f0d1905c"
+    },
+    "warmup_data_hashes": {
+      "NAS100_M1.pkl": "ca9bf8cef91fd8e02142bd5ed5ae55b5b6faaaad445bf558fd7920e631e6ed38",
+      "NAS100_M15.pkl": "48324b0f2d426a2effddcdf3692ece2ba4a08fa4d18e7dc8e9ba33aad4ccc8b6",
+      "NAS100_M5.pkl": "c6f1519573d79f05a78ae05e6f6c95095c43c7a46e5ec2e4e7d632bf0c9abddd",
+      "SPX500_M1.pkl": "5058a209e4db748e049e8805f166c8a65246eb2b7aed92bd0c7a97089f77a140",
+      "SPX500_M15.pkl": "7b4d15f6c8fee0ee1055a379ba13258e7c808fb5186cbab623a8359cc1b5f556",
+      "SPX500_M5.pkl": "c5af2617db7c2fd472a177fbe2b61d175c4be3943bdf38ff684bfac6157daa7d"
+    },
+    "code_sha256": "523b39ddc5c316aee897e7afb2c7e0f194b091b4754d711a14a5b845c947f1cf",
+    "strategies": {
+      "orb": 5,
+      "closing": 5,
+      "squeeze": 15,
+      "rsi2": 5,
+      "breakout": [
+        1,
+        5,
+        15
+      ],
+      "pullback": [
+        1,
+        5,
+        15
+      ]
+    },
+    "scenarios": {
+      "gross": [
+        0,
+        0
+      ],
+      "spread_slippage": [
+        1,
+        1
+      ],
+      "stress": [
+        1.5,
+        2
+      ]
+    },
+    "clocks": {
+      "primary": "fixed broker UTC+3, based on capture clock; historical mapping unverified",
+      "sensitivity": "fixed broker UTC+2, a sensitivity case, not an estimate"
+    },
+    "split": "No optimization. First 15 observed NY evaluation sessions are development, remaining sessions chronological check. All are now consumed exploratory data, not certified unseen holdout.",
+    "execution": "Bid OHLC; modeled ask=bid+bar spread*point. Entries at next M1 open strictly 60 seconds after completed-bar decision. Exit quote sides respected. Stop first when both stop/target hit. Target prices get no favorable gap improvement. Market-stop gaps fill at adverse open. No tick path is inferred.",
+    "differences_from_repo": [
+      "NAS100/SPX500 are broker CFDs, not MNQ/MES futures; no futures-performance claim.",
+      "Existing breakout/pullback signal kernel reused; all 3 exported timeframes tested at fixed default lookback20/reward2.",
+      "Baseline entry window10:00-15:00 NY and flatten15:55 are explicit CFD session adaptations; maximum holding1h.",
+      "First-tick ORB crossing approximated with M1 OHLC crossing and stop-first ordering.",
+      "Fixed daily ATR uses prior14 complete RTH true ranges; earlier broker M5 bars are warmup only.",
+      "M1 spread is a within-bar proxy, not historical executable ask data. Commission omitted because unknown, not assumed zero for tradability.",
+      "No equity, position sizing, margin, portfolio allocation, daily-loss or drawdown-halt simulation. R drawdown is closed-outcome diagnostic, not account drawdown.",
+      "Minimum-lot risk illustration uses current metadata, not historical admissibility. No execution risk gate is opened."
+    ],
+    "not_tested": {
+      "3 Noise-band VWAP": "No actual traded volume; tick volume is not a substitute",
+      "5 VWAP reclaim": "No actual traded volume",
+      "4 Twelve-month trend": "13 month-end observations missing; FX-specific specification",
+      "8 London post-fix reversal": "FX-specific",
+      "9 European morning currency selling": "FX-specific",
+      "10 Month-end FX hedging": "FX and cross-country equity inputs missing"
+    },
+    "performance_claim": "No strategy may be qualified, selected for execution or promoted from these results."
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "existing_repository_suite": "172 tests passed on unchanged source commit215ba44",
+  "diagnostic_suite": "18 tests passed: original12 plus6 improvement/balance tests",
+  "original_screen_checks": "120 summaries reconciled, no unresolved exits, six earlier-data prefix checks passed",
+  "balance_checks": "All96 conditional account comparisons reconciled to private ledgers; planned risk bounds and non-overlapping entries checked",
+  "source_code_hashes": {
+    "backtest_indices.py": "523b39ddc5c316aee897e7afb2c7e0f194b091b4754d711a14a5b845c947f1cf",
+    "improve_strategies.py": "f1ab6760f660514bc3e2968ee6944ed58b8ac3af99a17f929ac90070a75619ed",
+    "add_balances.py": "665c6ec897ae95b91ff8c420a52b68972641dea66401e0655d056f6d37b7ef47",
+    "test_improvements.py": "711b0d75382a63aea356e8f2cc14a844ce8cc8b970044923b9ce504833a6e95f"
+  },
+  "publication_scope": "Aggregate diagnostics only. Raw quotes/bars, trade-level ledgers, credentials, account identifiers, logs and local runtime files excluded.",
+  "qualification": "None. Simulations before unknown commissions; historical clock, quote paths and margins remain unverified."
+}
