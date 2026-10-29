@@ -17,13 +17,14 @@ def evidence():
         dataset_hash='a'*64,protocol_hash='b'*64,result_hash='c'*64,trades=300,trade_days=30,
         win_rate=.61,profit_factor=1.6,net_expectancy=.1,expectancy_ci_lower=.01,drawdown=.05)
 
-def paper():
-    return dict(kind='local_forward',reviewed=True,trades=30,review_reference='test-only review',
+def paper(version='1'):
+    return dict(strategy='s',version=version,protocol_hash='b'*64,validation_result_hash='c'*64,result_hash='d'*64,
+                kind='local_forward',reviewed=True,trades=30,review_reference='test-only review',
                 risk_controls_pass=True,net_expectancy=.01)
 
 def comparison(incumbent=None):
     return dict(incumbent=incumbent,preregistration='test-only precommit',review_reference='test-only review',
-        same_conditions=True,meaningful_improvement=True,protocol_hash='b'*64,challenger_result_hash='c'*64)
+        same_conditions=True,meaningful_improvement=True,protocol_hash='b'*64,challenger_result_hash='c'*64,forward_result_hash='d'*64)
 
 class ResearchWorkflowTests(unittest.TestCase):
     def setUp(self):
@@ -57,9 +58,9 @@ class ResearchWorkflowTests(unittest.TestCase):
         self.w.transition('s','1','CANDIDATE','reviewed',evidence())
         self.w.promote('s','1',evidence(),comparison(),paper())
         self.w.register('s','2',SPEC);self.w.transition('s','2','CANDIDATE','reviewed',evidence())
-        with self.assertRaises(ValueError):self.w.promote('s','2',evidence(),comparison(),paper())
+        with self.assertRaises(ValueError):self.w.promote('s','2',evidence(),comparison(),paper('2'))
         self.assertEqual(self.w.snapshot()['champion']['version'],'1')
-        self.w.promote('s','2',evidence(),comparison(['s','1']),paper())
+        self.w.promote('s','2',evidence(),comparison(['s','1']),paper('2'))
         self.assertEqual(self.w.snapshot()['champion']['version'],'2')
         # Reviewed rollback follows the same evidence gate and retains both versions.
         self.w.promote('s','1',evidence(),comparison(['s','2']),paper())
@@ -69,6 +70,31 @@ class ResearchWorkflowTests(unittest.TestCase):
         with self.assertRaises(ValueError):self.w.transition('s','1','RESEARCH','retry')
         with self.assertRaises(sqlite3.IntegrityError):self.w.register('s','1',SPEC)
         self.assertEqual(self.w.snapshot()['registry'][0]['state'],'RETIRED')
+    def test_forward_bindings_fail_closed_without_state_or_journal_change(self):
+        self.w.transition('s','1','CANDIDATE','reviewed',evidence())
+        before=self.w.db.execute('SELECT COUNT(*) FROM records').fetchone()[0]
+        for field in ('strategy','version','protocol_hash','validation_result_hash','result_hash'):
+            for value in (None,'wrong'):
+                p=paper()
+                if value is None: del p[field]
+                else:p[field]=value
+                with self.subTest(field=field,value=value),self.assertRaises(ValueError):
+                    self.w.promote('s','1',evidence(),comparison(),p)
+        for value in (None,'e'*64):
+            c=comparison();c['forward_result_hash']=value
+            with self.assertRaises(ValueError):self.w.promote('s','1',evidence(),c,paper())
+        self.assertIsNone(self.w.snapshot()['champion'])
+        self.assertEqual(before,self.w.db.execute('SELECT COUNT(*) FROM records').fetchone()[0])
+    def test_stale_validation_receipt_rejected_even_with_matching_payload_bindings(self):
+        old=evidence();new=evidence();new['result_hash']='e'*64
+        self.w.transition('s','1','CANDIDATE','first',old)
+        self.w.transition('s','1','CANDIDATE','new receipt',new)
+        with self.assertRaises(ValueError):self.w.promote('s','1',old,comparison(),paper())
+        self.assertIsNone(self.w.snapshot()['champion'])
+        p=paper();p['validation_result_hash']='e'*64
+        c=comparison();c['challenger_result_hash']='e'*64
+        self.w.promote('s','1',new,c,p)
+        self.assertEqual(self.w.snapshot()['champion']['version'],'1')
     def test_cycle_claim_survives_restart(self):
         self.w.cycle('2026-10-27T15:00:00Z',[],['no admitted quotes'])
         self.w.close();self.w=Workflow(self.path)

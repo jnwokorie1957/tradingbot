@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-29",
+  "scope": "synthetic deterministic governance tests only",
+  "command": "python -m unittest discover -s tests -p test_research_workflow.py -v",
+  "tests": 22,
+  "failures": 0,
+  "errors": 0,
+  "exit_code": 0,
+  "seconds": 109.304,
+  "independent_code_review": "approved; not independently executed tests",
+  "market_experiments": 0,
+  "broker_calls": 0,
+  "real_promotions": 0
+}

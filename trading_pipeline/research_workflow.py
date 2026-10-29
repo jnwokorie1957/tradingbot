@@ -115,6 +115,15 @@ class Workflow:
             self.journal._append(strategy,'research_transition',dict(version=version,old=old[0],new=state,reason=reason,evidence=evidence))
     def promote(self,strategy,version,evidence,comparison,paper):
         if assessment(evidence): raise ValueError('validation incomplete')
+        if (paper.get('strategy') != strategy or paper.get('version') != version
+                or paper.get('protocol_hash') != evidence['protocol_hash']
+                or paper.get('validation_result_hash') != evidence['result_hash']):
+            raise ValueError('forward identity/validation binding mismatch')
+        receipt=paper.get('result_hash')
+        if (not isinstance(receipt,str) or len(receipt)!=64
+                or any(c not in '0123456789abcdef' for c in receipt)
+                or comparison.get('forward_result_hash') != receipt):
+            raise ValueError('reviewed forward result binding required')
         if paper.get('kind') not in ('local_forward','ibkr_paper') or paper.get('reviewed') is not True:
             raise ValueError('reviewed forward evidence required')
         if type(paper.get('trades')) is not int or paper['trades']<30 or not paper.get('review_reference'):
@@ -131,6 +140,13 @@ class Workflow:
             self.db.execute('BEGIN IMMEDIATE')
             row=self.db.execute('SELECT state FROM research_state WHERE strategy=? AND version=?',(strategy,version)).fetchone()
             if not row or row[0]!='CANDIDATE': raise ValueError('candidate state required')
+            latest=None
+            for (payload,) in self.db.execute("SELECT payload FROM records WHERE experiment=? AND kind IN ('research_transition','champion_promotion') ORDER BY seq",(strategy,)):
+                saved=json.loads(payload)
+                if saved.get('version')==version and saved.get('evidence'):
+                    latest=saved['evidence']
+            if latest is None or canonical(latest)!=canonical(evidence):
+                raise ValueError('stale candidate validation receipt')
             old=self.db.execute("SELECT strategy,version FROM research_state WHERE state='CHAMPION'").fetchone()
             if comparison.get('incumbent') != (list(old) if old else None): raise ValueError('stale incumbent comparison')
             if old:self.db.execute("UPDATE research_state SET state='CANDIDATE' WHERE strategy=? AND version=?",old)
