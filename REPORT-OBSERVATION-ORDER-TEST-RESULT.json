@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-30",
+  "scope": "synthetic reporting only",
+  "new_tests": 4,
+  "existing_regressions": 2,
+  "tests": 6,
+  "failures": 0,
+  "errors": 0,
+  "seconds": 31.811,
+  "exit_code": 0,
+  "selection": [
+    "tests.test_report_observation_order.ObservationOrderTests",
+    "tests.test_research_workflow.ResearchWorkflowTests.test_daily_report_idempotent_and_dated",
+    "tests.test_research_workflow.ResearchWorkflowTests.test_weekly_previous_completed_week_not_current_results"
+  ],
+  "review": "Independent static code review approved; tests executed by author",
+  "market_runs": 0,
+  "broker_probes": 0
+}

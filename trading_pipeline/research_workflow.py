@@ -230,15 +230,22 @@ class Workflow:
         report_id=f'research-report:{kind}:{start}:{end}'
         existing=self.db.execute("SELECT payload FROM records WHERE experiment=? AND kind='research_report_completed'",(report_id,)).fetchone()
         if existing:return json.loads(existing[0])
-        self.journal.claim(report_id,digest(dict(kind=kind,start=str(start),end=str(end))))
         cycles=[]
-        for (encoded,) in self.db.execute("SELECT payload FROM records WHERE kind='research_cycle_completed' ORDER BY seq"):
+        for seq,encoded in self.db.execute("SELECT seq,payload FROM records WHERE kind='research_cycle_completed' ORDER BY seq"):
             c=json.loads(encoded)
-            d=instant(c['observed_at']).astimezone(ZoneInfo('America/Chicago')).date()
-            if start<=d<=end:cycles.append(c)
+            try:
+                observed=instant(c['observed_at'])
+            except (KeyError,TypeError,AttributeError,ValueError,OverflowError) as exc:
+                raise ValueError(f'invalid cycle observation timestamp at journal sequence {seq}') from exc
+            d=observed.astimezone(ZoneInfo('America/Chicago')).date()
+            if start<=d<=end:cycles.append((observed,seq,c))
+        # Reject malformed receipts before claiming; preserve journal completion order.
+        self.journal.claim(report_id,digest(dict(kind=kind,start=str(start),end=str(end))))
         result=dict(kind=kind,created_at=at,period_start=str(start),period_end=str(end),
             timezone='America/Chicago',observed_cycles=len(cycles),
-            last_observed_snapshot=cycles[-1] if cycles else None,
+            last_observed_snapshot=max(cycles,key=lambda item:(item[0],item[1]))[2] if cycles else None,
+            last_recorded_snapshot=cycles[-1][2] if cycles else None,
+            observation_selection='greatest UTC observed_at; equal instants use greatest journal sequence',
             evidence_gap=not bool(cycles),
             note='No cycles means no evidence for this period, not zero trading activity. Older reports remain separate historical evidence.',
             broker_execution_enabled=False)
