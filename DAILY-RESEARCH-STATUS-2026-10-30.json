@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "kind": "daily_research_status",
+  "reporting_date": "2026-10-30",
+  "timezone": "America/Chicago",
+  "artifact_state": "prepublication_snapshot_pending_independent_document_review",
+  "base_commit": "1ac2aa65bde75e942ddeffcb123e0d4dbbb83eac",
+  "previous_daily_report": "DAILY-RESEARCH-STATUS-2026-10-29.json",
+  "scope": "Documentation reconciliation only; no experiments or tests rerun for this report.",
+  "evidence": {
+    "repository": "At October 30 06:42 UTC, main and complete tree confirmed the base commit and absence of the October 30 daily report. Local candidate listing was empty. Recheck before publication.",
+    "coordination": "October 30 task inventory showed the existing research owner idle. No active competing writer observed. The no-conflicting-publication handoff carried in earlier reports was October 28 evidence, not renewed confirmation.",
+    "baseline_batch": {
+      "owner_reported_completed_at": "2026-10-28T15:27-05:00",
+      "timestamp_precision": "minute",
+      "variants": 224,
+      "qualified_strategies": 0,
+      "compliant_admissions": 0
+    },
+    "expanded_batch": {
+      "owner_reported_completed_at": "2026-10-28T15:49-05:00",
+      "timestamp_precision": "minute",
+      "variants": 672,
+      "qualified_strategies": 0,
+      "compliant_admissions": 0
+    },
+    "interpretation": "Historical-data exploratory research under assumed costs, including unfunded reference diagnostics. Variant counts are not independent strategies, completed funded trades, synthetic fixture counts or proof of profitability. Do not sum overlapping batches as independent evidence.",
+    "tests": {
+      "date": "2026-10-28",
+      "author_recorded_passes": 28,
+      "source": "October 28 research task command output and October 28 owner handoff, carried forward from the published previous report",
+      "standalone_machine_readable_receipt": false,
+      "independently_rerun": false,
+      "qualification_review": false
+    },
+    "earlier_verification": "At 18:50 UTC on October 28 the bot owner read correction code/test logs and the 18:34:52 UTC baseline batch: 224 variants, zero compliant admissions and zero qualified strategies. This is prior evidence, not a new run.",
+    "freshness": "October 28 batch/test facts below are carried forward unchanged from prior published reports. No newer market experiment receipts obtained. Current runtime and current performance remain unknown. The separate October 29 code/test receipt is historical software evidence only.",
+    "promotion_binding_fix": {
+      "published_commit": "1ac2aa65bde75e942ddeffcb123e0d4dbbb83eac",
+      "date": "2026-10-29",
+      "change": "Fail-closed forward strategy/version, protocol and result-receipt bindings; superseded candidate validation receipts rejected; atomic reviewed swap and rollback retained.",
+      "test_receipt": "PROMOTION-BINDING-TEST-RESULT.json",
+      "scope": "synthetic deterministic governance tests only",
+      "command": "python -m unittest discover -s tests -p test_research_workflow.py -v",
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "exit_code": 0,
+      "seconds": 109.304,
+      "independent_code_review": "approved; not independently executed tests",
+      "market_experiments": 0,
+      "broker_calls": 0,
+      "real_promotions": 0,
+      "review_limit": "Independent code review approved; 22 tests executed by author, not independently rerun. Receipt consistency checks do not prove external attestation authenticity. No real strategy promotion."
+    }
+  },
+  "risk_policy": {
+    "starting_simulated_equity_usd": 500,
+    "planned_all_in_trade_risk": "min(0.005 * current equity, 2.50 USD, any lower configured cap)",
+    "portfolio_risk_fraction": 0.01,
+    "daily_pause_fraction": 0.02,
+    "drawdown_pause_fraction": 0.1,
+    "whole_contracts_required": true,
+    "structural_stops_preserved": true,
+    "session_duplicate_opposite_exposure_guards": "retained",
+    "missing_or_infeasible_execution_evidence": "skip",
+    "broker_read_only_required": true,
+    "live_execution_enabled": false,
+    "broker_order_submission_authorized": false
+  },
+  "preservation": {
+    "legacy_25_usd": "October 28 owner reported the unrun 25 USD draft archived and earlier reports retained, excluded from qualification. Not freshly reaudited.",
+    "validation": "October 28 owner records stated consumed validation retained and final 2026 holdout excluded. No holdout contents inspected and no new audit performed. Those boundaries remain required.",
+    "prior_failures": "Prior failed and interrupted experiment claims are not cleared or restarted by this report.",
+    "atlas": "Atlas ICT governance and original Atlas/PTHHS files remain separate and unchanged by this documentation task.",
+    "weekly_report": "Existing weekly report retained; no duplicate weekly artifact created."
+  },
+  "qualification": {
+    "champion": null,
+    "qualified_leaderboard": [],
+    "current_account_profitability_demonstrated": false,
+    "actual_forward_activity_verified_by_this_review": false,
+    "paper_returns": null,
+    "current_simulated_equity": null,
+    "current_drawdown": null,
+    "note": "Starting capital is a policy value, not a verified current account balance. No inferred runtime uptime or actual paper fills."
+  },
+  "remaining_requirements": [
+    "Dated applicable costs, margins, eligibility and session evidence",
+    "Causal executable quotes; XAUUSD midpoint data remain reference-only and are not 1OZ futures fills",
+    "Sufficient unseen chronological validation, robustness and independent review",
+    "Independent activation review and verified forward evidence before qualification"
+  ],
+  "actions_in_this_snapshot": {
+    "tests_run": 0,
+    "experiments_started": 0,
+    "broker_calls": 0,
+    "settings_changed": false,
+    "remote_publication": false,
+    "scope_note": "Preparation-time actions only; any later review and publication must be recorded separately. No raw licensed data, private accounts or credentials included."
+  },
+  "created_at_utc": "2026-10-30T06:42:44Z"
+}
