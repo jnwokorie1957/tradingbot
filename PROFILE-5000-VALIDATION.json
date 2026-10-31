@@ -1,0 +1,14 @@
+{
+  "checked_at_utc": "2026-10-31T01:31:39.406497+00:00",
+  "scope": "JSON configuration and risk arithmetic validation only; no runtime or market test",
+  "profile_sha256": "fc4af9211eeba439c698274e9400a5fb8bc8114272687c4c0b3b2258d65a7467",
+  "cap_arithmetic_usd": {
+    "100": 0.5,
+    "500": 2.5,
+    "5000": 2.5,
+    "25000": 2.5
+  },
+  "runtime_activated": false,
+  "market_experiments_run": 0,
+  "profile_validation": "pass"
+}
