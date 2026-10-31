@@ -3,7 +3,10 @@
 Prepared October 31, 2026 UTC. New research profile: $5,000 starting equity,
 $25,000 aspiration. This does not reset or overwrite the $500 studies. It is a
 versioned research configuration, not an activated runner or a qualified strategy.
-The fixed $2.50 all-in trade cap remains. A proposed $25 cap is pending confirmation.
+At 01:36 UTC the user approved the NEW profile's all-in cap as
+min(0.5% current equity, $25, any lower configured cap). Legacy profiles retain
+$2.50. The diagnosis below preserves the earlier $2.50 comparison as historical
+context; the new profile is not activated and no admission gate is waived.
 No market experiment, broker call or runtime restart was performed for this note.
 
 ## What actually blocked progress
@@ -63,21 +66,28 @@ The following are **zero-cost mathematical ceilings**, not feasible trade sizes:
 | MCL | 2 | 25 |
 
 Real ceilings are lower after costs. Neither column authorizes execution. The
-$25 column is illustrative only; no profile or running process uses it here.
+$25 column remains a zero-cost illustration, not an execution permission. The
+new profile now specifies the approved $25 cap; no running process is activated.
 At $5,000, retained percentage limits imply $50 open portfolio exposure, $100
 daily pause and $500 peak-to-trough drawdown threshold, subject to existing
-definitions and any stricter controls. Individual planned risk stays at $2.50.
+definitions and any stricter controls. New-profile individual planned risk is now
+min(0.5% equity, $25, any lower configured cap), including costs.
 
 ## Corrections and remaining work
 
-The separate worker owner applied status-only source changes and reported five
-mocked regression passes. Those changes distinguish completed collection from
-zero additional rows and label batching units. No running worker was restarted;
-source edits are not proof of deployment. The first independent review requested
-correction: malformed or unreadable completion metadata could terminate the
-expanded worker. Owner correction and second review were pending at preparation;
-the five mocked passes did not resolve that finding. Later worker receipts must
-be consulted separately for the correction and deployment status.
+The separate worker owner applied status-only source changes, then corrected a
+defect identified in the first independent review: malformed or unreadable
+completion metadata could terminate the expanded worker. The corrected source
+passed eight owner-executed mocked tests (0.165 seconds) and the second independent
+static review approved it. The reviewer did not rerun tests. Those changes
+distinguish completed collection from zero additional rows and label batching
+units. No running worker was restarted; deployment remains unverified.
+Reviewed expanded-worker SHA256:
+`aea730d9313adda53100f2a6804465eedc8fb5b1c97153f39260286fe7b773c4`;
+test SHA256: `8d1d671bd8ba1c9baf4b6f86d2de3ea8132845494636c16802f0b667c6b31ce0`;
+test receipt SHA256: `650fe3630255e333c176e910a24a99ac373fb1a88d790c83639565c82fa1750b`.
+This paragraph supersedes the preparation-time pending-review wording in the
+previous commit; it does not imply deployment or experiment authorization.
 
 This profile is not wired into the existing runner yet. Activation must bind a
 new experiment identity and reviewed effective execution inputs without replaying

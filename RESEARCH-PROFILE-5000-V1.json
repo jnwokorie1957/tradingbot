@@ -8,12 +8,19 @@
   "aspirational_equity": 25000,
   "aspiration_is_guarantee": false,
   "trade_fraction": 0.005,
-  "trade_dollar_cap": 2.5,
-  "risk_formula": "min(0.005 * current_equity, 2.50, any lower configured cap)",
-  "risk_includes": ["structural_stop_loss", "commissions", "exchange_and_regulatory_fees", "spread", "slippage", "applicable_financing_and_roll_costs"],
+  "trade_dollar_cap": 25,
+  "risk_formula": "min(0.005 * current_equity, 25.00, any lower configured cap)",
+  "risk_includes": [
+    "structural_stop_loss",
+    "commissions",
+    "exchange_and_regulatory_fees",
+    "spread",
+    "slippage",
+    "applicable_financing_and_roll_costs"
+  ],
   "portfolio_fraction": 0.01,
   "daily_pause": 0.02,
-  "drawdown_pause": 0.10,
+  "drawdown_pause": 0.1,
   "whole_contracts_only": true,
   "live_execution_enabled": false,
   "broker_orders_enabled": false,
@@ -23,6 +30,12 @@
   "historical_500_profile_and_claims": "preserve_unchanged",
   "reused_validation": "exploratory_only_never_fresh_oos",
   "automatic_claim_replay": false,
-  "runtime_activation_requires": ["explicit_profile_binding", "independent_review", "admitted_data", "verified_effective_execution_inputs", "existing_qualification_and_risk_gates"],
-  "proposed_25_dollar_cap": "not_authorized_or_activated_in_this_profile"
+  "runtime_activation_requires": [
+    "explicit_profile_binding",
+    "independent_review",
+    "admitted_data",
+    "verified_effective_execution_inputs",
+    "existing_qualification_and_risk_gates"
+  ],
+  "risk_cap_authorization": "explicit user approval 2026-10-31 01:36 UTC; new profile only"
 }
