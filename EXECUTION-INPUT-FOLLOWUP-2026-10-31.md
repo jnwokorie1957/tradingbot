@@ -65,6 +65,17 @@ causal historical replay. It is not admitted as a next-quote execution stream,
 not proof of continuous connectivity, and not evidence that local Gateway works.
 No repeated snapshots or connection retries were performed.
 
+Session clarification (01:42 UTC follow-up): the snapshot was taken after the
+Friday October 30 regular close, 16:00 Chicago / 21:00 UTC. FROZEN is consistent
+with market closure and does not demonstrate missing subscription or broken
+connection. The regular next opening is November 1 at 17:00 CST / 23:00 UTC,
+accounting for the DST change, subject to exchange notices. Sources:
+https://www.cmegroup.com/trading/equity-index/files/cme-micro-e-mini-futures-fact-card.pdf
+and https://www.cmegroup.com/trading-hours.html . IBKR distinguishes frozen from
+delayed-frozen and describes frozen data as the last market-close quote:
+https://www.interactivebrokers.com/docs/tws-api/doc/md/delayed-data . No exact quote
+event timestamp was returned; entitlement and local Gateway health remain unproven.
+
 Minimum missing evidence: timestamped bid/ask with source/delay status and sizes,
 contract/expiry and event ordering after each completed signal bar; full required
 date coverage and gaps; volume semantics for VWAP; contemporaneous fees, margin,
@@ -89,6 +100,21 @@ and whether the account is direct/non-member with any pricing add-ons. No accoun
 number, balance, credentials or new permission is requested. Gold additionally
 needs the exact executable product/quantity/shorting specification.
 
+A further public-source lookup found IBKR's Australia-hosted table:
+https://www.interactivebrokers.com.au/en/trading/marginRequirements/marginFutures.php .
+It labels exchange margin requirements. Observed USD intraday initial / overnight
+initial: MNQ 3340.76 / 4772.52, MES 2031.34 / 2901.91, MCL 2097.48 / 2097.48.
+This is a research reference, not a personalized or historical margin receipt;
+broker entity, account type, house add-ons, expiry overrides and effective time
+remain unresolved. Do not infer the user's account is Australian or eligible.
+
+Next bounded check: in an existing authorized cycle after the regular Sunday open,
+recheck session exceptions and exact contract, then request one quote snapshot.
+Record receipt UTC, data type, bid/ask validity and any event timestamp. Stop on
+frozen/delayed/empty/error; no loop, restart or subscription change. Even live
+quotes establish point-in-time access only, not historical coverage or an ordered
+forward feed. No new schedule or activation is installed by this plan.
+
 ## Evidence exposure correction
 
 During metadata inspection, prefixes of two saved October 26, 2026 instrument
@@ -99,3 +125,12 @@ to this reviewing agent. Preserve original claims; quarantine the affected windo
 from future independent holdout claims pending evidence review. The wider sealed
 dataset was not opened, and no consumed experiment was rerun. Subsequent metadata
 inspection explicitly selected non-row fields. This incident is not a test result.
+
+Conservative boundary record: both files' metadata requests span
+[2026-10-26T00:00:00Z, 2026-10-27T00:00:00Z), but each reports 2880 received rows.
+Actual row boundaries were not reopened to resolve this discrepancy. Treat BOTH
+ENTIRE probe files as exposed regardless of timestamp. Until an independent
+provenance review reconciles scope without further disclosure to this agent, do
+not assert any 2026 XAUUSD/MCL interval wholly unseen to this reviewing agent.
+The owner received this exclusion record; runtime enforcement is not verified.
+Original claims, ORB specification and source data remain unchanged.
