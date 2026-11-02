@@ -1,0 +1,77 @@
+{
+  "registered_utc": "2026-11-02T19:33:15.512449+00:00",
+  "request": "SPX50015m fixed1.5R plus NAS10015m fixed2R; exclude NAS5. Shared5000USD account. Preserve original entryconditions,naturalstops,holdingdeadlines,risklimits.",
+  "dates": [
+    "2025-12-15",
+    "2026-10-30"
+  ],
+  "styles": {
+    "SPX15": "original",
+    "NAS15": "fixed_2"
+  },
+  "approved_risk": {
+    "initial_equity": 5000.0,
+    "per_trade_equity_pct": 0.005,
+    "per_trade_dollar_ceiling": 25.0,
+    "portfolio_equity_pct": 0.01,
+    "daily_loss_pause_pct": 0.02,
+    "drawdown_pause_pct": 0.1,
+    "daily_trade_count_limit": null,
+    "paper_only": true
+  },
+  "costs": {
+    "standard": {
+      "spread": 1.0,
+      "fee": 6.0,
+      "slip_ticks": 1,
+      "exit_delay": 0.0,
+      "margin_multiplier": 1.0
+    },
+    "higher": {
+      "spread": 1.5,
+      "fee": 12.0,
+      "slip_ticks": 2,
+      "exit_delay": 0.0,
+      "margin_multiplier": 1.0
+    },
+    "severe": {
+      "spread": 2.0,
+      "fee": 18.0,
+      "slip_ticks": 4,
+      "exit_delay": 1.0,
+      "margin_multiplier": 2.0
+    }
+  },
+  "method": "Fresh shared chronological replay,not subtraction of NAS5 losses. Compare archived two-lane1.5R/1.5R standard/higher; new severe1.5R/1.5R comparator because no archived severe exists. Independently reconstruct all new full quote drawdowns and archived controls.",
+  "independent_validation": false,
+  "all_historical_prices_reused": true,
+  "paper_account_unchanged": true,
+  "preserved_sha256": {
+    "outputs\\atlas_two_strategy_5000_v1\\results.json": "fef7459fc5bb907b70be0ba37fa753793abf5d3c7bff76c6fa52dd739452ac9e",
+    "outputs\\atlas_two_strategy_5000_v1\\private_fills_01.json": "9e13ea5304ece2fa26b4c58477dc9f3fa9487a600fddb6c56a28f991c9b792d9",
+    "outputs\\atlas_two_strategy_5000_v1\\private_fills_02.json": "9a53f789d385a4ccf2b24d4dfbbe4bf12f510f2acab5d256a41c4b1c5e6c5950",
+    "outputs\\atlas_exit_management_v1\\comparison\\results.json": "a3d944f0ce38b4da5084f1fd37049a121c78369b63bca4afbde73524d06a46ad",
+    "outputs\\atlas_exit_management_v1\\comparison\\portfolio.json": "35b88bb84d954e471af7f9fa6efdec665c54e32cf16d20a5ebb7d6864e335628",
+    "work\\tradingbot\\local-results\\atlas-forward-v2\\freeze.json": "f2ffb3d473bfd919de20a273c006b3d41b92a4ce0252544576ed26cb5ceec780"
+  },
+  "source_sha256": {
+    "audit.py": "c25fa27b1622968d419dbef42216c367b79a6e6256947bc17e4ceed25c426163",
+    "baseline.py": "5aba3b0fc28bf0713029ef8d9594b938e16cd871d0a656ce265cb7a255bf6bc5",
+    "checks.py": "7e33e1f13d5e1ddb3cc7c9504f9518b99e8758687a93eae90036ceb58ff46c52",
+    "control_check.py": "ee4771056285bf148cc7afb2b525bbfbcea5dc51da745765fdddabf2cf059a61",
+    "data.py": "05b51020ac5b54cdc4606061fac7d3327d9f84b70b0943543c649ce2784f8e05",
+    "engine.py": "a39423baf1aba880e954eebd06d6e89201658f1227ebd8a33f544938aa519a5a",
+    "report.py": "5fba1db3770674bf959791240f1de6ee18e26be3b43ba4485441ab5c1925dd81",
+    "resume.py": "b67ea7f63183eb457c36f0711707a2b7ce1994374d79f9a2458917d1aaed3191",
+    "run.py": "30cdddc3224eadd8d566ffb483e286f42ced31ec40da376ddc4cbfbf6998a06b",
+    "two_strategy.py": "2dce1146bcfec827a7c0cabe945c20658da6067d029d2b2c14edfcd62f980c02",
+    "__init__.py": "96af2be4cd188f348fbff555c1f15eb8824ed6d8349fd23008099a1ff2424cf8"
+  },
+  "limitations": [
+    "Commission6/12/18USD roundtrip per full CFD lot proxies,not verified account fees",
+    "Historical clock and contract/margin applicability unverified",
+    "Observed bid/ask;scaled spreads and deterministic tickslippage;severe1secondexitdelay and2xmargin;liquidity unverified",
+    "Stops/entrypauses do not guarantee realizedloss or drawdown bound",
+    "No newprospective outcome or independentOOS claim"
+  ]
+}

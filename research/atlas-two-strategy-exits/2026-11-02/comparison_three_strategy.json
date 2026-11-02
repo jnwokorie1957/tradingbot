@@ -1,0 +1,26 @@
+[
+  {
+    "cost": "standard",
+    "three_strategy_net": 349.76000000024214,
+    "two_strategy_net": 573.7500000000582,
+    "net_delta": 223.98999999981606,
+    "three_strategy_drawdown": 4.832868799296154,
+    "two_strategy_drawdown": 2.8385415684661126
+  },
+  {
+    "cost": "higher",
+    "three_strategy_net": 26.760000000018408,
+    "two_strategy_net": 335.74000000004344,
+    "net_delta": 308.98000000002503,
+    "three_strategy_drawdown": 7.514304540951007,
+    "two_strategy_drawdown": 3.321725759768353
+  },
+  {
+    "cost": "severe",
+    "three_strategy_net": -207.43000000016673,
+    "two_strategy_net": 273.22999999998956,
+    "net_delta": 480.6600000001563,
+    "three_strategy_drawdown": 9.399405359475073,
+    "two_strategy_drawdown": 2.9736938710159153
+  }
+]
