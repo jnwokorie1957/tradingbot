@@ -1,0 +1,15 @@
+{
+  "source_sha256": {
+    "research_monitor/atlas_two_strategy_replay.py": "344cc236be036737450ac0e7990bddecd59e0d6c7447b2420b84460e220b0e4e",
+    "research_monitor/atlas_nas15_winrate_study.py": "1683d94c86bf94cb854985ea148079495910b5c6f243343bc2511fb378f9b40b",
+    "research_monitor/tests/test_atlas_nas15_winrate.py": "cbad40fa6f0bc3e6b945f0f823e17684c0be0566c62cf36eb2aca5a2f11502fd"
+  },
+  "targeted_checks_passed": 7,
+  "checks": [
+    "4 research-selection/gap/sample checks",
+    "3 causal retest checks"
+  ],
+  "financial_validation": "Two-strategy replay completed with benchmark/source preservation and independent quote-equity reconstruction. NAS15 candidate selection/validation records remain separate local artifacts; no performance claim is made by publishing source.",
+  "paper_only": true,
+  "approved_risk_controller_modified": false
+}
