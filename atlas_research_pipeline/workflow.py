@@ -3,7 +3,7 @@
 Financial discovery is a separately registered finite command. This orchestrator
 does not silently create hypotheses, rerun finished cases or unseal fresh data.
 """
-import argparse,json,os,subprocess
+import argparse,json,os,subprocess,hashlib
 from pathlib import Path
 from datetime import datetime,timezone
 from atlas_exit_research.data import write,sha,stamp
@@ -21,10 +21,24 @@ def main():
         elif progress.get('status')=='running':report['next_action']='Inspect actual worker PID and creation identity;wait if genuine activeworker'
         elif progress.get('status')=='failed':report['next_action']='Preserve failure;diagnose before any exact-checkpoint recovery'
         else:report['next_action']='No completed financial rerun. Review new primary literature for distinct bounded hypotheses,unseen-data route,and prospective evaluator readiness. Register rules/source/data identities before a newcycle;keep cumulative trial history.'
+        delay=root/'outputs/atlas_pair_execution_delay_v1';prospective=root/'outputs/atlas_pair_prospective_v1'
+        report['execution_delay']=json.loads((delay/'completed.json').read_text())if(delay/'completed.json').exists()else None
+        if(prospective/'protocol.json').exists():
+            command=[os.sys.executable,'-m','atlas_research_pipeline.pair_forward','--root',str(root)]
+            r=subprocess.run(command+['--status'],cwd=root/'work/tradingbot',capture_output=True,text=True)
+            if r.returncode:
+                report['pair_prospective']=dict(status='identity_or_availability_failure_requires_review',exit_code=r.returncode,error=r.stderr+r.stdout);report['actions'].append('Preserved prospective failure;no financial replay or automatic recovery')
+            else:
+                report['pair_prospective']=json.loads(r.stdout);phase=json.loads((prospective/'progress.json').read_text())
+                if report['pair_prospective']['new_complete_sessions']>=5 and phase['status']not in ['evaluation_failed_requires_review','evidence_failure_requires_review']:
+                    report['financial_job_started']=True;r=subprocess.run(command,cwd=root/'work/tradingbot',capture_output=True,text=True);report['finite_evaluation']=dict(started_and_completed=True,exit_code=r.returncode,stdout=r.stdout,stderr=r.stderr);report['prospective_financial_results_available']=r.returncode==0
+                    report['actions'].append('Ran fixed prospective cohort once after five new covered sessions'if r.returncode==0 else'Prospective failure preserved;requires review,not automatic restart')
+        artifact_files=[p for p in [delay/'completed.json',prospective/'protocol.json',prospective/'progress.json']if p.exists()];surface=dict(files={str(p.relative_to(root)):sha(p)for p in artifact_files},coverage=report.get('pair_prospective',{}).get('coverage'),health={k:report.get('pair_prospective',{}).get('collector_health',{}).get(k)for k in ['matches_frozen_creation','fresh_status']});report['surface_identity']=hashlib.sha256(json.dumps(surface,sort_keys=True).encode()).hexdigest();previous=json.loads((out/'workflow_status.json').read_text())if(out/'workflow_status.json').exists()else{}
         # Financial results are not re-executed to generate activity.
-        if not(out/'dashboard_data.json').exists():
+        if not(out/'dashboard_data.json').exists()or previous.get('surface_identity')!=report['surface_identity']:
             subprocess.run([os.sys.executable,'-m','atlas_research_pipeline.ledger','--root',str(root)],cwd=root/'work/tradingbot',check=True,capture_output=True);report['actions'].append('Built missing aggregate ledger')
         path=out/'workflow_runs'/datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ.json');write(path,report);write(out/'workflow_status.json',report);print(json.dumps(report))
+        if previous.get('surface_identity')!=report['surface_identity']:subprocess.run([os.sys.executable,'-m','atlas_research_pipeline.dashboard','--root',str(root)],cwd=root/'work/tradingbot',check=True,capture_output=True)
     finally:lock.unlink(missing_ok=True)
 
 

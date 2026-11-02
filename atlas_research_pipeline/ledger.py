@@ -51,6 +51,12 @@ def main():
         if isinstance(v,dict):return {k:trim(x)for k,x in v.items()if k not in ['curve','cash_curve']}
         if isinstance(v,list):return [trim(x)for x in v]
         return v
+    delay=root/'outputs/atlas_pair_execution_delay_v1';future=root/'outputs/atlas_pair_prospective_v1'
+    package['execution_delay']=dict(completed=json.loads((delay/'completed.json').read_text()),decision=json.loads((delay/'development_decision.json').read_text()),records=[dict(profile=r['profile'],cost=r['cost'],trades=r['metrics']['trades'],win_rate=r['metrics']['win_rate'],net=r['metrics']['net_pnl'],quote_drawdown_pct=r['account']['quote_drawdown_pct'])for r in json.loads((delay/'development.json').read_text())],period=['2025-12-15','2026-05-31'],reused=True)if(delay/'completed.json').exists()else None
+    if(future/'protocol.json').exists():
+        p0=json.loads((future/'protocol.json').read_text());a0=json.loads((future/'availability.json').read_text())if(future/'availability.json').exists()else{};phase=json.loads((future/'progress.json').read_text());package['pair_prospective']=dict(frozen_utc=p0['frozen_utc'],financial_start_utc=p0['financial_start_utc'],profiles=p0['profiles'],protocol_sha256=sha(future/'protocol.json'),phase=phase['status'],financial_observations_scored=phase['financial_observations_scored'],covered_sessions=a0.get('coverage',{}).get('covered_sessions',[]),minimum_new_sessions=5,active_paper_changed=False,evaluation='Frozen receiptclock hypothetical replay;no newcollector or actual orders',drawdown=p0['drawdown']);package['independent_validation']['prospective']='Two-lane60/90minute fixed comparison frozen before new financial observations;awaiting complete sessions';package['priorities'][1]='Evaluate the frozen receipt-clock paired holding comparison after5new covered sessions;no refit or automatic deployment'
+    if package.get('pair_prospective')and phase.get('last_batch'):
+        batch=root/phase['last_batch'];package['pair_prospective']['records']=json.loads((batch/'results.json').read_text());package['pair_prospective']['comparison']=json.loads((batch/'comparison.json').read_text())
     write(out/'dashboard_data.json',trim(package));print(json.dumps(dict(experiments=len(records),books=len(results),independent_months=0,latest=[dict(cost=r['cost'],statistics=r['monthly']['statistics'])for r in results if r['book']=='two_strategy_NAS90min']),allow_nan=False))
 
 

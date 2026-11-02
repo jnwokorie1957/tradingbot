@@ -12,7 +12,12 @@ Entrypoints fromrepositoryroot:
 - python -m atlas_research_pipeline.ledger --root WORKSPACE
 - python -m atlas_research_pipeline.dashboard --root WORKSPACE
 - python -m atlas_research_pipeline.checks
+- python -m atlas_research_pipeline.pair_forward --root WORKSPACE --status
 
 The native heartbeat is the scheduled agent workflow;the CLI orchestrator logs its actual invocations and blocks duplicate workflow locks. It does not claim a future invocation occurred or start duplicate collectors. A completed financial cycle cannot be rerun. Everynew cycle requires preregistered rules, semantic duplicate review, source/dataidentity and retained failure history.
 
 NewIBKR observations remain quarantined. Theconnector rejects one-year1m requests beyond3500points and cannot date-page. Othercomputerroute is needed for longer history. CFD/futures execution models are distinct. No unseen financial validation is claimed.
+
+Additional bounded cycle: atlas_pair_execution_delay_v1 compared60/10/5second entry delays with identical original entries/stops/RR/risk. Primary10second failed all costs;5seconds not selected as fallback. All9cases retained;no later replay.
+
+Separate paired prospective evaluator frozen2026-11-02T20:21:42UTC,financialstartNovember3. ControlSPX15/1.5R/60minutes plusNAS15/2R/60minutes;candidateNAS90minutes. Six hypothetical books,threecosts,originalpaperbookunchanged. Ten synthetic execution/causality/sizing/ledgerchecks passed. Frozen protocol identity7cf7d23ce774e8d616b66d3c74a35d91023e128955cf3758d5f44b7b5e6e29e5. At least5new99percentcovered reference sessions before scoring;20sessions/50portfolio/30NAStrades percost before qualification. Recordedreceipt DD and conservativeobservedpathDDbound are not historicalfullquoteDD. All newfinancialevidenceawaited,no independentprofitabilityclaim. Runtimearchives,privateledgers andprocessidentities remain local.

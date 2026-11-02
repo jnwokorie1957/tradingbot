@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-11-02T19:55:09.840497+00:00",
+  "created_utc": "2026-11-02T20:22:58.713254+00:00",
   "objective": "Investigate15/20/25percent monthly net as stretchhypotheses;positiveindependentexpectancy first;DDtargetbelow10;no riskincreases",
   "monthly": [
     {
@@ -4611,6 +4611,21 @@
       "all_artifacts_preserved": true
     },
     {
+      "experiment": "outputs/atlas_pair_execution_delay_v1",
+      "status": "completed_unvalidated",
+      "identity": "3168110181488ba791e1c930a139006d580062dbe43c6cd44900aa3a12228455",
+      "files": {
+        "completed.json": "01ff3f9c5258ed823b9a90c6e659a7e5a9004cccb7e2e062276661b4d1a64079",
+        "development.json": "7590c8ad13526cee868ed544d5ae2b433122e3812be03cd30e69d874237a80ca",
+        "independent_audit.json": "b654be89c509c05aac806010dd86912ee2c94d96f7144b4e1580f16b195dc0aa",
+        "progress.json": "84c3a44fa8b340fa4ea7089ae8183a19715790d65580890f2e97863555daab33",
+        "protocol.json": "bfa4300c0998ec235b19605b0d3ac3996ea1908f1abd3eb25a4fb3bcdaacef98"
+      },
+      "has_results": false,
+      "independent_validation": "Not inferred from completion; requires separate unseen evidence",
+      "all_artifacts_preserved": true
+    },
+    {
       "experiment": "outputs/atlas_pair_holding_v1",
       "status": "completed_unvalidated",
       "identity": "80475be0b3c3154b0d425c2947c748be4ef80a6174449c47a780bbaeef12e0bc",
@@ -4624,6 +4639,18 @@
         "selection.json": "d8dcda45c5b3ca8f26fac666e49abd56e9c676d2fee2234dc2c74dbaebe31879"
       },
       "has_results": true,
+      "independent_validation": "Not inferred from completion; requires separate unseen evidence",
+      "all_artifacts_preserved": true
+    },
+    {
+      "experiment": "outputs/atlas_pair_prospective_v1",
+      "status": "registered_no_outcomes",
+      "identity": "50951f77371c51456ad4ebb4d2d7cfd9948338ad109a4072040c991b82114160",
+      "files": {
+        "progress.json": "265eddf6746d01535266f2f68a1cdccaf4a0f8470142c3c901b99edf8b10353a",
+        "protocol.json": "7cf7d23ce774e8d616b66d3c74a35d91023e128955cf3758d5f44b7b5e6e29e5"
+      },
+      "has_results": false,
       "independent_validation": "Not inferred from completion; requires separate unseen evidence",
       "all_artifacts_preserved": true
     },
@@ -6343,17 +6370,144 @@
       "25": null
     },
     "walk_forward": "NOT_AVAILABLE:no untouched historical cohort",
-    "prospective": "Requires complete evaluator and profile freeze before financial observations; no deployment"
+    "prospective": "Two-lane60/90minute fixed comparison frozen before new financial observations;awaiting complete sessions"
   },
   "priorities": [
     "Obtain longer genuinely unusedIBKRcontract histories via confirmedothercomputerroute;quarantine and seal before outcome review",
-    "Complete a frozen receipt-clock prospective evaluator; existing MT5observer unchanged",
+    "Evaluate the frozen receipt-clock paired holding comparison after5new covered sessions;no refit or automatic deployment",
     "Read-only coverage/clock/contract audit and confirmedfees",
     "Bounded evidence-based new cycles; retain all losses and failures;no after-outcome parameter tuning"
   ],
   "active_paper_changed": false,
+  "execution_delay": {
+    "completed": {
+      "completed_utc": "2026-11-02T20:08:21.565348+00:00",
+      "development_cases": 9,
+      "later_cases": 0,
+      "primary_development_pass": false,
+      "all_originals_preserved": true,
+      "signal_rules_stops_RR_risk_unchanged": true,
+      "active_paper_configuration_unchanged": true,
+      "independent_validation": false,
+      "promotion": false
+    },
+    "decision": {
+      "frozen_utc": "2026-11-02T20:08:21.375812+00:00",
+      "primary": "primary10",
+      "passed": false,
+      "reasons": [
+        "standard: nonpositive net",
+        "standard: PF below1.1",
+        "standard: net below60second control",
+        "higher: nonpositive net",
+        "higher: PF below1.1",
+        "higher: net below60second control",
+        "severe: nonpositive net",
+        "severe: PF below1.1",
+        "severe: net below60second control"
+      ],
+      "sensitivity_not_selected": true,
+      "promotion": false,
+      "later_outcomes_not_consulted": true
+    },
+    "records": [
+      {
+        "profile": "control60",
+        "cost": "standard",
+        "trades": 56,
+        "win_rate": 53.57142857142857,
+        "net": 292.0100000000661,
+        "quote_drawdown_pct": 2.8160557262915797
+      },
+      {
+        "profile": "control60",
+        "cost": "higher",
+        "trades": 52,
+        "win_rate": 55.76923076923077,
+        "net": 258.30000000001615,
+        "quote_drawdown_pct": 2.2806959434840737
+      },
+      {
+        "profile": "control60",
+        "cost": "severe",
+        "trades": 42,
+        "win_rate": 52.38095238095238,
+        "net": 189.11999999998548,
+        "quote_drawdown_pct": 2.8971802594816434
+      },
+      {
+        "profile": "primary10",
+        "cost": "standard",
+        "trades": 65,
+        "win_rate": 43.07692307692308,
+        "net": -133.16999999990134,
+        "quote_drawdown_pct": 5.991126117685551
+      },
+      {
+        "profile": "primary10",
+        "cost": "higher",
+        "trades": 58,
+        "win_rate": 43.10344827586207,
+        "net": -178.5199999999577,
+        "quote_drawdown_pct": 6.040501262314445
+      },
+      {
+        "profile": "primary10",
+        "cost": "severe",
+        "trades": 49,
+        "win_rate": 42.857142857142854,
+        "net": -98.75000000002859,
+        "quote_drawdown_pct": 4.163016441656812
+      },
+      {
+        "profile": "sensitivity5",
+        "cost": "standard",
+        "trades": 68,
+        "win_rate": 48.529411764705884,
+        "net": 4.72000000005956,
+        "quote_drawdown_pct": 4.6355194852666255
+      },
+      {
+        "profile": "sensitivity5",
+        "cost": "higher",
+        "trades": 59,
+        "win_rate": 47.45762711864407,
+        "net": -42.50499999997456,
+        "quote_drawdown_pct": 4.59444988343598
+      },
+      {
+        "profile": "sensitivity5",
+        "cost": "severe",
+        "trades": 51,
+        "win_rate": 43.13725490196079,
+        "net": -76.74000000000463,
+        "quote_drawdown_pct": 4.530655742513652
+      }
+    ],
+    "period": [
+      "2025-12-15",
+      "2026-05-31"
+    ],
+    "reused": true
+  },
+  "pair_prospective": {
+    "frozen_utc": "2026-11-02T20:21:42.216339+00:00",
+    "financial_start_utc": "2026-11-03T05:00:00+00:00",
+    "profiles": {
+      "control_60": 60,
+      "nas_90": 90
+    },
+    "protocol_sha256": "7cf7d23ce774e8d616b66d3c74a35d91023e128955cf3758d5f44b7b5e6e29e5",
+    "phase": "frozen_waiting_new_sessions",
+    "financial_observations_scored": 0,
+    "covered_sessions": [],
+    "minimum_new_sessions": 5,
+    "active_paper_changed": false,
+    "evaluation": "Frozen receiptclock hypothetical replay;no newcollector or actual orders",
+    "drawdown": "Receiptmarked equity independently reconstructed;observed intrabatch pathrange gives conservative drawdown upperbound,not exact synchronized fulltickDD. Missing/unreceived paths and brokerliquidity cannot be bounded."
+  },
   "schedule": {
-    "status": "ACTIVE",
+    "status": "ACTIVE hourly; updated paired evaluator verified; first updated unattended invocation not yet observed",
     "cadence": "Hourly",
     "automation_id": "atlas-paper-forward-health-and-results",
     "native_view_verified": true,
@@ -6364,23 +6518,21 @@
     "last_observed_prior_heartbeat_utc": "2026-11-02T19:12:01.577Z",
     "prior_scheduler_execution_evidence": "Actual heartbeat and completed receipt auditv4 in this chat;new instructions not yet observed firing",
     "separate_discovery_automation": "PAUSED to avoid duplicate orchestration",
-    "local_computer_required": true
+    "local_computer_required": true,
+    "verified_utc": "2026-11-02T20:24:25.915447+00:00",
+    "saved_configuration_verified": true,
+    "paired_prospective_protocol_sha256": "7cf7d23ce774e8d616b66d3c74a35d91023e128955cf3758d5f44b7b5e6e29e5",
+    "first_updated_scheduled_invocation_observed": false
   },
   "workflow": {
-    "at_utc": "2026-11-02T19:53:05.249780+00:00",
+    "at_utc": "2026-11-02T20:22:56.904155+00:00",
     "trigger": "manual",
-    "orchestrator_pid": 9452,
-    "cycle": {
-      "status": "completed",
-      "completed": 12,
-      "total": 12
-    },
     "original_financial_sources_match": true,
     "paper_only": true,
-    "broker_execution_calls": 0,
     "financial_job_started": false,
     "prospective_financial_results_available": false,
-    "actions": [],
-    "next_action": "No completed financial rerun. Review new primary literature for distinct bounded hypotheses,unseen-data route,and prospective evaluator readiness. Register rules/source/data identities before a newcycle;keep cumulative trial history."
+    "paired_status": "waiting_new_completed_sessions",
+    "new_covered_sessions": 0,
+    "collector_identity_matches": true
   }
 }

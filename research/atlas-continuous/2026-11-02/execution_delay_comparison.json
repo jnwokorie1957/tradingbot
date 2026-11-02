@@ -1,0 +1,253 @@
+{
+  "completed": {
+    "completed_utc": "2026-11-02T20:08:21.565348+00:00",
+    "development_cases": 9,
+    "later_cases": 0,
+    "primary_development_pass": false,
+    "all_originals_preserved": true,
+    "signal_rules_stops_RR_risk_unchanged": true,
+    "active_paper_configuration_unchanged": true,
+    "independent_validation": false,
+    "promotion": false
+  },
+  "decision": {
+    "frozen_utc": "2026-11-02T20:08:21.375812+00:00",
+    "primary": "primary10",
+    "passed": false,
+    "reasons": [
+      "standard: nonpositive net",
+      "standard: PF below1.1",
+      "standard: net below60second control",
+      "higher: nonpositive net",
+      "higher: PF below1.1",
+      "higher: net below60second control",
+      "severe: nonpositive net",
+      "severe: PF below1.1",
+      "severe: net below60second control"
+    ],
+    "sensitivity_not_selected": true,
+    "promotion": false,
+    "later_outcomes_not_consulted": true
+  },
+  "period": [
+    "2025-12-15",
+    "2026-05-31"
+  ],
+  "capital": 5000,
+  "all_prices_reused": true,
+  "records": [
+    {
+      "profile": "control60",
+      "cost": "standard",
+      "trades": 56,
+      "win_rate": 53.57142857142857,
+      "net": 292.0100000000661,
+      "profit_factor": 1.599326806641809,
+      "quote_drawdown_pct": 2.8160557262915797
+    },
+    {
+      "profile": "control60",
+      "cost": "higher",
+      "trades": 52,
+      "win_rate": 55.76923076923077,
+      "net": 258.30000000001615,
+      "profit_factor": 1.570425334570072,
+      "quote_drawdown_pct": 2.2806959434840737
+    },
+    {
+      "profile": "control60",
+      "cost": "severe",
+      "trades": 42,
+      "win_rate": 52.38095238095238,
+      "net": 189.11999999998548,
+      "profit_factor": 1.5127704571334983,
+      "quote_drawdown_pct": 2.8971802594816434
+    },
+    {
+      "profile": "primary10",
+      "cost": "standard",
+      "trades": 65,
+      "win_rate": 43.07692307692308,
+      "net": -133.16999999990134,
+      "profit_factor": 0.8001980465410584,
+      "quote_drawdown_pct": 5.991126117685551
+    },
+    {
+      "profile": "primary10",
+      "cost": "higher",
+      "trades": 58,
+      "win_rate": 43.10344827586207,
+      "net": -178.5199999999577,
+      "profit_factor": 0.7116762090880973,
+      "quote_drawdown_pct": 6.040501262314445
+    },
+    {
+      "profile": "primary10",
+      "cost": "severe",
+      "trades": 49,
+      "win_rate": 42.857142857142854,
+      "net": -98.75000000002859,
+      "profit_factor": 0.800702335062207,
+      "quote_drawdown_pct": 4.163016441656812
+    },
+    {
+      "profile": "sensitivity5",
+      "cost": "standard",
+      "trades": 68,
+      "win_rate": 48.529411764705884,
+      "net": 4.72000000005956,
+      "profit_factor": 1.007118833235389,
+      "quote_drawdown_pct": 4.6355194852666255
+    },
+    {
+      "profile": "sensitivity5",
+      "cost": "higher",
+      "trades": 59,
+      "win_rate": 47.45762711864407,
+      "net": -42.50499999997456,
+      "profit_factor": 0.920887077261012,
+      "quote_drawdown_pct": 4.59444988343598
+    },
+    {
+      "profile": "sensitivity5",
+      "cost": "severe",
+      "trades": 51,
+      "win_rate": 43.13725490196079,
+      "net": -76.74000000000463,
+      "profit_factor": 0.8467712950760692,
+      "quote_drawdown_pct": 4.530655742513652
+    }
+  ],
+  "protocol_sha256": "bfa4300c0998ec235b19605b0d3ac3996ea1908f1abd3eb25a4fb3bcdaacef98",
+  "independent_audit": {
+    "all_pass": true,
+    "records": {
+      "control60_standard": {
+        "arithmetic_pass": true,
+        "quote_drawdown_pass": true,
+        "max_trade_formula_error": 0.0,
+        "max_leg_quantity_error": 0.0,
+        "net_pnl": 292.0100000000661,
+        "trades": 56,
+        "win_rate": 53.57142857142857,
+        "quote_drawdown_pct": 2.8160557262915584,
+        "contribution_quote_drawdown": {
+          "SPX15": 1.7582921126532463,
+          "NAS15": 2.2127101516992282
+        }
+      },
+      "control60_higher": {
+        "arithmetic_pass": true,
+        "quote_drawdown_pass": true,
+        "max_trade_formula_error": 0.0,
+        "max_leg_quantity_error": 0.0,
+        "net_pnl": 258.30000000001615,
+        "trades": 52,
+        "win_rate": 55.76923076923077,
+        "quote_drawdown_pct": 2.2806959434841105,
+        "contribution_quote_drawdown": {
+          "SPX15": 1.4559601206418022,
+          "NAS15": 2.26410019978479
+        }
+      },
+      "control60_severe": {
+        "arithmetic_pass": true,
+        "quote_drawdown_pass": true,
+        "max_trade_formula_error": 0.0,
+        "max_leg_quantity_error": 0.0,
+        "net_pnl": 189.11999999998545,
+        "trades": 42,
+        "win_rate": 52.38095238095238,
+        "quote_drawdown_pct": 2.8971802594816247,
+        "contribution_quote_drawdown": {
+          "SPX15": 1.6536852474445616,
+          "NAS15": 2.594109427274638
+        }
+      },
+      "primary10_standard": {
+        "arithmetic_pass": true,
+        "quote_drawdown_pass": true,
+        "max_trade_formula_error": 0.0,
+        "max_leg_quantity_error": 0.0,
+        "net_pnl": -133.1699999999013,
+        "trades": 65,
+        "win_rate": 43.07692307692308,
+        "quote_drawdown_pct": 5.991126117685285,
+        "contribution_quote_drawdown": {
+          "SPX15": 1.983634048632151,
+          "NAS15": 5.648424263958271
+        }
+      },
+      "primary10_higher": {
+        "arithmetic_pass": true,
+        "quote_drawdown_pass": true,
+        "max_trade_formula_error": 0.0,
+        "max_leg_quantity_error": 0.0,
+        "net_pnl": -178.51999999995763,
+        "trades": 58,
+        "win_rate": 43.10344827586207,
+        "quote_drawdown_pct": 6.040501262314588,
+        "contribution_quote_drawdown": {
+          "SPX15": 1.8359484848901324,
+          "NAS15": 5.115969305362996
+        }
+      },
+      "primary10_severe": {
+        "arithmetic_pass": true,
+        "quote_drawdown_pass": true,
+        "max_trade_formula_error": 0.0,
+        "max_leg_quantity_error": 0.0,
+        "net_pnl": -98.75000000002862,
+        "trades": 49,
+        "win_rate": 42.857142857142854,
+        "quote_drawdown_pct": 4.163016441656688,
+        "contribution_quote_drawdown": {
+          "SPX15": 1.8138980579096915,
+          "NAS15": 4.126134142972056
+        }
+      },
+      "sensitivity5_standard": {
+        "arithmetic_pass": true,
+        "quote_drawdown_pass": true,
+        "max_trade_formula_error": 0.0,
+        "max_leg_quantity_error": 0.0,
+        "net_pnl": 4.720000000059559,
+        "trades": 68,
+        "win_rate": 48.529411764705884,
+        "quote_drawdown_pct": 4.6355194852663795,
+        "contribution_quote_drawdown": {
+          "SPX15": 1.3451077412961925,
+          "NAS15": 5.853999753118531
+        }
+      },
+      "sensitivity5_higher": {
+        "arithmetic_pass": true,
+        "quote_drawdown_pass": true,
+        "max_trade_formula_error": 0.0,
+        "max_leg_quantity_error": 0.0,
+        "net_pnl": -42.50499999997456,
+        "trades": 59,
+        "win_rate": 47.45762711864407,
+        "quote_drawdown_pct": 4.5944498834360346,
+        "contribution_quote_drawdown": {
+          "SPX15": 1.5221372145807217,
+          "NAS15": 3.928084995827318
+        }
+      },
+      "sensitivity5_severe": {
+        "arithmetic_pass": true,
+        "quote_drawdown_pass": true,
+        "max_trade_formula_error": 0.0,
+        "max_leg_quantity_error": 0.0,
+        "net_pnl": -76.74000000000464,
+        "trades": 51,
+        "win_rate": 43.13725490196079,
+        "quote_drawdown_pct": 4.530655742513562,
+        "contribution_quote_drawdown": {
+          "SPX15": 1.6388648503470857,
+          "NAS15": 3.589549398243271
+        }
+      }
+    }
+  }
+}
