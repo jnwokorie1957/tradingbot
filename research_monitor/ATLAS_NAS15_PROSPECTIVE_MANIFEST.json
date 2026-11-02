@@ -1,0 +1,20 @@
+{
+  "source_sha256": {
+    "research_monitor/atlas_nas15_regimes.py": "e794177d3511708057dfe3c6054666e1e5bd0e8daf7228d73023f3d90186bedd",
+    "research_monitor/atlas_nas15_regime_study.py": "41b9186e61c30efa2a7148b70d16bc1d500594def8759797859d4b0b5ee7cd7b",
+    "research_monitor/atlas_nas15_prospective.py": "f1a5bf61d92057d7d6d385eb59789a2760ede459ea8ac6ff40b21ab9631aeac9",
+    "research_monitor/tests/test_atlas_nas15_regimes.py": "0f1860efea70fa3d2ef343c15d90996acaaf58a1ae184ee64e93b797226e74a9",
+    "research_monitor/tests/test_atlas_nas15_prospective.py": "a18399b6c8d8dc85535668b2270601d54587f9bea73d021eef5518ac7226e620"
+  },
+  "targeted_checks_passed": 9,
+  "checks": [
+    "3 higher-timeframe causality/profile-preservation checks",
+    "6 receipt-clock reconstruction/coverage/end-to-end replay checks"
+  ],
+  "development_cases": 10,
+  "baseline_fills_exact": true,
+  "core_risk_changes": false,
+  "actual_order_routing": false,
+  "independent_results_available": false,
+  "scope": "Source publication only; private prices, protocol snapshots and financial ledgers remain local."
+}
