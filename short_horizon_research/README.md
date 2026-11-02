@@ -24,6 +24,7 @@ Paths are relative to the root above `work/tradingbot`. Reduced quote copies, pr
 
 1. `run.py`: three initial families (band reentry, opening-range failure, close-confirmed inside-bar trap), two markets, two timeframes and 1R/1.5R targets. Each runs at both costs: 48 development cases. Signals deliberately delay entry by 60 seconds. Version 1 failed on a holiday liquidation path and is preserved with source and protocol; version 2 applies the published cash-market holiday/early-close calendar. It changes no family thresholds. No version-2 configuration passed development selection.
 2. `extension.py`: separately registered trend EMA reclaim, 20-bar channel retest and RSI2 trend-reclaim adaptations. These are hypotheses, not replications or evidence for the performance of published daily-stock methods. A one-second modeled execution delay is assumed; selections also face a five-second delay sensitivity. This is a changed, explicit execution assumption, not measured historical receipt latency. The 60-second version-2 failures remain recorded.
+3. `level_noise.py`: two separately registered families: prior-session range reclaim and a time-of-day volatility breakout adapted from primary-source research. Prior-session features require complete observed RTH coverage; missing trading sessions invalidate levels/history. The noise hypothesis uses fourteen previous sessions and a typical-price session mean, not exchange-volume VWAP. It adds 32 development cost cases, for 128 across the three batches. Neither family qualified; no later-period selection was forced. Every failed case remains in the aggregate report.
 
 For each batch, December 15, 2025–May 31, 2026 is development. At most one candidate per market/timeframe is frozen before reading June–October financial outcomes. All strategies/thresholds/costs/risk rules are fixed before financial replay. Target-qualified selections require at least 100 development trades, >=60% net-positive trades, PF>=1.2, positive net and quote-equity drawdown <10% at both costs. A diagnostic selection may be retained with >=30 trades, positive net and drawdown <10% at both costs; it is explicitly not a qualifying system. If no candidate passes either selection tier, no later financial replay is performed.
 
@@ -39,11 +40,15 @@ Run from the repository root with the existing Python environment:
 ../mt5-venv/Scripts/python.exe -m short_horizon_research.checks_extension
 ../mt5-venv/Scripts/python.exe -m short_horizon_research.run --root C:/Users/IraLaptop/Documents/Codex/2026-10-27/he
 ../mt5-venv/Scripts/python.exe -m short_horizon_research.extension --root C:/Users/IraLaptop/Documents/Codex/2026-10-27/he
+../mt5-venv/Scripts/python.exe -m short_horizon_research.checks_level_noise
+../mt5-venv/Scripts/python.exe -m short_horizon_research.level_noise --root C:/Users/IraLaptop/Documents/Codex/2026-10-27/he
+../mt5-venv/Scripts/python.exe -m short_horizon_research.audit_batch --root C:/Users/IraLaptop/Documents/Codex/2026-10-27/he --version short_horizon_mt5_v4
+../mt5-venv/Scripts/python.exe -m short_horizon_research.publish_report --root C:/Users/IraLaptop/Documents/Codex/2026-10-27/he
 ```
 
 Each financial command is deliberately single-use for its registered output version; it refuses to overwrite an existing protocol. Before a new run, its directory must already contain the acquired contract snapshot and preserved-research hash map. Do not delete an old protocol to bypass the guard. Register a new version for a justified hypothesis or fix and retain the old failure. Monitor `progress.json` together with real process identity; a completed finite batch is not a running optimizer.
 
-The local HTML title is **Trade Dashboard**. Financial results, raw prices and runtime identities remain local; this source package can be published without them.
+The local HTML title is **Trade Dashboard**. Raw prices, individual ledgers and runtime identities remain local. A sanitized aggregate report is published separately in `research/mt5-short-horizon/2026-11-02/`, without changing original Atlas benchmarks. It contains all aggregate failures and explicitly states that no candidate has qualified. `publish_report.py` updates the current overview while immutable batch reports stay unchanged.
 
 ## Primary references
 
@@ -51,5 +56,7 @@ The local HTML title is **Trade Dashboard**. Financial results, raw prices and r
 - [TA-Lib Hikkake implementation](https://github.com/TA-Lib/ta-lib/blob/main/src/ta_func/ta_CDLHIKKAKE.c): an original implementation reference, not a profitability claim for our close-confirmed adaptation.
 - [Cesar Alvarez's RSI2 research](https://alvarezquanttrading.com/blog/rsi2-strategy-double-returns-with-a-simple-rule-change/): daily equity research; our intraday rules and stopped exits differ substantially.
 - [NYSE calendar](https://www.nyse.com/trade/hours-calendars): pre-known full holidays and early closes, not a financial outcome filter.
+- [Concretum's intraday momentum research](https://concretumgroup.substack.com/p/beat-the-market-with-intraday-momentum): SPY time-of-day noise-area research; our broker instruments, natural stops, targets and session-mean confirmation differ.
+- [New York Fed support/resistance mechanism](https://www.newyorkfed.org/research/staff_reports/sr125.html): FX order clustering motivates a hypothesis; transfer to equity-index proxies is unproven.
 
 No website's advertised win rate is accepted as local or independent validation.
