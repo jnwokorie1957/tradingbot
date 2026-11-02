@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-11-02T20:22:58.713254+00:00",
+  "created_utc": "2026-11-02T20:59:10.814499+00:00",
   "objective": "Investigate15/20/25percent monthly net as stretchhypotheses;positiveindependentexpectancy first;DDtargetbelow10;no riskincreases",
   "monthly": [
     {
@@ -4670,6 +4670,22 @@
       "all_artifacts_preserved": true
     },
     {
+      "experiment": "outputs/atlas_research_pipeline_v1/cycles/002",
+      "status": "completed_unvalidated",
+      "identity": "573dba54ff025182ee4d6b178c7bcbffb3734155e3ef775b58339f84d4a9642d",
+      "files": {
+        "completed.json": "91cc6f4b68c9b59fcf0acfcf3ad24a441ab22b1e35948a746b4e2cb1cf551776",
+        "decisions.json": "6f5e50d0c94a77cc4833680f02ec762c220dc7a1c5118b68894ab2aece181d10",
+        "independent_audit.json": "14c4d59c363ad9e75b3cac830a6f5d3a9591ac4259fecef2ea2c76e711bfb1eb",
+        "progress.json": "3203c9fd6609c57ee35f267d6c1333c6013162981e870b8f1949fcb9cdf43ceb",
+        "protocol.json": "bf285706f739745cf6162f7b4ffc8a0d3ca234b77dcb45d9a43892709368d32e",
+        "results.json": "b0f64b33b19f8abfc6673adeb78c8501ee9dab4363f5885ce673182897024f03"
+      },
+      "has_results": true,
+      "independent_validation": "Not inferred from completion; requires separate unseen evidence",
+      "all_artifacts_preserved": true
+    },
+    {
       "experiment": "outputs/atlas_risk_audit_v1",
       "status": "completed_unvalidated",
       "identity": "3dffec720eca8fa9700946bb364a754a8d6a5c1adcaa1cddc4e7fa4356b9aa75",
@@ -6506,8 +6522,346 @@
     "evaluation": "Frozen receiptclock hypothetical replay;no newcollector or actual orders",
     "drawdown": "Receiptmarked equity independently reconstructed;observed intrabatch pathrange gives conservative drawdown upperbound,not exact synchronized fulltickDD. Missing/unreceived paths and brokerliquidity cannot be bounded."
   },
+  "bottleneck_audit": {
+    "created_utc": "2026-11-02T20:56:46.369123+00:00",
+    "period": [
+      "2025-12-15",
+      "2026-10-30"
+    ],
+    "initial_equity": 5000,
+    "records": [
+      {
+        "cost": "standard",
+        "net": 596.2700000000727,
+        "expectancy": 6.933372093024102,
+        "trades_per_month": 8.179910156250001,
+        "average_win": 27.328958333333826,
+        "average_loss": -18.829473684209226,
+        "commission": 10.44,
+        "slippage": 24.9,
+        "lanes": {
+          "SPX15": {
+            "raw_decisions": 493,
+            "executed": 45,
+            "noncapital_rules_passed": 50,
+            "capital_exposure_only": 5,
+            "minimum_lot_above_cap": 3,
+            "veto_combinations": {
+              "shared_gross_risk_budget": 2,
+              "minimum_lot_above_trade_risk": 3
+            },
+            "net": 366.3999999999436,
+            "win_rate": 62.22222222222222,
+            "exit_reasons": {
+              "time_exit_quote": 17,
+              "target_quote": 18,
+              "stop_quote": 10
+            },
+            "average_win": 22.52678571428474,
+            "average_loss": -15.550000000001708
+          },
+          "NAS15": {
+            "raw_decisions": 834,
+            "executed": 41,
+            "noncapital_rules_passed": 181,
+            "capital_exposure_only": 140,
+            "minimum_lot_above_cap": 139,
+            "veto_combinations": {
+              "minimum_lot_above_trade_risk|shared_gross_risk_budget": 74,
+              "shared_gross_risk_budget": 1,
+              "minimum_lot_above_trade_risk": 65
+            },
+            "net": 229.8700000001292,
+            "win_rate": 48.78048780487805,
+            "exit_reasons": {
+              "target_quote": 15,
+              "time_exit_quote": 5,
+              "stop_quote": 21
+            },
+            "average_win": 34.05200000000255,
+            "average_loss": -21.48428571428199
+          }
+        }
+      },
+      {
+        "cost": "higher",
+        "net": 361.3800000000232,
+        "expectancy": 4.883513513513827,
+        "trades_per_month": 7.03852734375,
+        "average_win": 25.30658536585402,
+        "average_loss": -20.4906060606058,
+        "commission": 16.56,
+        "slippage": 36.84,
+        "lanes": {
+          "SPX15": {
+            "raw_decisions": 493,
+            "executed": 37,
+            "noncapital_rules_passed": 41,
+            "capital_exposure_only": 4,
+            "minimum_lot_above_cap": 2,
+            "veto_combinations": {
+              "shared_gross_risk_budget": 2,
+              "minimum_lot_above_trade_risk": 2
+            },
+            "net": 172.90500000004388,
+            "win_rate": 62.16216216216216,
+            "exit_reasons": {
+              "time_exit_quote": 15,
+              "target_quote": 12,
+              "stop_quote": 10
+            },
+            "average_win": 18.770434782609687,
+            "average_loss": -18.486785714284206
+          },
+          "NAS15": {
+            "raw_decisions": 834,
+            "executed": 37,
+            "noncapital_rules_passed": 176,
+            "capital_exposure_only": 139,
+            "minimum_lot_above_cap": 138,
+            "veto_combinations": {
+              "minimum_lot_above_trade_risk|shared_gross_risk_budget": 71,
+              "shared_gross_risk_budget": 1,
+              "minimum_lot_above_trade_risk": 67
+            },
+            "net": 188.47499999997933,
+            "win_rate": 48.648648648648646,
+            "exit_reasons": {
+              "target_quote": 13,
+              "time_exit_quote": 5,
+              "stop_quote": 19
+            },
+            "average_win": 33.658333333332884,
+            "average_loss": -21.967105263158555
+          }
+        }
+      },
+      {
+        "cost": "severe",
+        "net": 284.9699999999986,
+        "expectancy": 4.523333333333311,
+        "trades_per_month": 5.9922597656250005,
+        "average_win": 24.5161764705888,
+        "average_loss": -18.916551724138635,
+        "commission": 19.259999999999998,
+        "slippage": 56.08,
+        "lanes": {
+          "SPX15": {
+            "raw_decisions": 493,
+            "executed": 31,
+            "noncapital_rules_passed": 32,
+            "capital_exposure_only": 1,
+            "minimum_lot_above_cap": 1,
+            "veto_combinations": {
+              "minimum_lot_above_trade_risk": 1
+            },
+            "net": 93.7700000000515,
+            "win_rate": 58.064516129032256,
+            "exit_reasons": {
+              "time_exit_quote_delayed": 14,
+              "stop_quote_delayed": 9,
+              "target_quote_delayed": 8
+            },
+            "average_win": 17.26611111111292,
+            "average_loss": -16.693846153844696
+          },
+          "NAS15": {
+            "raw_decisions": 834,
+            "executed": 32,
+            "noncapital_rules_passed": 170,
+            "capital_exposure_only": 138,
+            "minimum_lot_above_cap": 137,
+            "veto_combinations": {
+              "minimum_lot_above_trade_risk|shared_gross_risk_budget": 69,
+              "shared_gross_risk_budget": 1,
+              "minimum_lot_above_trade_risk": 68
+            },
+            "net": 191.19999999994718,
+            "win_rate": 50.0,
+            "exit_reasons": {
+              "target_quote_delayed": 12,
+              "time_exit_quote_delayed": 4,
+              "stop_quote_delayed": 16
+            },
+            "average_win": 32.67249999999916,
+            "average_loss": -20.722500000002466
+          }
+        }
+      }
+    ],
+    "cost_composition_effects": {
+      "higher": {
+        "common_trades": 73,
+        "standard_only": 13,
+        "other_only": 1,
+        "common_net_reduction": 92.00000000004403,
+        "standard_only_net": 148.27000000000555,
+        "other_only_net": 5.38,
+        "total_net_reduction": 234.8900000000496,
+        "interpretation": "Composition attribution,not direct fee-only causal effect;entries,quantities and stateful recovery can change across costs"
+      },
+      "severe": {
+        "common_trades": 62,
+        "standard_only": 24,
+        "other_only": 1,
+        "common_net_reduction": 160.04000000005874,
+        "standard_only_net": 155.7800000000161,
+        "other_only_net": 4.520000000000728,
+        "total_net_reduction": 311.3000000000742,
+        "interpretation": "Composition attribution,not direct fee-only causal effect;entries,quantities and stateful recovery can change across costs"
+      }
+    },
+    "arithmetic_only_monthly_target": {
+      "current_trades_per_month": 8.179910156250001,
+      "current_expectancy": 6.933372093024102,
+      "required_trades_at_unchanged_expectancy": {
+        "0.15": 108.17247220217709,
+        "0.2": 144.22996293623612,
+        "0.25": 180.28745367029515
+      },
+      "interpretation": "Illustrative starting-equity arithmetic only,not a strategyforecast or permission to multiply correlated trades/risk"
+    },
+    "prior_opportunity_audit_provenance": "Original holding study opportunity_audit.json was sourced from60minutecontrol decisions,not the selectedNAS90 ledgers. Both archived unchanged;this audit labels NAS90 explicitly.",
+    "interpretation": "Raw signals and noncapital-rule passes are NOT proven missed winners or fully executable trades. No rejected trade outcome is invented. All prices already exposed;no independentvalidation.",
+    "originals_unchanged": true,
+    "active_paper_changed": false,
+    "new_financial_simulation": false
+  },
+  "cycle002": {
+    "completed": {
+      "at_utc": "2026-11-02T20:58:34.490513+00:00",
+      "cases": 6,
+      "later_cases": 0,
+      "originals_preserved": true,
+      "active_paper_changed": false,
+      "independent_validation": false
+    },
+    "decisions": {
+      "costs": {
+        "standard": {
+          "checks": {
+            "portfolio_sample": true,
+            "nas_sample": true,
+            "positive_net": true,
+            "PF": true,
+            "portfolio_profit_no_lower": false,
+            "nas_profit_no_lower": false,
+            "portfolio_DD_no_higher": true,
+            "nas_DD_no_higher": true,
+            "DD_below10": true,
+            "uncertainty_lower_positive": false
+          },
+          "passed": false,
+          "old_net": 292.0100000000661,
+          "new_net": 239.91000000006852,
+          "delta": -52.09999999999758,
+          "old_quoteDD": 2.8160557262915797,
+          "new_quoteDD": 2.566643448410765
+        },
+        "higher": {
+          "checks": {
+            "portfolio_sample": true,
+            "nas_sample": true,
+            "positive_net": true,
+            "PF": true,
+            "portfolio_profit_no_lower": false,
+            "nas_profit_no_lower": false,
+            "portfolio_DD_no_higher": false,
+            "nas_DD_no_higher": false,
+            "DD_below10": true,
+            "uncertainty_lower_positive": false
+          },
+          "passed": false,
+          "old_net": 258.30000000001615,
+          "new_net": 135.9350000000192,
+          "delta": -122.36499999999697,
+          "old_quoteDD": 2.2806959434840737,
+          "new_quoteDD": 2.652927436859821
+        },
+        "severe": {
+          "checks": {
+            "portfolio_sample": true,
+            "nas_sample": true,
+            "positive_net": true,
+            "PF": true,
+            "portfolio_profit_no_lower": false,
+            "nas_profit_no_lower": false,
+            "portfolio_DD_no_higher": false,
+            "nas_DD_no_higher": true,
+            "DD_below10": true,
+            "uncertainty_lower_positive": false
+          },
+          "passed": false,
+          "old_net": 189.11999999998548,
+          "new_net": 129.43999999998516,
+          "delta": -59.68000000000032,
+          "old_quoteDD": 2.8971802594816434,
+          "new_quoteDD": 3.2043726478095733
+        }
+      },
+      "all_costs_pass": false,
+      "later_cases": 0,
+      "promotion": false
+    },
+    "records": [
+      {
+        "profile": "control",
+        "cost": "standard",
+        "trades": 56,
+        "win_rate": 53.57142857142857,
+        "net": 292.0100000000661,
+        "quoteDD": 2.8160557262915797
+      },
+      {
+        "profile": "control",
+        "cost": "higher",
+        "trades": 52,
+        "win_rate": 55.76923076923077,
+        "net": 258.30000000001615,
+        "quoteDD": 2.2806959434840737
+      },
+      {
+        "profile": "control",
+        "cost": "severe",
+        "trades": 42,
+        "win_rate": 52.38095238095238,
+        "net": 189.11999999998548,
+        "quoteDD": 2.8971802594816434
+      },
+      {
+        "profile": "nas_break_even",
+        "cost": "standard",
+        "trades": 54,
+        "win_rate": 46.2962962962963,
+        "net": 239.91000000006852,
+        "quoteDD": 2.566643448410765
+      },
+      {
+        "profile": "nas_break_even",
+        "cost": "higher",
+        "trades": 51,
+        "win_rate": 49.01960784313726,
+        "net": 135.9350000000192,
+        "quoteDD": 2.652927436859821
+      },
+      {
+        "profile": "nas_break_even",
+        "cost": "severe",
+        "trades": 42,
+        "win_rate": 47.61904761904762,
+        "net": 129.43999999998516,
+        "quoteDD": 3.2043726478095733
+      }
+    ],
+    "period": [
+      "2025-12-15",
+      "2026-05-31"
+    ],
+    "reused_observations": true,
+    "independent_validation": false
+  },
   "schedule": {
-    "status": "ACTIVE hourly; updated paired evaluator verified; first updated unattended invocation not yet observed",
+    "status": "ACTIVE hourly; first updated heartbeat invocation observed",
     "cadence": "Hourly",
     "automation_id": "atlas-paper-forward-health-and-results",
     "native_view_verified": true,
@@ -6522,10 +6876,11 @@
     "verified_utc": "2026-11-02T20:24:25.915447+00:00",
     "saved_configuration_verified": true,
     "paired_prospective_protocol_sha256": "7cf7d23ce774e8d616b66d3c74a35d91023e128955cf3758d5f44b7b5e6e29e5",
-    "first_updated_scheduled_invocation_observed": false
+    "first_updated_scheduled_invocation_observed": true,
+    "first_updated_scheduled_invocation_utc": "2026-11-02T20:27:00.894978+00:00"
   },
   "workflow": {
-    "at_utc": "2026-11-02T20:22:56.904155+00:00",
+    "at_utc": "2026-11-02T20:59:08.911882+00:00",
     "trigger": "manual",
     "original_financial_sources_match": true,
     "paper_only": true,

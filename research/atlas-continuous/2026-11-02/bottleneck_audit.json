@@ -1,0 +1,205 @@
+{
+  "created_utc": "2026-11-02T20:56:46.369123+00:00",
+  "period": [
+    "2025-12-15",
+    "2026-10-30"
+  ],
+  "initial_equity": 5000,
+  "records": [
+    {
+      "cost": "standard",
+      "net": 596.2700000000727,
+      "expectancy": 6.933372093024102,
+      "trades_per_month": 8.179910156250001,
+      "average_win": 27.328958333333826,
+      "average_loss": -18.829473684209226,
+      "commission": 10.44,
+      "slippage": 24.9,
+      "lanes": {
+        "SPX15": {
+          "raw_decisions": 493,
+          "executed": 45,
+          "noncapital_rules_passed": 50,
+          "capital_exposure_only": 5,
+          "minimum_lot_above_cap": 3,
+          "veto_combinations": {
+            "shared_gross_risk_budget": 2,
+            "minimum_lot_above_trade_risk": 3
+          },
+          "net": 366.3999999999436,
+          "win_rate": 62.22222222222222,
+          "exit_reasons": {
+            "time_exit_quote": 17,
+            "target_quote": 18,
+            "stop_quote": 10
+          },
+          "average_win": 22.52678571428474,
+          "average_loss": -15.550000000001708
+        },
+        "NAS15": {
+          "raw_decisions": 834,
+          "executed": 41,
+          "noncapital_rules_passed": 181,
+          "capital_exposure_only": 140,
+          "minimum_lot_above_cap": 139,
+          "veto_combinations": {
+            "minimum_lot_above_trade_risk|shared_gross_risk_budget": 74,
+            "shared_gross_risk_budget": 1,
+            "minimum_lot_above_trade_risk": 65
+          },
+          "net": 229.8700000001292,
+          "win_rate": 48.78048780487805,
+          "exit_reasons": {
+            "target_quote": 15,
+            "time_exit_quote": 5,
+            "stop_quote": 21
+          },
+          "average_win": 34.05200000000255,
+          "average_loss": -21.48428571428199
+        }
+      }
+    },
+    {
+      "cost": "higher",
+      "net": 361.3800000000232,
+      "expectancy": 4.883513513513827,
+      "trades_per_month": 7.03852734375,
+      "average_win": 25.30658536585402,
+      "average_loss": -20.4906060606058,
+      "commission": 16.56,
+      "slippage": 36.84,
+      "lanes": {
+        "SPX15": {
+          "raw_decisions": 493,
+          "executed": 37,
+          "noncapital_rules_passed": 41,
+          "capital_exposure_only": 4,
+          "minimum_lot_above_cap": 2,
+          "veto_combinations": {
+            "shared_gross_risk_budget": 2,
+            "minimum_lot_above_trade_risk": 2
+          },
+          "net": 172.90500000004388,
+          "win_rate": 62.16216216216216,
+          "exit_reasons": {
+            "time_exit_quote": 15,
+            "target_quote": 12,
+            "stop_quote": 10
+          },
+          "average_win": 18.770434782609687,
+          "average_loss": -18.486785714284206
+        },
+        "NAS15": {
+          "raw_decisions": 834,
+          "executed": 37,
+          "noncapital_rules_passed": 176,
+          "capital_exposure_only": 139,
+          "minimum_lot_above_cap": 138,
+          "veto_combinations": {
+            "minimum_lot_above_trade_risk|shared_gross_risk_budget": 71,
+            "shared_gross_risk_budget": 1,
+            "minimum_lot_above_trade_risk": 67
+          },
+          "net": 188.47499999997933,
+          "win_rate": 48.648648648648646,
+          "exit_reasons": {
+            "target_quote": 13,
+            "time_exit_quote": 5,
+            "stop_quote": 19
+          },
+          "average_win": 33.658333333332884,
+          "average_loss": -21.967105263158555
+        }
+      }
+    },
+    {
+      "cost": "severe",
+      "net": 284.9699999999986,
+      "expectancy": 4.523333333333311,
+      "trades_per_month": 5.9922597656250005,
+      "average_win": 24.5161764705888,
+      "average_loss": -18.916551724138635,
+      "commission": 19.259999999999998,
+      "slippage": 56.08,
+      "lanes": {
+        "SPX15": {
+          "raw_decisions": 493,
+          "executed": 31,
+          "noncapital_rules_passed": 32,
+          "capital_exposure_only": 1,
+          "minimum_lot_above_cap": 1,
+          "veto_combinations": {
+            "minimum_lot_above_trade_risk": 1
+          },
+          "net": 93.7700000000515,
+          "win_rate": 58.064516129032256,
+          "exit_reasons": {
+            "time_exit_quote_delayed": 14,
+            "stop_quote_delayed": 9,
+            "target_quote_delayed": 8
+          },
+          "average_win": 17.26611111111292,
+          "average_loss": -16.693846153844696
+        },
+        "NAS15": {
+          "raw_decisions": 834,
+          "executed": 32,
+          "noncapital_rules_passed": 170,
+          "capital_exposure_only": 138,
+          "minimum_lot_above_cap": 137,
+          "veto_combinations": {
+            "minimum_lot_above_trade_risk|shared_gross_risk_budget": 69,
+            "shared_gross_risk_budget": 1,
+            "minimum_lot_above_trade_risk": 68
+          },
+          "net": 191.19999999994718,
+          "win_rate": 50.0,
+          "exit_reasons": {
+            "target_quote_delayed": 12,
+            "time_exit_quote_delayed": 4,
+            "stop_quote_delayed": 16
+          },
+          "average_win": 32.67249999999916,
+          "average_loss": -20.722500000002466
+        }
+      }
+    }
+  ],
+  "cost_composition_effects": {
+    "higher": {
+      "common_trades": 73,
+      "standard_only": 13,
+      "other_only": 1,
+      "common_net_reduction": 92.00000000004403,
+      "standard_only_net": 148.27000000000555,
+      "other_only_net": 5.38,
+      "total_net_reduction": 234.8900000000496,
+      "interpretation": "Composition attribution,not direct fee-only causal effect;entries,quantities and stateful recovery can change across costs"
+    },
+    "severe": {
+      "common_trades": 62,
+      "standard_only": 24,
+      "other_only": 1,
+      "common_net_reduction": 160.04000000005874,
+      "standard_only_net": 155.7800000000161,
+      "other_only_net": 4.520000000000728,
+      "total_net_reduction": 311.3000000000742,
+      "interpretation": "Composition attribution,not direct fee-only causal effect;entries,quantities and stateful recovery can change across costs"
+    }
+  },
+  "arithmetic_only_monthly_target": {
+    "current_trades_per_month": 8.179910156250001,
+    "current_expectancy": 6.933372093024102,
+    "required_trades_at_unchanged_expectancy": {
+      "0.15": 108.17247220217709,
+      "0.2": 144.22996293623612,
+      "0.25": 180.28745367029515
+    },
+    "interpretation": "Illustrative starting-equity arithmetic only,not a strategyforecast or permission to multiply correlated trades/risk"
+  },
+  "prior_opportunity_audit_provenance": "Original holding study opportunity_audit.json was sourced from60minutecontrol decisions,not the selectedNAS90 ledgers. Both archived unchanged;this audit labels NAS90 explicitly.",
+  "interpretation": "Raw signals and noncapital-rule passes are NOT proven missed winners or fully executable trades. No rejected trade outcome is invented. All prices already exposed;no independentvalidation.",
+  "originals_unchanged": true,
+  "active_paper_changed": false,
+  "new_financial_simulation": false
+}
