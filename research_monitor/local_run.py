@@ -5,6 +5,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 from .telemetry import Reporter
+from .discipline import Discipline
+from .exits import target_rr,next_stop,POLICIES
+from .risk_review import RiskReview
 from trading_pipeline.engine_v4 import Engine,Hypothesis,Policy
 
 NY=ZoneInfo('America/New_York')
@@ -41,11 +44,16 @@ def signals(native,symbol,minutes,lookback,filter_,end_clock=720,family=None):
             'short_only':side==-1,'max_stop_atr':True,'short_range':side==-1}.get(filter_)
         if passes is None:raise ValueError('Unknown preregistered entry filter')
         if side and 600<=clock<=end_clock and passes:
-            out[end]=dict(side=side,stop=b['low'] if side==1 else b['high'],reference=b['close'],decision=end,entry_at=end+60,atr14=atr)
+            out[end]=dict(side=side,stop=b['low'] if side==1 else b['high'],reference=b['close'],decision=end,entry_at=end+60,atr14=atr,trend_aligned=trend,strong_close=strong)
     return out
 
 def run_case(source,symbol,minutes,metadata,variant,phase,days,reporter,pace,queue_index,queue_total,stress=False,stop_event=None):
     end_clock=variant.get('end_clock',720)
+    exit_policy=variant.get('exit_policy','baseline')
+    if exit_policy not in POLICIES:raise ValueError('Unknown exit policy')
+    if variant.get('discipline') not in (None,'selective_v1'):raise ValueError('Unknown discipline policy')
+    discipline=Discipline() if variant.get('discipline') else None
+    risk_review=RiskReview(variant.get('risk_policy','baseline'))
     family=variant.get('family') or ('pullback' if symbol=='NAS100' else 'breakout')
     one=source[(symbol,1)];native=source[(symbol,minutes)];sig=signals(native,symbol,minutes,variant['lookback'],variant['filter'],end_clock,family)
     chosen=set(days);rows=[]
@@ -55,36 +63,59 @@ def run_case(source,symbol,minutes,metadata,variant,phase,days,reporter,pace,que
     tick=metadata['trade_tick_size'];mult=metadata['trade_tick_value_loss']/tick;slip=tick*(2 if stress else 1)
     spread_factor=1.5 if stress else 1;cash=500.;position=None;pending=None;busy=-1;fills=[];skips=Counter();peak=500.;dd=0.;risk=25.
     rid=f'{symbol}-{phase}-L{variant["lookback"]}-{variant["rr"]}-{variant["filter"]}-'+('wide' if stress else 'base')
+    if discipline:rid+='-selective_v1'
+    rid+='-'+exit_policy
+    if risk_review.name!='baseline':rid+='-'+risk_review.name
     reporter.begin(rid,symbol,f'{minutes}m',family.title()+(' · Morning session' if end_clock==720 else ' · Day session'),500,
         evidence='Historical simulation',phase=phase,queue_index=queue_index,queue_total=queue_total,assumptions='Isolated dollar ceiling; portfolio and daily halts not applied. Before commissions; margin unverified.')
     reporter.state.update(risk_cap=risk,rr=f'1:{variant["rr"]:g}',timeframe_minutes=minutes,
         variant=f'L{variant["lookback"]} · '+('EMA50' if variant['filter']!='none' else 'Unfiltered'),queue_index=queue_index,queue_total=queue_total)
     reporter.state['variant']='L'+str(variant['lookback'])+' · '+variant['filter'].replace('_',' ').title()
+    if risk_review.name!='baseline':
+        reporter.state['variant']+=' · '+risk_review.name.replace('_',' ')
+        reporter.state['metadata']['assumptions']='Isolated scenario; only specified session controls applied. Before unknown fees; margin unverified.'
     def close(price,at,reason):
         nonlocal cash,position,busy
         p=position;fill=price-p['side']*slip;pnl=(fill-p['entry'])*p['side']*p['quantity']*mult
         cash+=pnl;R=(fill-p['entry'])*p['side']/p['distance'];fills.append(dict(entry_at=iso(p['at']),exit_at=iso(at),pnl=pnl,R=R,reason=reason,side=p['side'],entry_price=p['entry'],exit_price=fill,stop=p['stop'],target=p['target'],quantity=p['quantity'],initial_risk_points=p['distance']))
+        if discipline:discipline.exited(pnl,at)
+        risk_review.exited(pnl,at)
         reporter.state.update(balance=cash,equity=cash,plan=None)
         reporter.event('exit',time=iso(at),price=fill,side=p['side'],pnl=pnl,quantity=p['quantity'],reason=reason)
         position=None;busy=at
     for index,b in enumerate(rows):
         if stop_event is not None and stop_event.is_set():break
         t=b['t'];now=t+60;spread=up(b['spread']*metadata['point']*spread_factor,tick)
+        risk_review.session_start(str(datetime.fromtimestamp(t,timezone.utc).astimezone(NY).date()))
+        if discipline:discipline.begin_session(str(datetime.fromtimestamp(t,timezone.utc).astimezone(NY).date()))
         if pending and t>=pending['entry_at']:
             if t!=pending['entry_at']:skips['missing_entry']+=1
             elif not 600<=datetime.fromtimestamp(t,timezone.utc).astimezone(NY).hour*60+datetime.fromtimestamp(t,timezone.utc).astimezone(NY).minute<=end_clock:skips['entry_outside_window']+=1
             elif not position and pending['decision']>busy:
                 side=pending['side'];entry=b['open']+(spread if side==1 else 0)+side*slip
                 stop=down(pending['stop'],tick) if side==1 else up(pending['stop'],tick);distance=side*(entry-stop)
+                risk=risk_review.cap(cash)
+                reporter.state['risk_cap']=risk
                 perlot=(distance+slip)*mult;quantity=down(min(risk,max(cash,0))/perlot,metadata['volume_step']) if perlot>0 else 0
+                gate=discipline.reason(pending,entry,distance,spread,slip,t) if discipline and distance>=tick-1e-8 else None
                 if distance<tick-1e-8:skips['invalid_stop']+=1
+                elif risk_review.entry_reason(pending,spread,slip,distance):skips[risk_review.entry_reason(pending,spread,slip,distance)]+=1
+                elif risk_review.name=='cost_gate' and (spread+2*slip)/distance>.10:skips['cost_above_tenth_R']+=1
+                elif risk_review.reason(t):skips[risk_review.reason(t)]+=1
+                elif discipline and (b['open']<=stop if side==1 else b['open']+spread>=stop):skips['stop_already_breached']+=1
+                elif gate:
+                    skips[gate]+=1
+                    reporter.event('skip',time=iso(t),side=side,price=entry,reason=gate)
                 elif variant['filter'] in ('max_stop_atr','short_range') and (not pending.get('atr14') or distance/pending['atr14']>1.5):skips['oversized_stop_relative_to_volatility']+=1
                 elif quantity<metadata['volume_min']-1e-8:skips['minimum_lot_above_cap']+=1
                 else:
-                    reward=down(variant['rr']*distance,tick)
+                    reward=down(target_rr(exit_policy,variant['rr'],pending)*distance,tick)
                     local=datetime.fromtimestamp(t,timezone.utc).astimezone(NY)
                     flatten=int(local.replace(hour=15,minute=55,second=0,microsecond=0).timestamp())
                     position=dict(side=side,entry=entry,stop=stop,target=entry+side*reward,distance=distance,quantity=quantity,at=t,expiry=min(t+3600,flatten))
+                    position['recovery']=risk_review.loss_streak>=2
+                    if discipline:discipline.entered()
+                    risk_review.entered()
                     reporter.state['plan']=dict(side=side,entry=entry,stop=stop,target=position['target'],time=iso(t))
                     reporter.event('entry',time=iso(t),price=entry,side=side,quantity=quantity,stop=stop,target=position['target'])
             pending=None
@@ -97,6 +128,12 @@ def run_case(source,symbol,minutes,metadata,variant,phase,days,reporter,pace,que
             elif (op>=p['target'] if side==1 else op<=p['target']):close(p['target'],t,'target')
             elif (lo<=p['stop'] if side==1 else hi>=p['stop']):close(p['stop'],now,'stop')
             elif (hi>=p['target'] if side==1 else lo<=p['target']):close(p['target'],now,'target')
+            if position:
+                revised=next_stop(exit_policy,p,hi,lo,tick,b['close']+q)
+                if revised!=p['stop']:
+                    p['stop']=revised
+                    reporter.state['plan']=dict(side=side,entry=p['entry'],stop=revised,target=p['target'],time=iso(now))
+                    reporter.event('stop_revision',time=iso(now),price=revised,side=side,reason='Effective next observation')
         bucket=t//(minutes*60)*(minutes*60)
         candles=reporter.state['candles']
         if candles and candles[-1]['time']==bucket:
@@ -110,6 +147,7 @@ def run_case(source,symbol,minutes,metadata,variant,phase,days,reporter,pace,que
             executable=b['close']+(spread if position['side']==-1 else 0)-position['side']*slip
             equity+=(executable-position['entry'])*position['side']*position['quantity']*mult
         peak=max(peak,equity);dd=max(dd,(peak-equity)/peak)
+        risk_review.observe_equity(equity)
         reporter.update(balance=cash,equity=equity,progress=(index+1)/max(len(rows),1),processed=index+1,total=len(rows),cursor_time=iso(now),closed_positions=len(fills))
         if pace:time.sleep(pace)
     status='interrupted' if stop_event is not None and stop_event.is_set() else 'completed' if position is None else 'incomplete'
@@ -117,6 +155,9 @@ def run_case(source,symbol,minutes,metadata,variant,phase,days,reporter,pace,que
     result=dict(id=rid,symbol=symbol,variant=variant,phase=phase,stress=stress,status=status,
         outcomes=len(fills),win_rate=100*wins/len(fills) if fills else None,sum_R=sumR,mean_R=sumR/len(fills) if fills else None,
         ending_balance_before_fees=cash,drawdown_pct=dd*100,skips=dict(skips),qualified=False,broker_execution_enabled=False)
+    if discipline:result['discipline_policy']=discipline.specification()
+    if variant.get('diagnostics'):
+        result['diagnostics']=dict(gross_profit=sum(max(f['pnl'],0) for f in fills),gross_loss=sum(min(f['pnl'],0) for f in fills),average_winner=sum(f['pnl'] for f in fills if f['pnl']>0)/max(sum(f['pnl']>0 for f in fills),1),average_loser=sum(f['pnl'] for f in fills if f['pnl']<0)/max(sum(f['pnl']<0 for f in fills),1),exit_reasons=dict(Counter(f['reason'] for f in fills)))
     reporter.finish(status,balance=cash,equity=cash,progress=1,summary=result)
     return result
 
