@@ -78,6 +78,10 @@ def main():
         package['observation']=dict(state='stopped_by_user',collection_running=False,prospective_observations_accruing=False,required_action=None,notice='Observation stopped by user. Offline research continues; no new prospective observations are being collected. No restart or replacement is authorized.')
         package['independent_validation']['prospective']='Stopped by user; old frozen cohort cannot adopt a replacement process. No new observations accrue.'
         package['priorities'][1]='Keep observation stopped as requested. Any future collection or new cohort requires explicit reactivation and a separate pre-observation freeze.'
+    design=out/'designs/fomc_entry_guard_v1/public_summary.json'
+    if design.exists():
+        package['fomc_entry_design']=json.loads(design.read_text(encoding='utf-8'))
+        package['priorities'].append('Keep scheduled FOMC entry guard inactive. Calendar vintage, complete coverage, clock/contract reconciliation and a separate full evaluation freeze are prerequisites. No calendar-to-signal joins or financial outcomes have been scored.')
     write(out/'dashboard_data.json',trim(package));print(json.dumps(dict(experiments=len(records),books=len(results),independent_months=0,latest=[dict(cost=r['cost'],statistics=r['monthly']['statistics'])for r in results if r['book']=='two_strategy_NAS90min']),allow_nan=False))
 
 

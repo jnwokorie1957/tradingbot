@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-11-03T03:16:42.639848+00:00",
+  "created_utc": "2026-11-03T04:39:40.716864+00:00",
   "objective": "Investigate15/20/25percent monthly net as stretchhypotheses;positiveindependentexpectancy first;DDtargetbelow10;no riskincreases",
   "monthly": [
     {
@@ -4702,6 +4702,18 @@
       "all_artifacts_preserved": true
     },
     {
+      "experiment": "outputs/atlas_research_pipeline_v1/designs/fomc_entry_guard_v1",
+      "status": "registered_no_outcomes",
+      "identity": "c8bcb922e201e4d4f22d5b7fdfc1ac9fd59118a185f64f0b716190eaeb1f97b2",
+      "files": {
+        "progress.json": "62d0132f083958f506fdad8a42ada9eed79815bce289392d15166e48b6264ddd",
+        "protocol.json": "3723d737d8f9c5898e49403f0593f2e6938eb982d36cbf7207719d9957837477"
+      },
+      "has_results": false,
+      "independent_validation": "Not inferred from completion; requires separate unseen evidence",
+      "all_artifacts_preserved": true
+    },
+    {
       "experiment": "outputs/atlas_research_pipeline_v1/feasibility/contract_provenance_v1",
       "status": "completed_unvalidated",
       "identity": "e27f808be49e4046fabaa8b1c105852e6b9b0eb88e06950e582efbfa2d1da65d",
@@ -6461,7 +6473,8 @@
     "Obtain longer genuinely unusedIBKRcontract histories via confirmedothercomputerroute;quarantine and seal before outcome review",
     "Evaluate the frozen receipt-clock paired holding comparison after5new covered sessions;no refit or automatic deployment",
     "Read-only coverage/clock/contract audit and confirmedfees",
-    "Bounded evidence-based new cycles; retain all losses and failures;no after-outcome parameter tuning"
+    "Bounded evidence-based new cycles; retain all losses and failures;no after-outcome parameter tuning",
+    "Keep scheduled FOMC entry guard inactive. Calendar vintage, complete coverage, clock/contract reconciliation and a separate full evaluation freeze are prerequisites. No calendar-to-signal joins or financial outcomes have been scored."
   ],
   "active_paper_changed": false,
   "execution_delay": {
@@ -7479,6 +7492,79 @@
     "required_action": null,
     "notice": "Observation stopped by user. Offline research continues; no new prospective observations are being collected. No restart or replacement is authorized."
   },
+  "fomc_entry_design": {
+    "status": "DESIGN_ONLY_NOT_ACTIVATED",
+    "registered_utc": "2026-11-03T04:38:50.368237+00:00",
+    "hypothesis": "Avoiding new NAS entries in a fixed scheduled FOMC-statement identification window might improve after-cost robustness, but may discard profitable opportunities.",
+    "rule": {
+      "lane": "NAS15 only",
+      "event": "Agency-scheduled FOMC statement only",
+      "interval_seconds": [
+        -600,
+        1200
+      ],
+      "boundaries": "start inclusive,end exclusive",
+      "timestamp": "Actual causal admission receipt time under the unchanged baseline; source/broker clock must first be reconciled.",
+      "within_window": "Exclude that new signal. No deferred entry, post-window resurrection, altered stop or existing-position action.",
+      "outside_window": "Unchanged baseline eligibility. No policy surprise, statement sentiment, price move or future information is an input.",
+      "unavailable": "Incomplete calendar, later receipt/version or naive clock means unavailable/review; never silently no-event."
+    },
+    "references": [
+      {
+        "title": "Gurkaynak, Sack and Swanson (2004), Do Actions Speak Louder Than Words?",
+        "url": "https://www.federalreserve.gov/pubs/feds/2004/200466/200466pap.pdf",
+        "role": "Primary intraday evidence that policy actions and statement information can move asset prices. Not evidence that an entry exclusion is profitable."
+      },
+      {
+        "title": "Wongswan (2005), The Response of Global Equity Indexes to U.S. Monetary Policy Announcements",
+        "url": "https://www.federalreserve.gov/pubs/ifdp/2005/844/ifdp844.htm",
+        "role": "Section 2.1 describes a 10-minute-before/20-minute-after monetary-surprise window. Its equity-response analysis also uses a wider window. Neither is a recommended trading exclusion."
+      },
+      {
+        "title": "Federal Reserve meeting calendars and information",
+        "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+        "role": "Agency dates and links are metadata leads. A page retrieved today does not establish what this research system knew before a historical entry."
+      },
+      {
+        "title": "Federal Reserve January 28, 2026 statement release header",
+        "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260128a.htm",
+        "role": "The header explicitly states 2:00 p.m. EST for this release. Do not generalize that clock to every historical event or infer a CFD broker offset."
+      }
+    ],
+    "costs": [
+      "standard",
+      "higher",
+      "severe"
+    ],
+    "risk": {
+      "capital": 5000,
+      "per_trade": "min(0.5percent current equity,25USD) all-in",
+      "gross_open": "1percent",
+      "daily_pause": "2percent",
+      "peak_drawdown_pause": "10percent",
+      "count_quota": null
+    },
+    "reviewed_protocols": 77,
+    "synthetic_checks_passed": 9,
+    "calendar_to_signal_joins": 0,
+    "financial_cases_started": 0,
+    "financial_observations_scored": 0,
+    "financial_result": null,
+    "independent_validation": false,
+    "active_paper_changed": false,
+    "observation_restarted": false,
+    "ict_used": false,
+    "deployment": false,
+    "readiness": "Calendar vintage, complete coverage, clock/contract reconciliation and separate full evaluation freeze required. No ongoing collection; stopped by user.",
+    "limitations": [
+      "No financial outcome, interception count or calendar-to-signal feature join was computed.",
+      "Separate press conferences/unscheduled events and already open positions remain outside this proposed new-entry gate.",
+      "CFD fee, margin, historical contract and clock assumptions remain estimates/unresolved. No futures relabelling.",
+      "A narrower entry universe may reduce net profit and opportunity capture; no benefit is assumed."
+    ],
+    "protocol_sha256": "3723d737d8f9c5898e49403f0593f2e6938eb982d36cbf7207719d9957837477",
+    "source_sha256": "e375cc3cb0238cc0b973b3743a020bf99a4d3e537122b558b6a07eb2364b88e4"
+  },
   "schedule": {
     "status": "ACTIVE hourly; first updated heartbeat invocation observed",
     "cadence": "Hourly",
@@ -7499,7 +7585,7 @@
     "first_updated_scheduled_invocation_utc": "2026-11-02T20:27:00.894978+00:00"
   },
   "workflow": {
-    "at_utc": "2026-11-03T03:11:14.599059+00:00",
+    "at_utc": "2026-11-03T04:24:13.891617+00:00",
     "trigger": "heartbeat",
     "original_financial_sources_match": true,
     "paper_only": true,
