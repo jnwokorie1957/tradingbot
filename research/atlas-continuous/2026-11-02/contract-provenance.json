@@ -1,0 +1,117 @@
+{
+  "completed_utc": "2026-11-03T03:15:19.313607+00:00",
+  "status": "DOCUMENTARY_AUDIT_COMPLETE_APPLICABILITY_UNRESOLVED",
+  "corpus_scope": "Bounded to matching text JSON files at most 500K under outputs/work. Original broker documents, larger files, external computers and other locations are not claimed searched. ICT, broker connections and price/fill archives are excluded.",
+  "matching_documents": 22,
+  "exact_duplicate_content_groups": 2,
+  "instruments": {
+    "NAS100": {
+      "documents_with_properties": 21,
+      "property_records": 21,
+      "unique_document_hashes": 17,
+      "records_with_explicit_capture_time": 3,
+      "explicit_capture_times": [
+        "2026-10-28T02:35:05.146825+00:00",
+        "2026-11-01T23:46:38.411807+00:00"
+      ],
+      "records_with_effective_fields": 0,
+      "observed_property_values": {
+        "point": [
+          0.01
+        ],
+        "digits": [
+          2
+        ],
+        "trade_tick_size": [
+          0.01
+        ],
+        "trade_tick_value_profit": [
+          1.0
+        ],
+        "trade_tick_value_loss": [
+          1.0
+        ],
+        "trade_contract_size": [
+          100.0
+        ],
+        "volume_min": [
+          0.01
+        ],
+        "volume_step": [
+          0.01
+        ]
+      },
+      "conflicting_observed_property_values": false,
+      "historical_applicability_verified": false,
+      "verdict": "NO_VERIFIED_HISTORICAL_CONTRACT_MAPPING_IN_BOUNDED_CORPUS"
+    },
+    "SPX500": {
+      "documents_with_properties": 21,
+      "property_records": 21,
+      "unique_document_hashes": 17,
+      "records_with_explicit_capture_time": 4,
+      "explicit_capture_times": [
+        "2026-10-28T02:35:05.146825+00:00",
+        "2026-10-31T19:56:53.897934+00:00",
+        "2026-11-01T23:46:38.411807+00:00"
+      ],
+      "records_with_effective_fields": 0,
+      "observed_property_values": {
+        "point": [
+          0.1
+        ],
+        "digits": [
+          1
+        ],
+        "trade_tick_size": [
+          0.1
+        ],
+        "trade_tick_value_profit": [
+          10.0
+        ],
+        "trade_tick_value_loss": [
+          10.0
+        ],
+        "trade_contract_size": [
+          100.0
+        ],
+        "volume_min": [
+          0.01
+        ],
+        "volume_step": [
+          0.01
+        ]
+      },
+      "conflicting_observed_property_values": false,
+      "historical_applicability_verified": false,
+      "verdict": "NO_VERIFIED_HISTORICAL_CONTRACT_MAPPING_IN_BOUNDED_CORPUS"
+    }
+  },
+  "required_evidence": [
+    "Dated broker-origin specification or revision evidence identifying the same symbol, server/feed and applicable historical interval.",
+    "Precision, minimum price increment, monetary tick value, contract size, profit currency and legal volume increments for each applicable interval.",
+    "Any conversion, symbol migration or historical-feed rescaling policy, with effective timestamps and preserved document identity.",
+    "A documented bridge from those specifications to the original quote archive, plus separate fee, margin and historical server-clock evidence.",
+    "An independently reviewed execution model registered as a new version before any new financial replay; all original benchmarks and failures retained."
+  ],
+  "references": [
+    {
+      "title": "MetaQuotes symbol_info",
+      "url": "https://www.mql5.com/en/docs/python_metatrader5/mt5symbolinfo_py",
+      "scope": "The documented call accepts a symbol name and returns its properties. It has no historical as-of parameter. This does not establish a broker revision timeline."
+    },
+    {
+      "title": "MetaQuotes price precision and tick properties",
+      "url": "https://www.mql5.com/en/book/automation/symbols/symbols_point_tick",
+      "scope": "Decimal representation, price-change step and monetary tick value are distinct properties. The documentation describes tick values as current; it does not certify this account historical settings."
+    }
+  ],
+  "historical_specification_resolved": false,
+  "financial_cases": 0,
+  "profit_delta": null,
+  "financial_PASS": false,
+  "active_paper_changed": false,
+  "observation_restarted": false,
+  "independent_validation": false,
+  "ict_used": false
+}

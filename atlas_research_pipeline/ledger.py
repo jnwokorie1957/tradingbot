@@ -69,6 +69,10 @@ def main():
     if(precision/'completed.json').exists():
         package['quote_precision']=json.loads((precision/'results.json').read_text())
         package['priorities'].insert(0,'Reconcile SPX historical quote precision with the saved tick size/value and contract timeline before new execution-sensitive SPX scoring. Preserve old modeled results and the failed feasibility probe; do not infer replacement specifications.')
+    provenance=out/'feasibility/contract_provenance_v1'
+    if(provenance/'completed.json').exists():
+        package['contract_provenance']=json.loads((provenance/'public_summary.json').read_text())
+        package['priorities'].insert(0,'Keep historical contract applicability unresolved: agreeing saved snapshots have no effective-date evidence in the bounded corpus. Require documentary reconciliation before a newly registered execution model; no substitution, rounding repair, or replay.')
     decision=root/'outputs/atlas_observer_incident_2026_11_02T2229_v1/user_decision.json'
     if decision.exists():
         package['observation']=dict(state='stopped_by_user',collection_running=False,prospective_observations_accruing=False,required_action=None,notice='Observation stopped by user. Offline research continues; no new prospective observations are being collected. No restart or replacement is authorized.')
