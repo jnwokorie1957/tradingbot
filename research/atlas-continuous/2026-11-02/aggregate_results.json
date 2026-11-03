@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-11-02T20:59:10.814499+00:00",
+  "created_utc": "2026-11-03T00:30:50.118346+00:00",
   "objective": "Investigate15/20/25percent monthly net as stretchhypotheses;positiveindependentexpectancy first;DDtargetbelow10;no riskincreases",
   "monthly": [
     {
@@ -4686,6 +4686,35 @@
       "all_artifacts_preserved": true
     },
     {
+      "experiment": "outputs/atlas_research_pipeline_v1/cycles/003",
+      "status": "completed_unvalidated",
+      "identity": "63a6d296969fed070896c3a5e65ad42f9d1d1479a11bc0fa11612749a2dca313",
+      "files": {
+        "completed.json": "4f9b46e7fc7a5617520809420dbb8c3f36206fcdc1900d4e51c4db54f347b362",
+        "decisions.json": "34a2a7f1c220d4a8806d718ea6c12f7e1f1aad05221527e9df8e3edfaef41a2e",
+        "independent_audit.json": "c9c8a00110d3e0f2345094e36c2b4105703ceaa9c29e5ef785015c1b4d4f6535",
+        "progress.json": "3203c9fd6609c57ee35f267d6c1333c6013162981e870b8f1949fcb9cdf43ceb",
+        "protocol.json": "97a695aaf0c4cf630712c7bb79cdfaaa9c34bf7eade0e35f02bf4cd739bc25bd",
+        "results.json": "c1d982e4f255eb9b4dcf5e926d441f347afb16358deb75b9a83b11b85b97266c"
+      },
+      "has_results": true,
+      "independent_validation": "Not inferred from completion; requires separate unseen evidence",
+      "all_artifacts_preserved": true
+    },
+    {
+      "experiment": "outputs/atlas_research_pipeline_v1/feasibility/variance_budget_v1",
+      "status": "completed_unvalidated",
+      "identity": "f2af0b04654586495298803c7b96b116a7b567856abcb295f3be054948a6ff0c",
+      "files": {
+        "completed.json": "5b93893d480d3d5b4d692baeaabef8ccde56ceead150100535132c36b2704d61",
+        "protocol.json": "a180ae76894a1c982deceb58a0c9149814058f9d69d04a1e413442537ce6b6e1",
+        "results.json": "5534c79896c65587bc489fb89a342ec123a45fa09f7ca8f3a62da53e7c10a2e1"
+      },
+      "has_results": true,
+      "independent_validation": "Not inferred from completion; requires separate unseen evidence",
+      "all_artifacts_preserved": true
+    },
+    {
       "experiment": "outputs/atlas_risk_audit_v1",
       "status": "completed_unvalidated",
       "identity": "3dffec720eca8fa9700946bb364a754a8d6a5c1adcaa1cddc4e7fa4356b9aa75",
@@ -6386,11 +6415,11 @@
       "25": null
     },
     "walk_forward": "NOT_AVAILABLE:no untouched historical cohort",
-    "prospective": "Two-lane60/90minute fixed comparison frozen before new financial observations;awaiting complete sessions"
+    "prospective": "Stopped by user; old frozen cohort cannot adopt a replacement process. No new observations accrue."
   },
   "priorities": [
     "Obtain longer genuinely unusedIBKRcontract histories via confirmedothercomputerroute;quarantine and seal before outcome review",
-    "Evaluate the frozen receipt-clock paired holding comparison after5new covered sessions;no refit or automatic deployment",
+    "Keep observation stopped as requested. Any future collection or new cohort requires explicit reactivation and a separate pre-observation freeze.",
     "Read-only coverage/clock/contract audit and confirmedfees",
     "Bounded evidence-based new cycles; retain all losses and failures;no after-outcome parameter tuning"
   ],
@@ -6860,6 +6889,276 @@
     "reused_observations": true,
     "independent_validation": false
   },
+  "cycle003": {
+    "completed": {
+      "at_utc": "2026-11-03T00:27:41.654211+00:00",
+      "cases": 6,
+      "later_cases": 0,
+      "originals_preserved": true,
+      "active_paper_changed": false,
+      "independent_validation": false
+    },
+    "decisions": {
+      "costs": {
+        "standard": {
+          "checks": {
+            "portfolio_sample": true,
+            "lane_samples": true,
+            "reduced_sample": false,
+            "capture": true,
+            "positive": true,
+            "PF": true,
+            "portfolio_profit_no_lower": true,
+            "lane_profits_no_lower": true,
+            "portfolio_DD_no_higher": true,
+            "lane_DDs_no_higher": true,
+            "DD_below10": true,
+            "uncertainty_lower_positive": false
+          },
+          "passed": false,
+          "old_net": 292.0100000000661,
+          "new_net": 292.0100000000661,
+          "delta": 0.0,
+          "old_quoteDD": 2.8160557262915797,
+          "new_quoteDD": 2.8160557262915797
+        },
+        "higher": {
+          "checks": {
+            "portfolio_sample": true,
+            "lane_samples": true,
+            "reduced_sample": false,
+            "capture": true,
+            "positive": true,
+            "PF": true,
+            "portfolio_profit_no_lower": true,
+            "lane_profits_no_lower": true,
+            "portfolio_DD_no_higher": true,
+            "lane_DDs_no_higher": true,
+            "DD_below10": true,
+            "uncertainty_lower_positive": false
+          },
+          "passed": false,
+          "old_net": 258.30000000001615,
+          "new_net": 258.30000000001615,
+          "delta": 0.0,
+          "old_quoteDD": 2.2806959434840737,
+          "new_quoteDD": 2.2806959434840737
+        },
+        "severe": {
+          "checks": {
+            "portfolio_sample": true,
+            "lane_samples": false,
+            "reduced_sample": false,
+            "capture": true,
+            "positive": true,
+            "PF": true,
+            "portfolio_profit_no_lower": true,
+            "lane_profits_no_lower": true,
+            "portfolio_DD_no_higher": true,
+            "lane_DDs_no_higher": true,
+            "DD_below10": true,
+            "uncertainty_lower_positive": false
+          },
+          "passed": false,
+          "old_net": 189.11999999998548,
+          "new_net": 189.11999999998548,
+          "delta": 0.0,
+          "old_quoteDD": 2.8971802594816434,
+          "new_quoteDD": 2.8971802594816434
+        }
+      },
+      "all_costs_pass": false,
+      "later_cases": 0,
+      "promotion": false
+    },
+    "post_run_audit": {
+      "at_utc": "2026-11-03T00:29:22.690254+00:00",
+      "status": "REJECTED_NO_ECONOMIC_EFFECT_IN_DEVELOPMENT",
+      "records": {
+        "standard": {
+          "exact_financial_ledger_parity": true,
+          "candidate_closed_trades": 56,
+          "reduced_allocation_closed_trades": 0,
+          "feature_exposure": {
+            "NAS15": {
+              "feature_available_closed": 14,
+              "reduced_closed": 0
+            },
+            "SPX15": {
+              "feature_available_closed": 11,
+              "reduced_closed": 0
+            }
+          },
+          "scaled_budget_raw_decisions": 80,
+          "scaled_budget_executed_decisions": 2,
+          "interpretation": "Two accepted decisions had a below-one budget factor, but their quantities were already constrained enough that legal sizes and all realized outcomes remained unchanged. Rejected raw decisions are not proven missed winners."
+        },
+        "higher": {
+          "exact_financial_ledger_parity": true,
+          "candidate_closed_trades": 52,
+          "reduced_allocation_closed_trades": 0,
+          "feature_exposure": {
+            "NAS15": {
+              "feature_available_closed": 14,
+              "reduced_closed": 0
+            },
+            "SPX15": {
+              "feature_available_closed": 9,
+              "reduced_closed": 0
+            }
+          },
+          "scaled_budget_raw_decisions": 80,
+          "scaled_budget_executed_decisions": 2,
+          "interpretation": "Two accepted decisions had a below-one budget factor, but their quantities were already constrained enough that legal sizes and all realized outcomes remained unchanged. Rejected raw decisions are not proven missed winners."
+        },
+        "severe": {
+          "exact_financial_ledger_parity": true,
+          "candidate_closed_trades": 42,
+          "reduced_allocation_closed_trades": 0,
+          "feature_exposure": {
+            "NAS15": {
+              "feature_available_closed": 12,
+              "reduced_closed": 0
+            },
+            "SPX15": {
+              "feature_available_closed": 6,
+              "reduced_closed": 0
+            }
+          },
+          "scaled_budget_raw_decisions": 80,
+          "scaled_budget_executed_decisions": 2,
+          "interpretation": "Two accepted decisions had a below-one budget factor, but their quantities were already constrained enough that legal sizes and all realized outcomes remained unchanged. Rejected raw decisions are not proven missed winners."
+        }
+      },
+      "next_action": "Archive this exact hypothesis. Do not shorten warmup, alter the normalization, or test neighboring thresholds using these outcomes. No later replay or deployment.",
+      "independent_validation": false,
+      "observation_restarted": false,
+      "ict_used": false
+    },
+    "records": [
+      {
+        "profile": "control",
+        "cost": "standard",
+        "trades": 56,
+        "win_rate": 53.57142857142857,
+        "net": 292.0100000000661,
+        "quoteDD": 2.8160557262915797,
+        "exposure": {
+          "NAS15": {
+            "feature_available_closed": 0,
+            "reduced_closed": 0
+          },
+          "SPX15": {
+            "feature_available_closed": 0,
+            "reduced_closed": 0
+          }
+        }
+      },
+      {
+        "profile": "control",
+        "cost": "higher",
+        "trades": 52,
+        "win_rate": 55.76923076923077,
+        "net": 258.30000000001615,
+        "quoteDD": 2.2806959434840737,
+        "exposure": {
+          "NAS15": {
+            "feature_available_closed": 0,
+            "reduced_closed": 0
+          },
+          "SPX15": {
+            "feature_available_closed": 0,
+            "reduced_closed": 0
+          }
+        }
+      },
+      {
+        "profile": "control",
+        "cost": "severe",
+        "trades": 42,
+        "win_rate": 52.38095238095238,
+        "net": 189.11999999998548,
+        "quoteDD": 2.8971802594816434,
+        "exposure": {
+          "NAS15": {
+            "feature_available_closed": 0,
+            "reduced_closed": 0
+          },
+          "SPX15": {
+            "feature_available_closed": 0,
+            "reduced_closed": 0
+          }
+        }
+      },
+      {
+        "profile": "capped_prior_variance",
+        "cost": "standard",
+        "trades": 56,
+        "win_rate": 53.57142857142857,
+        "net": 292.0100000000661,
+        "quoteDD": 2.8160557262915797,
+        "exposure": {
+          "NAS15": {
+            "feature_available_closed": 14,
+            "reduced_closed": 0
+          },
+          "SPX15": {
+            "feature_available_closed": 11,
+            "reduced_closed": 0
+          }
+        }
+      },
+      {
+        "profile": "capped_prior_variance",
+        "cost": "higher",
+        "trades": 52,
+        "win_rate": 55.76923076923077,
+        "net": 258.30000000001615,
+        "quoteDD": 2.2806959434840737,
+        "exposure": {
+          "NAS15": {
+            "feature_available_closed": 14,
+            "reduced_closed": 0
+          },
+          "SPX15": {
+            "feature_available_closed": 9,
+            "reduced_closed": 0
+          }
+        }
+      },
+      {
+        "profile": "capped_prior_variance",
+        "cost": "severe",
+        "trades": 42,
+        "win_rate": 52.38095238095238,
+        "net": 189.11999999998548,
+        "quoteDD": 2.8971802594816434,
+        "exposure": {
+          "NAS15": {
+            "feature_available_closed": 12,
+            "reduced_closed": 0
+          },
+          "SPX15": {
+            "feature_available_closed": 6,
+            "reduced_closed": 0
+          }
+        }
+      }
+    ],
+    "period": [
+      "2025-12-15",
+      "2026-05-31"
+    ],
+    "reused_observations": true,
+    "independent_validation": false
+  },
+  "observation": {
+    "state": "stopped_by_user",
+    "collection_running": false,
+    "prospective_observations_accruing": false,
+    "required_action": null,
+    "notice": "Observation stopped by user. Offline research continues; no new prospective observations are being collected. No restart or replacement is authorized."
+  },
   "schedule": {
     "status": "ACTIVE hourly; first updated heartbeat invocation observed",
     "cadence": "Hourly",
@@ -6880,14 +7179,14 @@
     "first_updated_scheduled_invocation_utc": "2026-11-02T20:27:00.894978+00:00"
   },
   "workflow": {
-    "at_utc": "2026-11-02T20:59:08.911882+00:00",
-    "trigger": "manual",
+    "at_utc": "2026-11-03T00:12:34.854661+00:00",
+    "trigger": "heartbeat",
     "original_financial_sources_match": true,
     "paper_only": true,
     "financial_job_started": false,
     "prospective_financial_results_available": false,
-    "paired_status": "waiting_new_completed_sessions",
-    "new_covered_sessions": 0,
-    "collector_identity_matches": true
+    "paired_status": "identity_or_availability_failure_requires_review",
+    "new_covered_sessions": null,
+    "collector_identity_matches": null
   }
 }

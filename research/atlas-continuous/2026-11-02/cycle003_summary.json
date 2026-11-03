@@ -1,0 +1,265 @@
+{
+  "completed": {
+    "at_utc": "2026-11-03T00:27:41.654211+00:00",
+    "cases": 6,
+    "later_cases": 0,
+    "originals_preserved": true,
+    "active_paper_changed": false,
+    "independent_validation": false
+  },
+  "decisions": {
+    "costs": {
+      "standard": {
+        "checks": {
+          "portfolio_sample": true,
+          "lane_samples": true,
+          "reduced_sample": false,
+          "capture": true,
+          "positive": true,
+          "PF": true,
+          "portfolio_profit_no_lower": true,
+          "lane_profits_no_lower": true,
+          "portfolio_DD_no_higher": true,
+          "lane_DDs_no_higher": true,
+          "DD_below10": true,
+          "uncertainty_lower_positive": false
+        },
+        "passed": false,
+        "old_net": 292.0100000000661,
+        "new_net": 292.0100000000661,
+        "delta": 0.0,
+        "old_quoteDD": 2.8160557262915797,
+        "new_quoteDD": 2.8160557262915797
+      },
+      "higher": {
+        "checks": {
+          "portfolio_sample": true,
+          "lane_samples": true,
+          "reduced_sample": false,
+          "capture": true,
+          "positive": true,
+          "PF": true,
+          "portfolio_profit_no_lower": true,
+          "lane_profits_no_lower": true,
+          "portfolio_DD_no_higher": true,
+          "lane_DDs_no_higher": true,
+          "DD_below10": true,
+          "uncertainty_lower_positive": false
+        },
+        "passed": false,
+        "old_net": 258.30000000001615,
+        "new_net": 258.30000000001615,
+        "delta": 0.0,
+        "old_quoteDD": 2.2806959434840737,
+        "new_quoteDD": 2.2806959434840737
+      },
+      "severe": {
+        "checks": {
+          "portfolio_sample": true,
+          "lane_samples": false,
+          "reduced_sample": false,
+          "capture": true,
+          "positive": true,
+          "PF": true,
+          "portfolio_profit_no_lower": true,
+          "lane_profits_no_lower": true,
+          "portfolio_DD_no_higher": true,
+          "lane_DDs_no_higher": true,
+          "DD_below10": true,
+          "uncertainty_lower_positive": false
+        },
+        "passed": false,
+        "old_net": 189.11999999998548,
+        "new_net": 189.11999999998548,
+        "delta": 0.0,
+        "old_quoteDD": 2.8971802594816434,
+        "new_quoteDD": 2.8971802594816434
+      }
+    },
+    "all_costs_pass": false,
+    "later_cases": 0,
+    "promotion": false
+  },
+  "post_run_audit": {
+    "at_utc": "2026-11-03T00:29:22.690254+00:00",
+    "status": "REJECTED_NO_ECONOMIC_EFFECT_IN_DEVELOPMENT",
+    "records": {
+      "standard": {
+        "exact_financial_ledger_parity": true,
+        "candidate_closed_trades": 56,
+        "reduced_allocation_closed_trades": 0,
+        "feature_exposure": {
+          "NAS15": {
+            "feature_available_closed": 14,
+            "reduced_closed": 0
+          },
+          "SPX15": {
+            "feature_available_closed": 11,
+            "reduced_closed": 0
+          }
+        },
+        "scaled_budget_raw_decisions": 80,
+        "scaled_budget_executed_decisions": 2,
+        "interpretation": "Two accepted decisions had a below-one budget factor, but their quantities were already constrained enough that legal sizes and all realized outcomes remained unchanged. Rejected raw decisions are not proven missed winners."
+      },
+      "higher": {
+        "exact_financial_ledger_parity": true,
+        "candidate_closed_trades": 52,
+        "reduced_allocation_closed_trades": 0,
+        "feature_exposure": {
+          "NAS15": {
+            "feature_available_closed": 14,
+            "reduced_closed": 0
+          },
+          "SPX15": {
+            "feature_available_closed": 9,
+            "reduced_closed": 0
+          }
+        },
+        "scaled_budget_raw_decisions": 80,
+        "scaled_budget_executed_decisions": 2,
+        "interpretation": "Two accepted decisions had a below-one budget factor, but their quantities were already constrained enough that legal sizes and all realized outcomes remained unchanged. Rejected raw decisions are not proven missed winners."
+      },
+      "severe": {
+        "exact_financial_ledger_parity": true,
+        "candidate_closed_trades": 42,
+        "reduced_allocation_closed_trades": 0,
+        "feature_exposure": {
+          "NAS15": {
+            "feature_available_closed": 12,
+            "reduced_closed": 0
+          },
+          "SPX15": {
+            "feature_available_closed": 6,
+            "reduced_closed": 0
+          }
+        },
+        "scaled_budget_raw_decisions": 80,
+        "scaled_budget_executed_decisions": 2,
+        "interpretation": "Two accepted decisions had a below-one budget factor, but their quantities were already constrained enough that legal sizes and all realized outcomes remained unchanged. Rejected raw decisions are not proven missed winners."
+      }
+    },
+    "next_action": "Archive this exact hypothesis. Do not shorten warmup, alter the normalization, or test neighboring thresholds using these outcomes. No later replay or deployment.",
+    "independent_validation": false,
+    "observation_restarted": false,
+    "ict_used": false
+  },
+  "records": [
+    {
+      "profile": "control",
+      "cost": "standard",
+      "trades": 56,
+      "win_rate": 53.57142857142857,
+      "net": 292.0100000000661,
+      "quoteDD": 2.8160557262915797,
+      "exposure": {
+        "NAS15": {
+          "feature_available_closed": 0,
+          "reduced_closed": 0
+        },
+        "SPX15": {
+          "feature_available_closed": 0,
+          "reduced_closed": 0
+        }
+      }
+    },
+    {
+      "profile": "control",
+      "cost": "higher",
+      "trades": 52,
+      "win_rate": 55.76923076923077,
+      "net": 258.30000000001615,
+      "quoteDD": 2.2806959434840737,
+      "exposure": {
+        "NAS15": {
+          "feature_available_closed": 0,
+          "reduced_closed": 0
+        },
+        "SPX15": {
+          "feature_available_closed": 0,
+          "reduced_closed": 0
+        }
+      }
+    },
+    {
+      "profile": "control",
+      "cost": "severe",
+      "trades": 42,
+      "win_rate": 52.38095238095238,
+      "net": 189.11999999998548,
+      "quoteDD": 2.8971802594816434,
+      "exposure": {
+        "NAS15": {
+          "feature_available_closed": 0,
+          "reduced_closed": 0
+        },
+        "SPX15": {
+          "feature_available_closed": 0,
+          "reduced_closed": 0
+        }
+      }
+    },
+    {
+      "profile": "capped_prior_variance",
+      "cost": "standard",
+      "trades": 56,
+      "win_rate": 53.57142857142857,
+      "net": 292.0100000000661,
+      "quoteDD": 2.8160557262915797,
+      "exposure": {
+        "NAS15": {
+          "feature_available_closed": 14,
+          "reduced_closed": 0
+        },
+        "SPX15": {
+          "feature_available_closed": 11,
+          "reduced_closed": 0
+        }
+      }
+    },
+    {
+      "profile": "capped_prior_variance",
+      "cost": "higher",
+      "trades": 52,
+      "win_rate": 55.76923076923077,
+      "net": 258.30000000001615,
+      "quoteDD": 2.2806959434840737,
+      "exposure": {
+        "NAS15": {
+          "feature_available_closed": 14,
+          "reduced_closed": 0
+        },
+        "SPX15": {
+          "feature_available_closed": 9,
+          "reduced_closed": 0
+        }
+      }
+    },
+    {
+      "profile": "capped_prior_variance",
+      "cost": "severe",
+      "trades": 42,
+      "win_rate": 52.38095238095238,
+      "net": 189.11999999998548,
+      "quoteDD": 2.8971802594816434,
+      "exposure": {
+        "NAS15": {
+          "feature_available_closed": 12,
+          "reduced_closed": 0
+        },
+        "SPX15": {
+          "feature_available_closed": 6,
+          "reduced_closed": 0
+        }
+      }
+    }
+  ],
+  "period": [
+    "2025-12-15",
+    "2026-05-31"
+  ],
+  "reused_observations": true,
+  "independent_validation": false,
+  "candidate_status": "REJECTED_NO_ECONOMIC_EFFECT_IN_DEVELOPMENT",
+  "source": "One cap-only adaptation motivated by Moreira and Muir(2017),not a replication of their monthly-factor strategy."
+}

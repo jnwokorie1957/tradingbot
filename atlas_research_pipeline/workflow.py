@@ -24,6 +24,8 @@ def main():
         delay=root/'outputs/atlas_pair_execution_delay_v1';prospective=root/'outputs/atlas_pair_prospective_v1'
         second=out/'cycles/002';bottleneck=root/'outputs/atlas_pair_bottleneck_audit_v1'
         report['cycle002']=json.loads((second/'progress.json').read_text())if(second/'progress.json').exists()else None
+        third=out/'cycles/003'
+        report['cycle003']=json.loads((third/'progress.json').read_text())if(third/'progress.json').exists()else None
         report['execution_delay']=json.loads((delay/'completed.json').read_text())if(delay/'completed.json').exists()else None
         if(prospective/'protocol.json').exists():
             command=[os.sys.executable,'-m','atlas_research_pipeline.pair_forward','--root',str(root)]
@@ -35,7 +37,7 @@ def main():
                 if report['pair_prospective']['new_complete_sessions']>=5 and phase['status']not in ['evaluation_failed_requires_review','evidence_failure_requires_review']:
                     report['financial_job_started']=True;r=subprocess.run(command,cwd=root/'work/tradingbot',capture_output=True,text=True);report['finite_evaluation']=dict(started_and_completed=True,exit_code=r.returncode,stdout=r.stdout,stderr=r.stderr);report['prospective_financial_results_available']=r.returncode==0
                     report['actions'].append('Ran fixed prospective cohort once after five new covered sessions'if r.returncode==0 else'Prospective failure preserved;requires review,not automatic restart')
-        artifact_files=[p for p in [delay/'completed.json',prospective/'protocol.json',prospective/'progress.json',second/'progress.json',second/'completed.json',bottleneck/'completed.json']if p.exists()];surface=dict(files={str(p.relative_to(root)):sha(p)for p in artifact_files},coverage=report.get('pair_prospective',{}).get('coverage'),health={k:report.get('pair_prospective',{}).get('collector_health',{}).get(k)for k in ['matches_frozen_creation','fresh_status']});report['surface_identity']=hashlib.sha256(json.dumps(surface,sort_keys=True).encode()).hexdigest();previous=json.loads((out/'workflow_status.json').read_text())if(out/'workflow_status.json').exists()else{}
+        artifact_files=[p for p in [delay/'completed.json',prospective/'protocol.json',prospective/'progress.json',second/'progress.json',second/'completed.json',third/'progress.json',third/'completed.json',bottleneck/'completed.json']if p.exists()];surface=dict(files={str(p.relative_to(root)):sha(p)for p in artifact_files},coverage=report.get('pair_prospective',{}).get('coverage'),health={k:report.get('pair_prospective',{}).get('collector_health',{}).get(k)for k in ['matches_frozen_creation','fresh_status']});report['surface_identity']=hashlib.sha256(json.dumps(surface,sort_keys=True).encode()).hexdigest();previous=json.loads((out/'workflow_status.json').read_text())if(out/'workflow_status.json').exists()else{}
         # Financial results are not re-executed to generate activity.
         if not(out/'dashboard_data.json').exists()or previous.get('surface_identity')!=report['surface_identity']:
             subprocess.run([os.sys.executable,'-m','atlas_research_pipeline.ledger','--root',str(root)],cwd=root/'work/tradingbot',check=True,capture_output=True);report['actions'].append('Built missing aggregate ledger')

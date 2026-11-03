@@ -60,6 +60,14 @@ def main():
     second=out/'cycles/002';audit=root/'outputs/atlas_pair_bottleneck_audit_v1/results.json'
     if audit.exists():package['bottleneck_audit']={k:v for k,v in json.loads(audit.read_text()).items()if k!='source_sha256'}
     if(second/'completed.json').exists():package['cycle002']=dict(completed=json.loads((second/'completed.json').read_text()),decisions=json.loads((second/'decisions.json').read_text()),records=[dict(profile=r['profile'],cost=r['cost'],trades=r['metrics']['trades'],win_rate=r['metrics']['win_rate'],net=r['metrics']['net_pnl'],quoteDD=r['account']['quote_drawdown_pct'])for r in json.loads((second/'results.json').read_text())],period=['2025-12-15','2026-05-31'],reused_observations=True,independent_validation=False)
+    third=out/'cycles/003'
+    if(third/'completed.json').exists():
+        package['cycle003']=dict(completed=json.loads((third/'completed.json').read_text()),decisions=json.loads((third/'decisions.json').read_text()),post_run_audit=json.loads((third/'post_run_audit.json').read_text()),records=[dict(profile=r['profile'],cost=r['cost'],trades=r['metrics']['trades'],win_rate=r['metrics']['win_rate'],net=r['metrics']['net_pnl'],quoteDD=r['account']['quote_drawdown_pct'],exposure=r['exposure'])for r in json.loads((third/'results.json').read_text())],period=['2025-12-15','2026-05-31'],reused_observations=True,independent_validation=False)
+    decision=root/'outputs/atlas_observer_incident_2026_11_02T2229_v1/user_decision.json'
+    if decision.exists():
+        package['observation']=dict(state='stopped_by_user',collection_running=False,prospective_observations_accruing=False,required_action=None,notice='Observation stopped by user. Offline research continues; no new prospective observations are being collected. No restart or replacement is authorized.')
+        package['independent_validation']['prospective']='Stopped by user; old frozen cohort cannot adopt a replacement process. No new observations accrue.'
+        package['priorities'][1]='Keep observation stopped as requested. Any future collection or new cohort requires explicit reactivation and a separate pre-observation freeze.'
     write(out/'dashboard_data.json',trim(package));print(json.dumps(dict(experiments=len(records),books=len(results),independent_months=0,latest=[dict(cost=r['cost'],statistics=r['monthly']['statistics'])for r in results if r['book']=='two_strategy_NAS90min']),allow_nan=False))
 
 

@@ -1,0 +1,76 @@
+{
+  "registered_utc": "2026-11-03T00:24:11.700528+00:00",
+  "status": "FEASIBILITY_ONLY_NO_FINANCIAL_SCORING",
+  "purpose": "Assess whether existing development data can support one causal, capped variance-budget hypothesis before any financial implementation.",
+  "literature": {
+    "title": "Volatility-Managed Portfolios",
+    "authors": [
+      "Alan Moreira",
+      "Tyler Muir"
+    ],
+    "year": 2017,
+    "doi": "10.1111/jofi.12513",
+    "url": "https://amoreira2.github.io/alan-moreira.github.io/VolPortfolios_published.pdf",
+    "paraphrase": "The paper scales monthly factor returns using prior-month realized variance. Its factor evidence does not establish an intraday CFD result.",
+    "adaptation": "Daily 1m reference-window variance, a trailing median normalization and a cap-only budget are our proposed adaptation, not the published implementation."
+  },
+  "proposed_hypothesis": "Reducing only planned new-entry risk after unusually volatile completed sessions may reduce adverse portfolio exposure. Natural-stop sizing already reduces quantity as stop width grows, so this can double-reduce exposure and worsen minimum-lot capture.",
+  "proposed_rules": {
+    "reference_window": "09:30-16:00 America/New_York,390 complete minute bars under the existing inferred clock; not independently verified venue hours",
+    "variance": "Squared log close-to-close returns; first minute uses its open. No overnight return. Reject incomplete, duplicated or invalid windows.",
+    "lag": "Immediately preceding weekday must be complete; missing holidays or early closes remain unavailable rather than inferred.",
+    "normalization": "Median of60 complete reference-window variances strictly before the lag session",
+    "scale": "min(1,median60/prior_variance)",
+    "planned_budget": "A possible future experimental wrapper may only reduce min(0.5% current equity,25USD), original recovery controls and remaining gross portfolio headroom. No leverage or risk increase.",
+    "entries_and_exits": "Preserve original SPX15 1.5R60minutes and NAS15 2R90minutes capped16NY, including natural initial stops, signal rules, legal lots and cost assumptions.",
+    "future_costs": [
+      "standard",
+      "higher",
+      "severe"
+    ],
+    "fallback": "No imputation or reduced warmup; no alternate lookback or threshold selected from this audit."
+  },
+  "development": [
+    "2025-12-15",
+    "2026-05-31"
+  ],
+  "feasibility_gate": "At least20 development weekdays with a causal feature for EACH instrument; this is data feasibility, not financial sample sufficiency.",
+  "duplicate_review": {
+    "registry_sha256": "d6fec41ed34e510e7bb8539e377ddbb59409726ca383096661f465ca28646564",
+    "prior_records": 72,
+    "related": [
+      "spx15_adaptive_2026_10_31",
+      "spx15_drawdown_2026_10_31",
+      "spx15_recovery_ramp_v1",
+      "spx15_sub20_2026_10_31",
+      "portfolio_25_protection_v1",
+      "portfolio_25_discipline_v1",
+      "atlas_pair_holding_v1",
+      "atlas_research_pipeline_v1/cycles/002"
+    ],
+    "conclusion": "Prior fixed/loss/drawdown risk cuts, ATR entry gates, holding changes and break-even exits are related but do not use this lagged realized-variance budget. A negative text search alone was not treated as semantic proof."
+  },
+  "inputs": {
+    "NAS100": {
+      "path": "outputs/nas100_quote_data_v1/NAS100_M1.csv",
+      "sha256": "58f3b8ae1ad747a4dcbfa5155881a2be49ee8bc9f0e921464e197e9bc32ff35b"
+    },
+    "SPX500": {
+      "path": "outputs/spx15_canonical_quote_data_v1/SPX500_M1.csv",
+      "sha256": "1b1d5eabbdf4572a46429a7750dd396c48388b4da54cfc69b29b4770d463b0c1"
+    }
+  },
+  "source_sha256": "4502f080b2fc73cd60c07dc06a70d970f1c813e0742d890d9cef8962a92caa22",
+  "source_file": "atlas_research_pipeline/variance_preflight.py",
+  "limitations": [
+    "All prices are previously exposed; no independent validation.",
+    "Historical server/DST, commissions, margin, liquidity and reference-window coverage remain uncertain.",
+    "Feature availability is not an eligible trade, missed winner, return forecast or target pass.",
+    "No candidate selection, financial replay, paper-book change or new collection occurs in this audit."
+  ],
+  "paper_only": true,
+  "financial_outcomes_scored": 0,
+  "active_paper_changed": false,
+  "atlas_observation": "Stopped by explicit user decision; this audit does not initialize a terminal.",
+  "ict_source_used": false
+}
