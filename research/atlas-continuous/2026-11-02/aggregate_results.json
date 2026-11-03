@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-11-03T05:41:39.292468+00:00",
+  "created_utc": "2026-11-03T06:49:56.500974+00:00",
   "objective": "Investigate15/20/25percent monthly net as stretchhypotheses;positiveindependentexpectancy first;DDtargetbelow10;no riskincreases",
   "monthly": [
     {
@@ -4727,6 +4727,19 @@
       "all_artifacts_preserved": true
     },
     {
+      "experiment": "outputs/atlas_research_pipeline_v1/feasibility/clock_provenance_v1",
+      "status": "completed_unvalidated",
+      "identity": "b50c246b9a831ae14f5f8d7e62d5ee0d04df4cf2002dd0036304b8c0cf36c7d7",
+      "files": {
+        "completed.json": "dc6d6f424ba0a7556d6a09dd373a1af75423d42ead4ae133b0bb109ce344da34",
+        "protocol.json": "aa4f3fcb4e7f943ea77fbe1144a879381941be29425d92dfe3f28a316a718e88",
+        "results.json": "fb99ec7d4dc57a692a4a995915e8fbf24decd105adaba4243b9cea347d067bd3"
+      },
+      "has_results": true,
+      "independent_validation": "Not inferred from completion; requires separate unseen evidence",
+      "all_artifacts_preserved": true
+    },
+    {
       "experiment": "outputs/atlas_research_pipeline_v1/feasibility/contract_provenance_v1",
       "status": "completed_unvalidated",
       "identity": "e27f808be49e4046fabaa8b1c105852e6b9b0eb88e06950e582efbfa2d1da65d",
@@ -6488,7 +6501,8 @@
     "Read-only coverage/clock/contract audit and confirmedfees",
     "Bounded evidence-based new cycles; retain all losses and failures;no after-outcome parameter tuning",
     "Keep scheduled FOMC entry guard inactive. Calendar vintage, complete coverage, clock/contract reconciliation and a separate full evaluation freeze are prerequisites. No calendar-to-signal joins or financial outcomes have been scored.",
-    "Future other-computer inventory remains metadata only. A complete schema is not archive/hash/exposure/contract verification or authority to transfer or score prices. No actual receipt or archive has been opened by the inactive preparation."
+    "Future other-computer inventory remains metadata only. A complete schema is not archive/hash/exposure/contract verification or authority to transfer or score prices. No actual receipt or archive has been opened by the inactive preparation.",
+    "Historical clock mapping remains unresolved. Saved numeric offsets and null availability states do not certify broker DST/effective intervals or authorize archive corrections. Preserve prior clock-grid work; no rerun, timestamp repair or observer restart."
   ],
   "active_paper_changed": false,
   "execution_delay": {
@@ -7612,6 +7626,77 @@
       }
     ]
   },
+  "clock_provenance": {
+    "completed_utc": "2026-11-03T06:48:33.675596+00:00",
+    "status": "DOCUMENTARY_CLOCK_AUDIT_COMPLETE_MAPPING_UNRESOLVED",
+    "corpus_scope": "Bounded to rg-visible JSON files at most 500K under outputs/work containing the exact offset_hours key, with dependency, data/quarantine, publication-payload/history and ICT folders excluded. Ignored, larger or differently named evidence and broker documents elsewhere are not claimed searched.",
+    "matching_documents": 9,
+    "instruments": {
+      "NAS100": {
+        "offset_records": 9,
+        "documents_with_offset": 9,
+        "numeric_assertion_records": 7,
+        "unavailable_records": 2,
+        "invalid_records": 0,
+        "distinct_numeric_assertions": [
+          3
+        ],
+        "protocol_or_mapping_assertions": 2,
+        "records_with_explicit_effective_fields": 0,
+        "independent_clock_observations_verified": 0,
+        "historical_mapping_verified": false,
+        "DST_policy_verified": false,
+        "verdict": "HISTORICAL_MAPPING_UNRESOLVED"
+      },
+      "SPX500": {
+        "offset_records": 9,
+        "documents_with_offset": 9,
+        "numeric_assertion_records": 7,
+        "unavailable_records": 2,
+        "invalid_records": 0,
+        "distinct_numeric_assertions": [
+          3
+        ],
+        "protocol_or_mapping_assertions": 2,
+        "records_with_explicit_effective_fields": 0,
+        "independent_clock_observations_verified": 0,
+        "historical_mapping_verified": false,
+        "DST_policy_verified": false,
+        "verdict": "HISTORICAL_MAPPING_UNRESOLVED"
+      }
+    },
+    "duplicate_content_groups": 0,
+    "synthetic_checks_passed": 8,
+    "historical_clock_mapping_verified": false,
+    "broker_DST_policy_verified": false,
+    "reference_price_alignment_performed": false,
+    "financial_cases_started": 0,
+    "financial_observations_scored": 0,
+    "financial_PASS": false,
+    "profit_delta": null,
+    "net": null,
+    "win_rate": null,
+    "drawdown": null,
+    "references": [
+      {
+        "title": "MetaQuotes Python copy_ticks_range",
+        "url": "https://www.mql5.com/en/docs/python_metatrader5/mt5copyticksrange_py",
+        "scope": "Documents UTC tick/bar-open times and aware UTC requests. Documentation is not a broker-specific historical mapping or proof that this archive follows those semantics."
+      },
+      {
+        "title": "MetaQuotes TimeTradeServer",
+        "url": "https://www.mql5.com/en/docs/dateandtime/timetradeserver",
+        "scope": "Describes a current server-time estimate computed by the client and dependent on computer time settings. Not a historical server timezone revision service."
+      },
+      {
+        "title": "MetaQuotes universal time",
+        "url": "https://www.mql5.com/en/book/common/timing/timing_gmt",
+        "scope": "Distinguishes computer-derived UTC, local DST and chart/server time conversion. Local or New York DST does not establish this broker historical policy."
+      }
+    ],
+    "observation_restarted": false,
+    "ict_used": false
+  },
   "schedule": {
     "status": "ACTIVE hourly; first updated heartbeat invocation observed",
     "cadence": "Hourly",
@@ -7632,7 +7717,7 @@
     "first_updated_scheduled_invocation_utc": "2026-11-02T20:27:00.894978+00:00"
   },
   "workflow": {
-    "at_utc": "2026-11-03T05:35:27.768170+00:00",
+    "at_utc": "2026-11-03T06:43:28.459313+00:00",
     "trigger": "heartbeat",
     "original_financial_sources_match": true,
     "paper_only": true,

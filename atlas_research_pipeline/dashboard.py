@@ -23,6 +23,8 @@ def append_research_readme(dest,data):
         additions.append('Inactive research design: one NAS-only new-entry exclusion from ten minutes before to twenty minutes after a scheduled FOMC statement, using calendar versions actually received before admission. A bounded review of 77 retained protocols found no same dated-event mechanism; nine synthetic clock/as-of/schema checks passed. No calendar-to-signal joins or financial observations were scored. This is not an accepted improvement or a complete financial evaluation protocol. Calendar vintage, coverage and clock/contract reconciliation come first. See [design and primary sources](fomc-entry-design.html) and [design record](fomc-entry-design.json). Observation and all financial books remain unchanged.')
     if data.get('metadata_intake_design'):
         additions.append('Inactive IBKR inventory preparation: a strict metadata-only schema for a future other-computer MNQ/MES archive inventory passed twenty synthetic checks. Referenced paths are never opened and archive hashes are not verified. No actual metadata receipt, price archive, quote, outcome or account was inspected. Schema completeness never approves data transfer, provenance, prior exposure, independent evidence or financial scoring. See [intake preparation and primary documentation](ibkr-metadata-intake.html) and [aggregate record](ibkr-metadata-intake.json). Original risk controls and user-stopped observation remain unchanged.')
+    if data.get('clock_provenance'):
+        additions.append('Clock documentary review: across nine matching saved JSON documents there are seven numeric offset assertions and two unavailable records per instrument, with no explicit effective-interval fields. Protocol mappings are not independent observations. Null is unavailable, not UTC or a new timezone/DST rule. Historical applicability remains unresolved; no prior clock-grid job, quote alignment, financial case, timestamp correction or observer restart occurred. See [clock provenance and official documentation](clock-provenance.html) and [aggregate record](clock-provenance.json).')
     path=dest/'README.md'
     path.write_text(path.read_text(encoding='utf-8')+'\n\n'+'\n\n'.join(additions)+'\n',encoding='utf-8')
     if data.get('quote_precision'):
@@ -52,6 +54,12 @@ def append_research_readme(dest,data):
         report=render(data['metadata_intake_design'])
         (dest/'ibkr-metadata-intake.html').write_text(report,encoding='utf-8')
         (dest.parents[4]/'outputs/atlas_research_pipeline_v1/ibkr-metadata-intake.html').write_text(report,encoding='utf-8')
+    if data.get('clock_provenance'):
+        from .clock_provenance import render
+        write(dest/'clock-provenance.json',data['clock_provenance'])
+        report=render(data['clock_provenance'])
+        (dest/'clock-provenance.html').write_text(report,encoding='utf-8')
+        (dest.parents[4]/'outputs/atlas_research_pipeline_v1/clock-provenance.html').write_text(report,encoding='utf-8')
 
 
 def main():
@@ -96,6 +104,10 @@ TEMPLATE=TEMPLATE.replace('</script></body>','''const FG=D.fomc_entry_design;if(
 
 TEMPLATE=TEMPLATE.replace('<section id="registry">','''<section id="metadata-intake"><h2>IBKR metadata intake preparation</h2><p><strong>INACTIVE - METADATA SHAPE ONLY</strong></p><p>A future other-computer MNQ/MES inventory can record archive identifiers, dates, contract identity, timezone/bar semantics, roll provenance and prior-exposure assertions. The pure review opens no referenced path, verifies no archive bytes or hash, and never authorizes a transfer or financial scoring. Older dates and another feed are not automatically independent evidence.</p><p id="metadataIntakeNote"></p><p>Financial performance: <strong>NOT EVALUATED</strong>. No actual inventory receipt or archive was reviewed. Historical contract/clock/cost reconciliation, independent exposure review and a complete new evaluation freeze remain prerequisites. Observation remains stopped as requested.</p><p><a href="ibkr-metadata-intake.html">Intake preparation and primary documentation</a> - <a href="ibkr-metadata-intake.json">Preparation record</a></p></section><section id="registry">''')
 TEMPLATE=TEMPLATE.replace('</script></body>','''const MI=D.metadata_intake_design;if(MI){$('metadataIntakeNote').textContent=`${MI.synthetic_checks_passed} synthetic schema/provenance-boundary checks passed. Actual metadata receipts reviewed ${MI.actual_metadata_receipts_reviewed}; archive bytes opened ${MI.archive_bytes_opened}; financial cases ${MI.financial_cases_started}. These checks establish no verified data availability, profitability or independent validation.`}
+</script></body>''')
+
+TEMPLATE=TEMPLATE.replace('<section id="registry">','''<section id="clock-provenance"><h2>Historical clock provenance</h2><p><strong>DOCUMENTARY REVIEW ONLY - MAPPING UNRESOLVED</strong></p><p>Saved numeric offsets, protocol assumptions and unavailable clock records have different roles. A capture timestamp is not a historical effective interval. Null is unavailable, not UTC, a broker timezone change or a DST switch. No offset or archived timestamp has been corrected.</p><p id="clockProvenanceNote"></p><p>No price alignment, financial scoring, broker contact or observation restart. Existing clock-grid protocols and all financial model/benchmark identities remain preserved. Official API definitions do not certify this broker historical archive behavior.</p><p><a href="clock-provenance.html">Clock evidence limits and official documentation</a> - <a href="clock-provenance.json">Aggregate record</a></p></section><section id="registry">''')
+TEMPLATE=TEMPLATE.replace('</script></body>','''const CL=D.clock_provenance;if(CL){$('clockProvenanceNote').textContent=`${CL.matching_documents} matching saved JSON documents; ${CL.synthetic_checks_passed} synthetic projection/boundary checks. Historical mapping and broker DST policy remain unresolved. Financial cases ${CL.financial_cases_started}; performance NOT EVALUATED.`}
 </script></body>''')
 
 if __name__=='__main__':main()

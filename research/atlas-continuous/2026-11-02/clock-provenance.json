@@ -1,0 +1,71 @@
+{
+  "completed_utc": "2026-11-03T06:48:33.675596+00:00",
+  "status": "DOCUMENTARY_CLOCK_AUDIT_COMPLETE_MAPPING_UNRESOLVED",
+  "corpus_scope": "Bounded to rg-visible JSON files at most 500K under outputs/work containing the exact offset_hours key, with dependency, data/quarantine, publication-payload/history and ICT folders excluded. Ignored, larger or differently named evidence and broker documents elsewhere are not claimed searched.",
+  "matching_documents": 9,
+  "instruments": {
+    "NAS100": {
+      "offset_records": 9,
+      "documents_with_offset": 9,
+      "numeric_assertion_records": 7,
+      "unavailable_records": 2,
+      "invalid_records": 0,
+      "distinct_numeric_assertions": [
+        3
+      ],
+      "protocol_or_mapping_assertions": 2,
+      "records_with_explicit_effective_fields": 0,
+      "independent_clock_observations_verified": 0,
+      "historical_mapping_verified": false,
+      "DST_policy_verified": false,
+      "verdict": "HISTORICAL_MAPPING_UNRESOLVED"
+    },
+    "SPX500": {
+      "offset_records": 9,
+      "documents_with_offset": 9,
+      "numeric_assertion_records": 7,
+      "unavailable_records": 2,
+      "invalid_records": 0,
+      "distinct_numeric_assertions": [
+        3
+      ],
+      "protocol_or_mapping_assertions": 2,
+      "records_with_explicit_effective_fields": 0,
+      "independent_clock_observations_verified": 0,
+      "historical_mapping_verified": false,
+      "DST_policy_verified": false,
+      "verdict": "HISTORICAL_MAPPING_UNRESOLVED"
+    }
+  },
+  "duplicate_content_groups": 0,
+  "synthetic_checks_passed": 8,
+  "historical_clock_mapping_verified": false,
+  "broker_DST_policy_verified": false,
+  "reference_price_alignment_performed": false,
+  "financial_cases_started": 0,
+  "financial_observations_scored": 0,
+  "financial_PASS": false,
+  "profit_delta": null,
+  "net": null,
+  "win_rate": null,
+  "drawdown": null,
+  "references": [
+    {
+      "title": "MetaQuotes Python copy_ticks_range",
+      "url": "https://www.mql5.com/en/docs/python_metatrader5/mt5copyticksrange_py",
+      "scope": "Documents UTC tick/bar-open times and aware UTC requests. Documentation is not a broker-specific historical mapping or proof that this archive follows those semantics."
+    },
+    {
+      "title": "MetaQuotes TimeTradeServer",
+      "url": "https://www.mql5.com/en/docs/dateandtime/timetradeserver",
+      "scope": "Describes a current server-time estimate computed by the client and dependent on computer time settings. Not a historical server timezone revision service."
+    },
+    {
+      "title": "MetaQuotes universal time",
+      "url": "https://www.mql5.com/en/book/common/timing/timing_gmt",
+      "scope": "Distinguishes computer-derived UTC, local DST and chart/server time conversion. Local or New York DST does not establish this broker historical policy."
+    }
+  ],
+  "observation_restarted": false,
+  "ict_used": false
+}

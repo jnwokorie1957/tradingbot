@@ -86,6 +86,10 @@ def main():
     if intake.exists():
         package['metadata_intake_design']=json.loads(intake.read_text(encoding='utf-8'))
         package['priorities'].append('Future other-computer inventory remains metadata only. A complete schema is not archive/hash/exposure/contract verification or authority to transfer or score prices. No actual receipt or archive has been opened by the inactive preparation.')
+    clock_provenance=out/'feasibility/clock_provenance_v1/public_summary.json'
+    if clock_provenance.exists():
+        package['clock_provenance']=json.loads(clock_provenance.read_text(encoding='utf-8'))
+        package['priorities'].append('Historical clock mapping remains unresolved. Saved numeric offsets and null availability states do not certify broker DST/effective intervals or authorize archive corrections. Preserve prior clock-grid work; no rerun, timestamp repair or observer restart.')
     write(out/'dashboard_data.json',trim(package));print(json.dumps(dict(experiments=len(records),books=len(results),independent_months=0,latest=[dict(cost=r['cost'],statistics=r['monthly']['statistics'])for r in results if r['book']=='two_strategy_NAS90min']),allow_nan=False))
 
 
