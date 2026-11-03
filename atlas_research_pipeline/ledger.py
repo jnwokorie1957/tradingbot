@@ -82,6 +82,10 @@ def main():
     if design.exists():
         package['fomc_entry_design']=json.loads(design.read_text(encoding='utf-8'))
         package['priorities'].append('Keep scheduled FOMC entry guard inactive. Calendar vintage, complete coverage, clock/contract reconciliation and a separate full evaluation freeze are prerequisites. No calendar-to-signal joins or financial outcomes have been scored.')
+    intake=out/'designs/ibkr_metadata_intake_v1/public_summary.json'
+    if intake.exists():
+        package['metadata_intake_design']=json.loads(intake.read_text(encoding='utf-8'))
+        package['priorities'].append('Future other-computer inventory remains metadata only. A complete schema is not archive/hash/exposure/contract verification or authority to transfer or score prices. No actual receipt or archive has been opened by the inactive preparation.')
     write(out/'dashboard_data.json',trim(package));print(json.dumps(dict(experiments=len(records),books=len(results),independent_months=0,latest=[dict(cost=r['cost'],statistics=r['monthly']['statistics'])for r in results if r['book']=='two_strategy_NAS90min']),allow_nan=False))
 
 

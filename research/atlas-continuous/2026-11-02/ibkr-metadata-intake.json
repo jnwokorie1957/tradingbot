@@ -1,0 +1,33 @@
+{
+  "completed_utc": "2026-11-03T05:40:17.230304+00:00",
+  "status": "INACTIVE_METADATA_SHAPE_PREPARATION_COMPLETE",
+  "synthetic_checks_passed": 20,
+  "actual_metadata_receipts_reviewed": 0,
+  "archive_bytes_opened": 0,
+  "archive_hashes_verified": false,
+  "new_data_acquired": false,
+  "financial_cases_started": 0,
+  "financial_observations_scored": 0,
+  "financial_PASS": false,
+  "net": null,
+  "win_rate": null,
+  "drawdown": null,
+  "independent_validation": false,
+  "scoring_authorized": false,
+  "transfer_authorized": false,
+  "observation_restarted": false,
+  "original_benchmarks_and_risk_unchanged": true,
+  "ict_used": false,
+  "references": [
+    {
+      "title": "Interactive Brokers: Futures",
+      "url": "https://www.interactivebrokers.com/docs/tws-api/contracts/futures",
+      "role": "Contract identity includes security type, exchange, currency, expiry and multiplier. Continuous futures differ from dated contracts. These definitions do not verify an archive or its historical specification."
+    },
+    {
+      "title": "Interactive Brokers: Historical Bars",
+      "url": "https://www.interactivebrokers.com/docs/tws-api/doc/md/historical-bars",
+      "role": "Bar size, whatToShow, useRTH and timestamp format/timezone matter. Documentation is not proof of actual coverage, feed alignment or first research receipt."
+    }
+  ]
+}

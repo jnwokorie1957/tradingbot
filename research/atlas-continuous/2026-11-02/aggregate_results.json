@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-11-03T04:39:40.716864+00:00",
+  "created_utc": "2026-11-03T05:41:39.292468+00:00",
   "objective": "Investigate15/20/25percent monthly net as stretchhypotheses;positiveindependentexpectancy first;DDtargetbelow10;no riskincreases",
   "monthly": [
     {
@@ -4714,6 +4714,19 @@
       "all_artifacts_preserved": true
     },
     {
+      "experiment": "outputs/atlas_research_pipeline_v1/designs/ibkr_metadata_intake_v1",
+      "status": "completed_unvalidated",
+      "identity": "c4ce5bdf4f62e4fa812dcc64840faef760bd45044041538af913fd9d4871002f",
+      "files": {
+        "completed.json": "00753ab90aef608551697227e0461ce2aba093326e11581003aafc0643f13772",
+        "progress.json": "ac365e7fec607f48cc4b2192ad25640d520991ef081c52a8be96a41c4a0f2ed1",
+        "protocol.json": "cea3febc45e8c6955bb747ec2f3f9bdd5c6d4000b3911a9c41e10353c6c20cd4"
+      },
+      "has_results": false,
+      "independent_validation": "Not inferred from completion; requires separate unseen evidence",
+      "all_artifacts_preserved": true
+    },
+    {
       "experiment": "outputs/atlas_research_pipeline_v1/feasibility/contract_provenance_v1",
       "status": "completed_unvalidated",
       "identity": "e27f808be49e4046fabaa8b1c105852e6b9b0eb88e06950e582efbfa2d1da65d",
@@ -6474,7 +6487,8 @@
     "Evaluate the frozen receipt-clock paired holding comparison after5new covered sessions;no refit or automatic deployment",
     "Read-only coverage/clock/contract audit and confirmedfees",
     "Bounded evidence-based new cycles; retain all losses and failures;no after-outcome parameter tuning",
-    "Keep scheduled FOMC entry guard inactive. Calendar vintage, complete coverage, clock/contract reconciliation and a separate full evaluation freeze are prerequisites. No calendar-to-signal joins or financial outcomes have been scored."
+    "Keep scheduled FOMC entry guard inactive. Calendar vintage, complete coverage, clock/contract reconciliation and a separate full evaluation freeze are prerequisites. No calendar-to-signal joins or financial outcomes have been scored.",
+    "Future other-computer inventory remains metadata only. A complete schema is not archive/hash/exposure/contract verification or authority to transfer or score prices. No actual receipt or archive has been opened by the inactive preparation."
   ],
   "active_paper_changed": false,
   "execution_delay": {
@@ -7565,6 +7579,39 @@
     "protocol_sha256": "3723d737d8f9c5898e49403f0593f2e6938eb982d36cbf7207719d9957837477",
     "source_sha256": "e375cc3cb0238cc0b973b3743a020bf99a4d3e537122b558b6a07eb2364b88e4"
   },
+  "metadata_intake_design": {
+    "completed_utc": "2026-11-03T05:40:17.230304+00:00",
+    "status": "INACTIVE_METADATA_SHAPE_PREPARATION_COMPLETE",
+    "synthetic_checks_passed": 20,
+    "actual_metadata_receipts_reviewed": 0,
+    "archive_bytes_opened": 0,
+    "archive_hashes_verified": false,
+    "new_data_acquired": false,
+    "financial_cases_started": 0,
+    "financial_observations_scored": 0,
+    "financial_PASS": false,
+    "net": null,
+    "win_rate": null,
+    "drawdown": null,
+    "independent_validation": false,
+    "scoring_authorized": false,
+    "transfer_authorized": false,
+    "observation_restarted": false,
+    "original_benchmarks_and_risk_unchanged": true,
+    "ict_used": false,
+    "references": [
+      {
+        "title": "Interactive Brokers: Futures",
+        "url": "https://www.interactivebrokers.com/docs/tws-api/contracts/futures",
+        "role": "Contract identity includes security type, exchange, currency, expiry and multiplier. Continuous futures differ from dated contracts. These definitions do not verify an archive or its historical specification."
+      },
+      {
+        "title": "Interactive Brokers: Historical Bars",
+        "url": "https://www.interactivebrokers.com/docs/tws-api/doc/md/historical-bars",
+        "role": "Bar size, whatToShow, useRTH and timestamp format/timezone matter. Documentation is not proof of actual coverage, feed alignment or first research receipt."
+      }
+    ]
+  },
   "schedule": {
     "status": "ACTIVE hourly; first updated heartbeat invocation observed",
     "cadence": "Hourly",
@@ -7585,7 +7632,7 @@
     "first_updated_scheduled_invocation_utc": "2026-11-02T20:27:00.894978+00:00"
   },
   "workflow": {
-    "at_utc": "2026-11-03T04:24:13.891617+00:00",
+    "at_utc": "2026-11-03T05:35:27.768170+00:00",
     "trigger": "heartbeat",
     "original_financial_sources_match": true,
     "paper_only": true,
