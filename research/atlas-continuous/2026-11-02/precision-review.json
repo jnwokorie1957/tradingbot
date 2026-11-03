@@ -1,0 +1,216 @@
+{
+  "failed_probe": {
+    "registered_utc": "2026-11-03T01:25:31.976139+00:00",
+    "hypothesis": "Wide arrival spreads may justify a bounded market-entry wait for a narrower observed spread, but delay can worsen prices or miss valid entries. First establish whether this rule has enough actual quote interventions to merit a separately frozen financial comparison.",
+    "references": [
+      {
+        "title": "Understanding Order Types",
+        "publisher": "SEC Investor.gov",
+        "url": "https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins-14",
+        "scope": "Stock order mechanics: market prices are uncertain; a limit price can prevent execution. This is not CFD strategy evidence."
+      },
+      {
+        "title": "Algorithmic Trading",
+        "publisher": "Interactive Brokers",
+        "url": "https://www.ibkrguides.com/ibkrdesktop/algorithmic-trading.htm",
+        "scope": "Adaptive and Arrival Price descriptions motivate an execution-cost/price-risk tradeoff. Our proposed spread-conditioned wait is neither an IBKR algo reproduction nor a demonstrated CFD improvement."
+      }
+    ],
+    "development": [
+      "2025-12-15",
+      "2026-05-31"
+    ],
+    "all_history_previously_exposed": true,
+    "proposed_rules": {
+      "baseline": "Tick-count median of raw bid/ask spreads in [scheduled entry minus60s,scheduled entry); exclude current and all later quotes.",
+      "baseline_seconds": 60,
+      "minimum_distinct_timestamps": 30,
+      "maximum_quote_gap_seconds": 5,
+      "initial_scheduled_delay_seconds": 60,
+      "trigger": "If arrival spread exceeds the fixed baseline median, wait for the FIRST subsequent spread at or below it. Otherwise preserve arrival.",
+      "maximum_additional_wait_seconds": 60,
+      "reaction_seconds": 1,
+      "execution": "No resting limit, midpoint fill, assumed queue priority or price improvement. This audit only records quote times; a separate experiment must apply adverse market fills and every original guard at actual candidate time.",
+      "cancellation": "Sparse baseline is unavailable, not imputed. A waiting-path gap or deadline failure is retained. No new session eligibility, financial outcome or opportunity validity is inferred."
+    },
+    "feasibility_gate": "At least20 delayed_quote_candidate raw schedule events for EACH original lane, with complete frozen quote coverage and causal prefix parity. This does not establish20 executable trades.",
+    "no_tuning": "If the gate fails, archive without alternate median windows, wait horizons, thresholds or sparse-data fallbacks. No later-history financial replay.",
+    "limitations": [
+      "Previously exposed development prices are not untouched evidence.",
+      "Historical clock/DST, contract applicability, commissions, margins, liquidity and historical computation/receipt latency are unverified.",
+      "Market quote candidates are not fills, successful trades, proven missed winners or broker execution evidence.",
+      "This audit measures data intervention availability only and does not estimate profit or drawdown."
+    ],
+    "financial_outcomes_scored": 0,
+    "financial_cases_started": 0,
+    "paper_only": true,
+    "active_paper_changed": false,
+    "observation_restarted": false,
+    "ict_used": false
+  },
+  "failure": {
+    "status": "FAILED_DATA_COMPATIBILITY_PRESERVED",
+    "failure": {
+      "failed_utc": "2026-11-03T01:25:38.393226+00:00",
+      "error": "ValueError('Raw spread is inconsistent with the frozen price tick')",
+      "evidence_preserved": true,
+      "financial_cases_started": 0
+    },
+    "protocol_sha256": "53d559c09c2ad2dadcd5baeed8198a8f4677e76518c02b92dd39cf6f91902097",
+    "financial_cases_started": 0,
+    "financial_result": null,
+    "interpretation": "The backward-spread waiting idea was not financially scored. Its real-data precision guard failed; eight synthetic causal checks passing did not establish compatibility with historical SPX quotes. No rounding repair, threshold refit or rerun."
+  },
+  "diagnostic": {
+    "completed_utc": "2026-11-03T01:28:40.831925+00:00",
+    "status": "COMPLETED_DIAGNOSTIC_MODEL_LIMITATION_REMAINS",
+    "instruments": {
+      "NAS100": {
+        "metadata": {
+          "point": 0.01,
+          "digits": 2,
+          "trade_tick_size": 0.01,
+          "trade_tick_value_loss": 1.0,
+          "trade_contract_size": 100.0
+        },
+        "development": [
+          "2025-12-15",
+          "2026-05-31"
+        ],
+        "counts": {
+          "windows": 442,
+          "quote_rows": 91896,
+          "bid_off_tick": 0,
+          "ask_off_tick": 0,
+          "spread_off_tick": 0,
+          "any_off_tick": 0,
+          "any_off_point": 0
+        },
+        "affected_development_dates": 0,
+        "first_affected_date": null,
+        "last_affected_date": null,
+        "original_archive_check": {
+          "date": "2025-12-15",
+          "source_sha256": "70a031af99db53840288d612f441e340933a244e27aefccdf5556730e9f32d37",
+          "raw_bid_ask_match": true,
+          "clock": "Existing inferred offset used only to locate the original row; not historical clock verification."
+        },
+        "preserved_full_history_fills": {
+          "standard": {
+            "trades": 41,
+            "off_tick_counts": {
+              "entry": 0,
+              "stop": 0,
+              "target": 0,
+              "exit": 0
+            },
+            "unchanged_ledger_sha256": "c5ea15ae745e2c1772056aeee30a67d9b24cf37a14b47045b568201916f6014f",
+            "diagnostic_only": true
+          },
+          "higher": {
+            "trades": 37,
+            "off_tick_counts": {
+              "entry": 8,
+              "stop": 0,
+              "target": 8,
+              "exit": 5
+            },
+            "unchanged_ledger_sha256": "27d9bbff246371565c354bed5f6f890f82fdc2a7c067d9c082360edcf4f5d92a",
+            "diagnostic_only": true
+          },
+          "severe": {
+            "trades": 32,
+            "off_tick_counts": {
+              "entry": 0,
+              "stop": 0,
+              "target": 0,
+              "exit": 0
+            },
+            "unchanged_ledger_sha256": "62a28a5143210a1306743a3d956c3637a0e908ac92d42eb32ab23f99b3562ae1",
+            "diagnostic_only": true
+          }
+        },
+        "historical_contract_timeline_verified": false,
+        "verdict": "NO_MISMATCH_IN_THIS_BOUNDED_SAMPLE_NOT_HISTORICAL_SPEC_VERIFICATION"
+      },
+      "SPX500": {
+        "metadata": {
+          "point": 0.1,
+          "digits": 1,
+          "trade_tick_size": 0.1,
+          "trade_tick_value_loss": 10.0,
+          "trade_contract_size": 100.0
+        },
+        "development": [
+          "2025-12-15",
+          "2026-05-31"
+        ],
+        "counts": {
+          "windows": 247,
+          "quote_rows": 34459,
+          "bid_off_tick": 7439,
+          "ask_off_tick": 7016,
+          "spread_off_tick": 7447,
+          "any_off_tick": 7447,
+          "any_off_point": 7447
+        },
+        "affected_development_dates": 38,
+        "first_affected_date": "2025-12-15",
+        "last_affected_date": "2026-02-11",
+        "original_archive_check": {
+          "date": "2025-12-15",
+          "source_sha256": "85a2f87b535617ea9c6f66f76e681a70c9d4d1cf11cfd71be343f3f71d9c3432",
+          "raw_bid_ask_match": true,
+          "clock": "Existing inferred offset used only to locate the original row; not historical clock verification."
+        },
+        "preserved_full_history_fills": {
+          "standard": {
+            "trades": 45,
+            "off_tick_counts": {
+              "entry": 14,
+              "stop": 0,
+              "target": 14,
+              "exit": 14
+            },
+            "unchanged_ledger_sha256": "c5ea15ae745e2c1772056aeee30a67d9b24cf37a14b47045b568201916f6014f",
+            "diagnostic_only": true
+          },
+          "higher": {
+            "trades": 37,
+            "off_tick_counts": {
+              "entry": 27,
+              "stop": 0,
+              "target": 27,
+              "exit": 19
+            },
+            "unchanged_ledger_sha256": "27d9bbff246371565c354bed5f6f890f82fdc2a7c067d9c082360edcf4f5d92a",
+            "diagnostic_only": true
+          },
+          "severe": {
+            "trades": 31,
+            "off_tick_counts": {
+              "entry": 8,
+              "stop": 0,
+              "target": 8,
+              "exit": 9
+            },
+            "unchanged_ledger_sha256": "62a28a5143210a1306743a3d956c3637a0e908ac92d42eb32ab23f99b3562ae1",
+            "diagnostic_only": true
+          }
+        },
+        "historical_contract_timeline_verified": false,
+        "verdict": "PRECISION_COMPATIBILITY_UNRESOLVED"
+      }
+    },
+    "financial_cases_started": 0,
+    "financial_outcomes_scored": 0,
+    "independent_validation": false,
+    "benchmarks_changed": false,
+    "active_paper_changed": false,
+    "observation_restarted": false,
+    "conclusion": "SPX historical quote precision is not reconciled with saved current-style metadata. Preserve all quoted modeled results as estimates; no financial correction or replacement specification is inferred. The spread-wait probe remains failed, not silently repaired or rescored.",
+    "next_action": "Resolve source provenance and broker historical precision/tick value/contract applicability through documentary evidence when available. Until then defer execution-sensitive strategy scoring; continue nonfinancial provenance work or distinct research design."
+  },
+  "independent_validation": false,
+  "financial_result": null
+}

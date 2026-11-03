@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-11-03T00:30:50.118346+00:00",
+  "created_utc": "2026-11-03T01:30:56.016377+00:00",
   "objective": "Investigate15/20/25percent monthly net as stretchhypotheses;positiveindependentexpectancy first;DDtargetbelow10;no riskincreases",
   "monthly": [
     {
@@ -4702,6 +4702,31 @@
       "all_artifacts_preserved": true
     },
     {
+      "experiment": "outputs/atlas_research_pipeline_v1/feasibility/quote_precision_v1",
+      "status": "completed_unvalidated",
+      "identity": "e4af73e47edb3c61bb3a7c2684e7418cf7c5247abfb7da9ab59bb330ca06a65c",
+      "files": {
+        "completed.json": "76323402e265e641400cb5ef692b2d548a9117ea9bacb5ff5cb16b06d926d4f8",
+        "protocol.json": "390c4c9052d6abb861850338107250265235e68c640ab88eb29281351e8de8dc",
+        "results.json": "fa3a77624ffa11cdec9671daccc7a570a77761c745726f26ad23b1ac0e45cee0"
+      },
+      "has_results": true,
+      "independent_validation": "Not inferred from completion; requires separate unseen evidence",
+      "all_artifacts_preserved": true
+    },
+    {
+      "experiment": "outputs/atlas_research_pipeline_v1/feasibility/spread_wait_v1",
+      "status": "failed_preserved",
+      "identity": "c4445a44fb326cd2d0ea8ecf20c88e3e1412140fb20ff19dec55d98cb2f0cb34",
+      "files": {
+        "failure.json": "588de4d7000f870dcff871a67e7783359eeb7699721b509d3c7cba78e800f244",
+        "protocol.json": "53d559c09c2ad2dadcd5baeed8198a8f4677e76518c02b92dd39cf6f91902097"
+      },
+      "has_results": false,
+      "independent_validation": "Not inferred from completion; requires separate unseen evidence",
+      "all_artifacts_preserved": true
+    },
+    {
       "experiment": "outputs/atlas_research_pipeline_v1/feasibility/variance_budget_v1",
       "status": "completed_unvalidated",
       "identity": "f2af0b04654586495298803c7b96b116a7b567856abcb295f3be054948a6ff0c",
@@ -6418,8 +6443,9 @@
     "prospective": "Stopped by user; old frozen cohort cannot adopt a replacement process. No new observations accrue."
   },
   "priorities": [
-    "Obtain longer genuinely unusedIBKRcontract histories via confirmedothercomputerroute;quarantine and seal before outcome review",
+    "Reconcile SPX historical quote precision with the saved tick size/value and contract timeline before new execution-sensitive SPX scoring. Preserve old modeled results and the failed feasibility probe; do not infer replacement specifications.",
     "Keep observation stopped as requested. Any future collection or new cohort requires explicit reactivation and a separate pre-observation freeze.",
+    "Evaluate the frozen receipt-clock paired holding comparison after5new covered sessions;no refit or automatic deployment",
     "Read-only coverage/clock/contract audit and confirmedfees",
     "Bounded evidence-based new cycles; retain all losses and failures;no after-outcome parameter tuning"
   ],
@@ -7152,6 +7178,169 @@
     "reused_observations": true,
     "independent_validation": false
   },
+  "spread_feasibility": {
+    "status": "FAILED_DATA_COMPATIBILITY_PRESERVED",
+    "failure": {
+      "failed_utc": "2026-11-03T01:25:38.393226+00:00",
+      "error": "ValueError('Raw spread is inconsistent with the frozen price tick')",
+      "evidence_preserved": true,
+      "financial_cases_started": 0
+    },
+    "protocol_sha256": "53d559c09c2ad2dadcd5baeed8198a8f4677e76518c02b92dd39cf6f91902097",
+    "financial_cases_started": 0,
+    "financial_result": null,
+    "interpretation": "The backward-spread waiting idea was not financially scored. Its real-data precision guard failed; eight synthetic causal checks passing did not establish compatibility with historical SPX quotes. No rounding repair, threshold refit or rerun."
+  },
+  "quote_precision": {
+    "completed_utc": "2026-11-03T01:28:40.831925+00:00",
+    "status": "COMPLETED_DIAGNOSTIC_MODEL_LIMITATION_REMAINS",
+    "instruments": {
+      "NAS100": {
+        "metadata": {
+          "point": 0.01,
+          "digits": 2,
+          "trade_tick_size": 0.01,
+          "trade_tick_value_loss": 1.0,
+          "trade_contract_size": 100.0
+        },
+        "development": [
+          "2025-12-15",
+          "2026-05-31"
+        ],
+        "counts": {
+          "windows": 442,
+          "quote_rows": 91896,
+          "bid_off_tick": 0,
+          "ask_off_tick": 0,
+          "spread_off_tick": 0,
+          "any_off_tick": 0,
+          "any_off_point": 0
+        },
+        "affected_development_dates": 0,
+        "first_affected_date": null,
+        "last_affected_date": null,
+        "original_archive_check": {
+          "date": "2025-12-15",
+          "source_sha256": "70a031af99db53840288d612f441e340933a244e27aefccdf5556730e9f32d37",
+          "raw_bid_ask_match": true,
+          "clock": "Existing inferred offset used only to locate the original row; not historical clock verification."
+        },
+        "preserved_full_history_fills": {
+          "standard": {
+            "trades": 41,
+            "off_tick_counts": {
+              "entry": 0,
+              "stop": 0,
+              "target": 0,
+              "exit": 0
+            },
+            "unchanged_ledger_sha256": "c5ea15ae745e2c1772056aeee30a67d9b24cf37a14b47045b568201916f6014f",
+            "diagnostic_only": true
+          },
+          "higher": {
+            "trades": 37,
+            "off_tick_counts": {
+              "entry": 8,
+              "stop": 0,
+              "target": 8,
+              "exit": 5
+            },
+            "unchanged_ledger_sha256": "27d9bbff246371565c354bed5f6f890f82fdc2a7c067d9c082360edcf4f5d92a",
+            "diagnostic_only": true
+          },
+          "severe": {
+            "trades": 32,
+            "off_tick_counts": {
+              "entry": 0,
+              "stop": 0,
+              "target": 0,
+              "exit": 0
+            },
+            "unchanged_ledger_sha256": "62a28a5143210a1306743a3d956c3637a0e908ac92d42eb32ab23f99b3562ae1",
+            "diagnostic_only": true
+          }
+        },
+        "historical_contract_timeline_verified": false,
+        "verdict": "NO_MISMATCH_IN_THIS_BOUNDED_SAMPLE_NOT_HISTORICAL_SPEC_VERIFICATION"
+      },
+      "SPX500": {
+        "metadata": {
+          "point": 0.1,
+          "digits": 1,
+          "trade_tick_size": 0.1,
+          "trade_tick_value_loss": 10.0,
+          "trade_contract_size": 100.0
+        },
+        "development": [
+          "2025-12-15",
+          "2026-05-31"
+        ],
+        "counts": {
+          "windows": 247,
+          "quote_rows": 34459,
+          "bid_off_tick": 7439,
+          "ask_off_tick": 7016,
+          "spread_off_tick": 7447,
+          "any_off_tick": 7447,
+          "any_off_point": 7447
+        },
+        "affected_development_dates": 38,
+        "first_affected_date": "2025-12-15",
+        "last_affected_date": "2026-02-11",
+        "original_archive_check": {
+          "date": "2025-12-15",
+          "source_sha256": "85a2f87b535617ea9c6f66f76e681a70c9d4d1cf11cfd71be343f3f71d9c3432",
+          "raw_bid_ask_match": true,
+          "clock": "Existing inferred offset used only to locate the original row; not historical clock verification."
+        },
+        "preserved_full_history_fills": {
+          "standard": {
+            "trades": 45,
+            "off_tick_counts": {
+              "entry": 14,
+              "stop": 0,
+              "target": 14,
+              "exit": 14
+            },
+            "unchanged_ledger_sha256": "c5ea15ae745e2c1772056aeee30a67d9b24cf37a14b47045b568201916f6014f",
+            "diagnostic_only": true
+          },
+          "higher": {
+            "trades": 37,
+            "off_tick_counts": {
+              "entry": 27,
+              "stop": 0,
+              "target": 27,
+              "exit": 19
+            },
+            "unchanged_ledger_sha256": "27d9bbff246371565c354bed5f6f890f82fdc2a7c067d9c082360edcf4f5d92a",
+            "diagnostic_only": true
+          },
+          "severe": {
+            "trades": 31,
+            "off_tick_counts": {
+              "entry": 8,
+              "stop": 0,
+              "target": 8,
+              "exit": 9
+            },
+            "unchanged_ledger_sha256": "62a28a5143210a1306743a3d956c3637a0e908ac92d42eb32ab23f99b3562ae1",
+            "diagnostic_only": true
+          }
+        },
+        "historical_contract_timeline_verified": false,
+        "verdict": "PRECISION_COMPATIBILITY_UNRESOLVED"
+      }
+    },
+    "financial_cases_started": 0,
+    "financial_outcomes_scored": 0,
+    "independent_validation": false,
+    "benchmarks_changed": false,
+    "active_paper_changed": false,
+    "observation_restarted": false,
+    "conclusion": "SPX historical quote precision is not reconciled with saved current-style metadata. Preserve all quoted modeled results as estimates; no financial correction or replacement specification is inferred. The spread-wait probe remains failed, not silently repaired or rescored.",
+    "next_action": "Resolve source provenance and broker historical precision/tick value/contract applicability through documentary evidence when available. Until then defer execution-sensitive strategy scoring; continue nonfinancial provenance work or distinct research design."
+  },
   "observation": {
     "state": "stopped_by_user",
     "collection_running": false,
@@ -7179,7 +7368,7 @@
     "first_updated_scheduled_invocation_utc": "2026-11-02T20:27:00.894978+00:00"
   },
   "workflow": {
-    "at_utc": "2026-11-03T00:12:34.854661+00:00",
+    "at_utc": "2026-11-03T01:15:39.759412+00:00",
     "trigger": "heartbeat",
     "original_financial_sources_match": true,
     "paper_only": true,

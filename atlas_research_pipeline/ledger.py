@@ -63,6 +63,12 @@ def main():
     third=out/'cycles/003'
     if(third/'completed.json').exists():
         package['cycle003']=dict(completed=json.loads((third/'completed.json').read_text()),decisions=json.loads((third/'decisions.json').read_text()),post_run_audit=json.loads((third/'post_run_audit.json').read_text()),records=[dict(profile=r['profile'],cost=r['cost'],trades=r['metrics']['trades'],win_rate=r['metrics']['win_rate'],net=r['metrics']['net_pnl'],quoteDD=r['account']['quote_drawdown_pct'],exposure=r['exposure'])for r in json.loads((third/'results.json').read_text())],period=['2025-12-15','2026-05-31'],reused_observations=True,independent_validation=False)
+    spread=out/'feasibility/spread_wait_v1';precision=out/'feasibility/quote_precision_v1'
+    if(spread/'failure.json').exists():
+        package['spread_feasibility']=dict(status='FAILED_DATA_COMPATIBILITY_PRESERVED',failure=json.loads((spread/'failure.json').read_text()),protocol_sha256=sha(spread/'protocol.json'),financial_cases_started=0,financial_result=None,interpretation='The backward-spread waiting idea was not financially scored. Its real-data precision guard failed; eight synthetic causal checks passing did not establish compatibility with historical SPX quotes. No rounding repair, threshold refit or rerun.')
+    if(precision/'completed.json').exists():
+        package['quote_precision']=json.loads((precision/'results.json').read_text())
+        package['priorities'].insert(0,'Reconcile SPX historical quote precision with the saved tick size/value and contract timeline before new execution-sensitive SPX scoring. Preserve old modeled results and the failed feasibility probe; do not infer replacement specifications.')
     decision=root/'outputs/atlas_observer_incident_2026_11_02T2229_v1/user_decision.json'
     if decision.exists():
         package['observation']=dict(state='stopped_by_user',collection_running=False,prospective_observations_accruing=False,required_action=None,notice='Observation stopped by user. Offline research continues; no new prospective observations are being collected. No restart or replacement is authorized.')
