@@ -7,3 +7,6 @@ private-data/
 *.png
 *.dpapi
 .env*
+
+# Private study exports must stay outside the public repository.
+/research/ict-mentorship-*/
